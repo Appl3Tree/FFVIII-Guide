@@ -1,0 +1,94 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  body {
+    @apply bg-slate-950 min-h-screen text-slate-100;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(20, 184, 166, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 0%, rgba(99, 102, 241, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+  }
+  * {
+    @apply box-border;
+  }
+  ::selection {
+    background-color: rgba(20, 184, 166, 0.25);
+    color: white;
+  }
+}
+
+/* Smoother focus rings */
+input:focus, button:focus-visible {
+  outline: none;
+}
+
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-sm bg-slate-900/60 border border-slate-700/60 rounded-xl;
+  }
+  .glass-panel-sm {
+    @apply backdrop-blur-sm bg-slate-900/40 border border-slate-700/40 rounded-lg;
+  }
+  .glass-button {
+    @apply px-3 py-1.5 bg-slate-800/80 border border-slate-600/60 rounded-lg
+           hover:bg-slate-700/80 hover:border-slate-500/80
+           active:bg-slate-800/80
+           transition-all duration-150 text-sm text-slate-200
+           focus:outline-none focus:ring-2 focus:ring-teal-500/40;
+  }
+  .glass-button-teal {
+    @apply px-3 py-1.5 bg-teal-900/40 border border-teal-500/40 rounded-lg
+           hover:bg-teal-800/60 hover:border-teal-400/60
+           transition-all duration-150 text-sm text-teal-300
+           focus:outline-none focus:ring-2 focus:ring-teal-500/40;
+  }
+  .badge-disc {
+    @apply text-xs px-2 py-0.5 rounded-full bg-indigo-900/60 border border-indigo-500/40 text-indigo-300 font-medium;
+  }
+  .badge-missable {
+    @apply text-xs px-2 py-0.5 rounded-full bg-amber-900/60 border border-amber-500/40 text-amber-300 font-medium;
+  }
+  .badge-achievement {
+    @apply text-xs px-2 py-0.5 rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 font-medium;
+  }
+  .badge-gf {
+    @apply text-xs px-2 py-0.5 rounded-full bg-violet-900/60 border border-violet-500/40 text-violet-300 font-medium;
+  }
+  .badge-card {
+    @apply text-xs px-2 py-0.5 rounded-full bg-sky-900/60 border border-sky-500/40 text-sky-300 font-medium;
+  }
+  .prose-chapter {
+    @apply text-slate-300 text-sm leading-relaxed max-w-prose;
+  }
+  .callout-teal {
+    @apply rounded-lg bg-teal-950/20 border-l-[3px] border-teal-500/70 px-4 py-3 space-y-1.5;
+  }
+  .callout-amber {
+    @apply rounded-lg bg-amber-950/25 border-l-[3px] border-amber-500/70 px-4 py-3 space-y-1.5;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
