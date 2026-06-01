@@ -15475,9 +15475,9 @@
         "id": "enemy-propagator",
         "name": "Propagator",
         "lvMin": 1,
-        "lvMax": 100,
+        "lvMax": 42,
         "hpMin": 1100,
-        "hpMax": 11000,
+        "hpMax": 5200,
         "ap": 5,
         "exp": 0,
         "lvUp": true,
@@ -15507,13 +15507,13 @@
         ],
         "drawMagic": [
           "Thunder",
-          "Cure",
-          "Esuna",
-          "Life",
           "Thundara",
-          "Cura",
           "Thundaga",
-          "Curaga"
+          "Cure",
+          "Cura",
+          "Curaga",
+          "Esuna",
+          "Life"
         ],
         "devour": null,
         "abilities": [
@@ -15523,10 +15523,10 @@
           "Silence",
           "Blind"
         ],
-        "mug": "6x Wizard Stone, 8x Wizard Stone, 10x Wizard Stone, 12x Wizard Stone",
-        "drop": "SS, DS, FS, AS; PS, HS, MS, DS; AS, US, US, US; DS, US, US, US*4",
+        "mug": "6x–12x Wizard Stone",
+        "drop": "Spell Stone (color-dependent: Purple→Shell/Protect/Aura/Death; Green→Death/Holy/Ultima; Yellow→Flare/Meteor/Ultima; Red→Aura/Death/Ultima)",
         "cardDrop": "none",
-        "scan": "A monster living in the spaceship Ragnarok. Very violent in nature, it attacks anything that moves within the ship."
+        "scan": "One-eyed aliens aboard the Ragnarok. 8 total (2 per color: purple, green, yellow, red). Must defeat each color pair together — survivors respawn. Each color has different Spell Stone drops."
       },
       {
         "id": "enemy-raldo",
@@ -17053,10 +17053,10 @@
         "id": "enemy-raijin-2",
         "name": "Raijin (with Fujin)",
         "lvMin": 1,
-        "lvMax": 29,
-        "hpMin": 400,
-        "hpMax": 11600,
-        "ap": 10,
+        "lvMax": 44,
+        "hpMin": 5400,
+        "hpMax": 22600,
+        "ap": 12,
         "exp": 0,
         "lvUp": false,
         "cards": {
@@ -17069,13 +17069,14 @@
         "drawMagic": [
           "Thunder",
           "Thundara",
+          "Thundaga",
           "Shell",
           "Protect"
         ],
-        "mug": "2x Str Up",
-        "drop": "Str Up",
+        "mug": "Power Wrist",
+        "drop": "3x–6x Str Up",
         "cardDrop": null,
-        "scan": "Fought alongside Fujin in Balamb. Same stats as solo fight. Gains Raijin Special attack."
+        "scan": "Second encounter in Lunatic Pandora alongside Fujin. Can cast Aura on himself for doubled attack."
       },
       {
         "id": "enemy-seifer-2",
@@ -17351,6 +17352,156 @@
         "drop": null,
         "cardDrop": null,
         "scan": "Lower appendage of final Ultimecia. Draws and casts Apocalypse against the party. Does not act independently."
+      },
+      {
+        "id": "enemy-seifer-4",
+        "name": "Seifer (Lunatic Pandora)",
+        "lvMin": 1,
+        "lvMax": 45,
+        "hpMin": 3700,
+        "hpMax": 34500,
+        "ap": 40,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Blizzard",
+          "Blizzara",
+          "Blizzaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Aura"
+        ],
+        "mug": "Hero / Holy War",
+        "drop": "Hero / Holy War",
+        "cardDrop": null,
+        "scan": "Fourth and final Seifer fight in Lunatic Pandora. Now carries Aura magic. Uses Bloodfest and Flare at low HP. Mug for Holy War."
+      },
+      {
+        "id": "enemy-sacred",
+        "name": "Sacred",
+        "lvMin": 1,
+        "lvMax": 75,
+        "hpMin": 578,
+        "hpMax": 27218,
+        "ap": 20,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "wind": "weak",
+          "poison": "weak",
+          "earth": "immune"
+        },
+        "drawMagic": [
+          "Shell",
+          "Protect",
+          "Berserk",
+          "Life"
+        ],
+        "mug": null,
+        "drop": "8x G-Hi-Potion",
+        "cardDrop": null,
+        "scan": "Encountered twice in the Tomb of the Unknown King. Uses Earth attacks with Minotaur. Float prevents their HP regen combo (Mad Cow Special)."
+      },
+      {
+        "id": "enemy-fujin-2",
+        "name": "Fujin (Lunatic Pandora)",
+        "lvMin": 1,
+        "lvMax": 44,
+        "hpMin": 5300,
+        "hpMax": 18200,
+        "ap": 8,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "wind": "absorb"
+        },
+        "drawMagic": [
+          "Aero",
+          "Cure",
+          "Cura",
+          "Curaga",
+          "Life",
+          "Full-Life",
+          "Tornado"
+        ],
+        "mug": "2x Megalixir",
+        "drop": "Megalixir",
+        "cardDrop": null,
+        "scan": "Second Fujin fight in Lunatic Pandora. Now casts Meteor, Confuse, Pain, Slow, Haste and Regen in addition to Wind spells."
+      },
+      {
+        "id": "enemy-ufo",
+        "name": "UFO?",
+        "lvMin": 1,
+        "lvMax": 100,
+        "hpMin": 121,
+        "hpMax": 12100,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Demi"
+        ],
+        "mug": null,
+        "drop": "Aegis Amulet (5th encounter only)",
+        "cardDrop": null,
+        "scan": "UFO spotted in 5 locations across the world. HP = (level+10)². The 5th encounter triggers the PuPu sidequest. Defeat to claim Aegis Amulet then fight PuPu."
+      },
+      {
+        "id": "enemy-pupu",
+        "name": "PuPu",
+        "lvMin": 1,
+        "lvMax": 100,
+        "hpMin": 10,
+        "hpMax": 10,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Blizzard",
+          "Blizzara",
+          "Blizzaga",
+          "Cure",
+          "Cura",
+          "Curaga"
+        ],
+        "mug": null,
+        "drop": "Accelerator (if killed)",
+        "cardDrop": "PuPu (feed 5x Elixir)",
+        "scan": "Tiny alien found on Alcauld Plains after all 5 UFO? encounters. HP is always 10. Feed 5x Elixir to obtain the rare PuPu Card instead of fighting. Killing drops Accelerator."
       }
     ]
   }
