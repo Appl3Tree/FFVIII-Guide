@@ -58,7 +58,6 @@ const CHAR_COLORS: Record<string, 'teal' | 'amber' | 'indigo' | 'emerald' | 'sla
 
 function ItemCard({ item }: { item: Item }) {
   const [open, setOpen] = useState(false)
-  const color = SECTION_COLORS[item.section] ?? 'slate'
   const hasDetail = !!(item.obtain || item.refineFrom.length || item.refineTo.length)
 
   return (
