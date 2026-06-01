@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Search, X, BookOpen, AlertTriangle, Trophy, CreditCard, Sparkles, FlaskConical, Package, Sword, Skull } from 'lucide-react'
+import { Search, X, BookOpen, AlertTriangle, Trophy, CreditCard, Sparkles, FlaskConical, Package, Sword, Skull, Zap } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { SearchResult } from '../../hooks/useSearch'
 
@@ -9,6 +9,7 @@ const typeIcons: Record<SearchResult['type'], React.ReactNode> = {
   achievement: <Trophy size={14} />,
   card:        <CreditCard size={14} />,
   gf:          <Sparkles size={14} />,
+  ability:     <Zap size={14} />,
   refinement:  <FlaskConical size={14} />,
   item:        <Package size={14} />,
   weapon:      <Sword size={14} />,
@@ -21,6 +22,7 @@ const typeColors: Record<SearchResult['type'], string> = {
   achievement: 'text-yellow-400',
   card:        'text-indigo-400',
   gf:          'text-violet-400',
+  ability:     'text-sky-300',
   refinement:  'text-emerald-400',
   item:        'text-sky-400',
   weapon:      'text-rose-400',

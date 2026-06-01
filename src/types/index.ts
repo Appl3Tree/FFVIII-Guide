@@ -156,4 +156,4 @@ export interface TrackerState {
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 
-export type ViewMode = 'guide' | 'checklist' | 'cards' | 'gfs' | 'refinement' | 'items' | 'bestiary'
+export type ViewMode = 'guide' | 'checklist' | 'cards' | 'gfs' | 'abilities' | 'refinement' | 'items' | 'bestiary'

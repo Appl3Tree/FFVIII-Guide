@@ -1,4 +1,4 @@
-import { BookOpen, CheckSquare, CreditCard, Sparkles, Search, FlaskConical, Package, Skull } from 'lucide-react'
+import { BookOpen, CheckSquare, CreditCard, Sparkles, Search, FlaskConical, Package, Skull, Zap } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { ViewMode } from '../../types'
 
@@ -12,8 +12,9 @@ const tabs: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
   { id: 'guide',       label: 'Guide',   icon: <BookOpen size={16} /> },
   { id: 'checklist',   label: 'Check',   icon: <CheckSquare size={16} /> },
   { id: 'cards',       label: 'Cards',   icon: <CreditCard size={16} /> },
-  { id: 'gfs',         label: 'GFs',     icon: <Sparkles size={16} /> },
-  { id: 'refinement',  label: 'Refine',  icon: <FlaskConical size={16} /> },
+  { id: 'gfs',         label: 'GFs',      icon: <Sparkles size={16} /> },
+  { id: 'abilities',   label: 'Abilities',icon: <Zap size={16} /> },
+  { id: 'refinement',  label: 'Refine',   icon: <FlaskConical size={16} /> },
   { id: 'items',       label: 'Items',   icon: <Package size={16} /> },
   { id: 'bestiary',    label: 'Bestiary',icon: <Skull size={16} /> },
 ]

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BookOpen, CheckSquare, CreditCard, Sparkles, Search, Menu, X, FlaskConical, Package, Skull } from 'lucide-react'
+import { BookOpen, CheckSquare, CreditCard, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
 import { useSearch } from './hooks/useSearch'
@@ -14,6 +14,7 @@ import { CardView } from './components/views/CardView'
 import { RefinementView } from './components/views/RefinementView'
 import { ItemsView } from './components/views/ItemsView'
 import { BestiaryView } from './components/views/BestiaryView'
+import { AbilitiesView } from './components/views/AbilitiesView'
 import type { MasterData, ViewMode } from './types'
 import masterDataRaw from './data/ff8_master.json'
 
@@ -28,6 +29,7 @@ const DESKTOP_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
   { id: 'checklist',   icon: <CheckSquare size={13} />,   label: 'Checklist' },
   { id: 'cards',       icon: <CreditCard size={13} />,    label: 'Cards' },
   { id: 'gfs',         icon: <Sparkles size={13} />,      label: 'GFs' },
+  { id: 'abilities',   icon: <Zap size={13} />,           label: 'Abilities' },
   { id: 'refinement',  icon: <FlaskConical size={13} />,  label: 'Refine' },
   { id: 'items',       icon: <Package size={13} />,       label: 'Items' },
   { id: 'bestiary',    icon: <Skull size={13} />,         label: 'Bestiary' },
@@ -86,6 +88,8 @@ export default function App() {
       setView('cards')
     } else if (result.type === 'gf') {
       setView('gfs')
+    } else if (result.type === 'ability') {
+      setView('abilities')
     } else if (result.type === 'refinement') {
       setView('refinement')
     } else if (result.type === 'item' || result.type === 'weapon') {
@@ -298,6 +302,9 @@ export default function App() {
 
       case 'items':
         return <ItemsView items={data.lookup.items} weapons={data.lookup.weapons} />
+
+      case 'abilities':
+        return <AbilitiesView gfs={data.lookup.gfs} />
 
       case 'bestiary':
         return <BestiaryView enemies={data.lookup.enemies} />

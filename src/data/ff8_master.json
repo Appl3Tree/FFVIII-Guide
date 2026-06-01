@@ -5,7 +5,7 @@
     "chapterCount": 43,
     "missableCount": 20,
     "itemCount": 198,
-    "weaponCount": 28
+    "weaponCount": 32
   },
   "chapters": [
     {
@@ -5551,12 +5551,6 @@
           },
           {
             "fromQty": 1,
-            "from": "Phoenix Pinion",
-            "toQty": 100,
-            "to": "Firaga"
-          },
-          {
-            "fromQty": 1,
             "from": "Phoenix Spirit",
             "toQty": 100,
             "to": "Firaga"
@@ -5606,12 +5600,6 @@
             "fromQty": 1,
             "from": "Whisper",
             "toQty": 50,
-            "to": "Curaga"
-          },
-          {
-            "fromQty": 1,
-            "from": "Healing Mail",
-            "toQty": 20,
             "to": "Curaga"
           },
           {
@@ -5741,12 +5729,6 @@
           },
           {
             "fromQty": 1,
-            "from": "Aegis Amulet",
-            "toQty": 100,
-            "to": "Haste"
-          },
-          {
-            "fromQty": 1,
             "from": "Accelerator",
             "toQty": 100,
             "to": "Haste"
@@ -5825,7 +5807,7 @@
           {
             "fromQty": 1,
             "from": "Ochu Tentacle",
-            "toQty": 30,
+            "toQty": 20,
             "to": "Blind"
           },
           {
@@ -5927,12 +5909,6 @@
             "fromQty": 1,
             "from": "Dragon Fang",
             "toQty": 20,
-            "to": "Esuna"
-          },
-          {
-            "fromQty": 1,
-            "from": "Remedy",
-            "toQty": 5,
             "to": "Esuna"
           },
           {
@@ -6958,6 +6934,18 @@
             "from": "Shaman Stone",
             "toQty": 1,
             "to": "Rosetta Stone"
+          },
+          {
+            "from": "Aegis Amulet",
+            "fromQty": 10,
+            "to": "Giant's Ring",
+            "toQty": 1
+          },
+          {
+            "from": "Luck-J Scroll",
+            "fromQty": 2,
+            "to": "Luck Up",
+            "toQty": 1
           }
         ]
       },
@@ -7797,7 +7785,7 @@
         "buy": null,
         "sell": 100,
         "useDesc": "Restores 400 HP; One Target",
-        "obtain": "",
+        "obtain": "Refine 3x Potion (Med LV Up)",
         "refineFrom": [
           "Potion [3:1] (Med LV Up)"
         ],
@@ -7829,7 +7817,7 @@
         "buy": null,
         "sell": 500,
         "useDesc": "Restores 2000 HP; One Target",
-        "obtain": "",
+        "obtain": "Refine 3x Hi-Potion (Med LV Up)",
         "refineFrom": [
           "Hi-Potion [3:1] (Med LV Up)"
         ],
@@ -7934,7 +7922,7 @@
         "buy": null,
         "sell": 5000,
         "useDesc": "Restores Max HP, removes all bad statuses, All Targets",
-        "obtain": "",
+        "obtain": "Refine 1x Doc's Code or 1x Med Kit (Forbid Med-RF); Refine 10x Elixir (Med LV Up)",
         "refineFrom": [
           "Doc's Code [1:1] (Forbid Med-RF)",
           "Med Kit [1:1] (Forbid Med-RF)",
@@ -8080,7 +8068,7 @@
         "buy": null,
         "sell": 5000,
         "useDesc": "Grants Invincibility; One Target",
-        "obtain": "",
+        "obtain": "Refine 10x Hero-trial (Med LV Up); Refine 1x Laguna Card (Card Mod)",
         "refineFrom": [
           "Hero-trial [10:1] (Med LV Up)",
           "Laguna Card [1:100] (Card Mod)"
@@ -8096,7 +8084,7 @@
         "buy": null,
         "sell": 5,
         "useDesc": "50% chance of granting Invincibility Status; All Targets",
-        "obtain": "",
+        "obtain": "Refine 10x Hero (Med LV Up)",
         "refineFrom": [
           "Hero [10:1] (Med LV Up)"
         ],
@@ -8111,7 +8099,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Grants Invincibility; All Targets",
-        "obtain": "",
+        "obtain": "Refine 10x Holy War-trial (Med LV Up); Refine 1x Gilgamesh Card (Card Mod)",
         "refineFrom": [
           "Holy War-trial [10:1] (Med LV Up)",
           "Gilgamesh Card [1:10] (Card Mod)"
@@ -8379,7 +8367,7 @@
         "buy": null,
         "sell": 250,
         "useDesc": "Restores 1000 HP to All GF's",
-        "obtain": "",
+        "obtain": "Refine 1x Healing Ring (GFRecov Med-RF); Refine Propagator or Sphinxara Card (Card Mod)",
         "refineFrom": [
           "Healing Ring [1:20] (GF Recov Med-RF)",
           "Propagator Card [1:1] (Card Mod)",
@@ -8415,7 +8403,7 @@
         "buy": null,
         "sell": 25,
         "useDesc": "Allows you to change a GF's name",
-        "obtain": "",
+        "obtain": "Refine 1x Catoblepas Card (Card Mod)",
         "refineFrom": [
           "Catoblepas Card [1:1] (Card Mod)"
         ],
@@ -8446,7 +8434,7 @@
         "buy": 10000,
         "sell": 2500,
         "useDesc": "Teaches GF the HP-J Ability",
-        "obtain": "Buy from Timber Pet Shop (Familiar) But from Esthar Pet Shop",
+        "obtain": "Buy from Timber Pet Shop (Familiar) Buy from Esthar Pet Shop",
         "refineFrom": [
           "HP Up [2:1] (GF Abl Med-RF)"
         ],
@@ -8461,7 +8449,7 @@
         "buy": 10000,
         "sell": 2500,
         "useDesc": "Teaches GF the Str-J Ability",
-        "obtain": "Buy from Timber Pet Shop (Familiar) But from Esthar Pet Shop",
+        "obtain": "Buy from Timber Pet Shop (Familiar) Buy from Esthar Pet Shop",
         "refineFrom": [
           "Str Up [2:1] (GF Abl Med-RF)"
         ],
@@ -8476,7 +8464,7 @@
         "buy": 10000,
         "sell": 2500,
         "useDesc": "Teaches GF the Vit-J Ability",
-        "obtain": "Buy from Timber Pet Shop (Familiar) But from Esthar Pet Shop",
+        "obtain": "Buy from Timber Pet Shop (Familiar) Buy from Esthar Pet Shop",
         "refineFrom": [
           "Vit Up [2:1] (GF Abl Med-RF)"
         ],
@@ -8491,7 +8479,7 @@
         "buy": 10000,
         "sell": 2500,
         "useDesc": "Teaches GF the Mag-J Ability",
-        "obtain": "Buy from Timber Pet Shop (Familiar) But from Esthar Pet Shop",
+        "obtain": "Buy from Timber Pet Shop (Familiar) Buy from Esthar Pet Shop",
         "refineFrom": [
           "Mag Up [2:1] (GF Abl Med-RF)"
         ],
@@ -8506,7 +8494,7 @@
         "buy": 10000,
         "sell": 2500,
         "useDesc": "Teaches GF the Spr-J Ability",
-        "obtain": "Buy from Timber Pet Shop (Familiar) But from Esthar Pet Shop",
+        "obtain": "Buy from Timber Pet Shop (Familiar) Buy from Esthar Pet Shop",
         "refineFrom": [
           "Spr Up [2:1] (GF Abl Med-RF)"
         ],
@@ -8536,7 +8524,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Luck-J Ability",
-        "obtain": "",
+        "obtain": "Refine 2x Luck Up or 1x Dark Matter (GFAbl Med-RF)",
         "refineFrom": [
           "Luck Up [2:1] (GF Abl Med-RF)",
           "Dark Matter [1:1] (GF Abl Med-RF)"
@@ -8567,7 +8555,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Elem-Atk-J Ability",
-        "obtain": "",
+        "obtain": "Refine 20x Samantha Soul (GFAbl Med-RF); Refine 1x Ifrit Card (Card Mod)",
         "refineFrom": [
           "Samantha Soul [20:1] (GF Abl Med-RF)",
           "Ifrit Card [1:3] (Card Mod)"
@@ -8583,7 +8571,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Elem-Defx4 Ability",
-        "obtain": "",
+        "obtain": "Refine 5x Diamond Armor (GFAbl Med-RF); Refine 1x Selphie Card (Card Mod)",
         "refineFrom": [
           "Diamond Armor [5:1] (GF Abl Med-RF)",
           "Selphie Card [1:3] (Card Mod)"
@@ -8599,7 +8587,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the ST-Atk-J Ability",
-        "obtain": "",
+        "obtain": "Refine 20x Royal Crown (GFAbl Med-RF); Refine 1x Siren Card (Card Mod)",
         "refineFrom": [
           "Royal Crown [20:1] (GF Abl Med-RF)",
           "Siren Card [1:3] (Card Mod)"
@@ -8706,7 +8694,7 @@
         "buy": null,
         "sell": 1250,
         "useDesc": "Teaches GF the Card Ability",
-        "obtain": "",
+        "obtain": "Refine 5x Shumi Tribe Card (Card Mod)",
         "refineFrom": [
           "Shumi Tribe Card [5:1] (Card Mod)"
         ],
@@ -8739,7 +8727,7 @@
         "buy": null,
         "sell": 2500,
         "useDesc": "Teaches GF the Revive Ability",
-        "obtain": "",
+        "obtain": "Refine 20x Phoenix Pinion (GFAbl Med-RF); Refine 1x Phoenix Card (Card Mod)",
         "refineFrom": [
           "Phoenix Pinion [20:1] (GF Abl Med-RF)",
           "Phoenix Card [1:3] (Card Mod)"
@@ -8758,7 +8746,7 @@
         "buy": null,
         "sell": 2500,
         "useDesc": "Teaches GF the Treatment Ability",
-        "obtain": "",
+        "obtain": "Refine 100x Dragon Fang (GFAbl Med-RF)",
         "refineFrom": [
           "Dragon Fang [100:1] (GF Abl Med-RF)"
         ],
@@ -8871,7 +8859,7 @@
         "buy": null,
         "sell": 500,
         "useDesc": "Teaches GF the SumMag+40% Ability",
-        "obtain": "",
+        "obtain": "Refine 50x Energy Crystal (GFAbl Med-RF); Refine 1x Quistis Card (Card Mod)",
         "refineFrom": [
           "Energy Crystal [50:1] (GF Abl Med-RF)",
           "Quistis Card [1:3] (Card Mod)"
@@ -8904,7 +8892,7 @@
         "buy": null,
         "sell": 125,
         "useDesc": "Teaches GF the GFHP+20% Ability",
-        "obtain": "Steal from Lvl20+ Snow Lion (Rare)",
+        "obtain": "Stolen from Lvl20+ Snow Lion (rare); Refine 5x Gold Armor (reverse: GFAbl Med-RF)",
         "refineFrom": [
           "---"
         ],
@@ -8936,7 +8924,7 @@
         "buy": null,
         "sell": 500,
         "useDesc": "Teaches GF the GFHP+40% Ability",
-        "obtain": "",
+        "obtain": "Refine 5x Gold Armor (GFAbl Med-RF); Refine 1x Seifer Card (Card Mod)",
         "refineFrom": [
           "Seifer Card [1:3] (Card Mod)",
           "Gold Armor [5:1] (GF Abl Med-RF)"
@@ -8988,7 +8976,7 @@
         "buy": null,
         "sell": 7500,
         "useDesc": "Teaches GF the HP+80% Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Giant's Ring (GFAbl Med-RF); Refine 1x Ward Card (Card Mod)",
         "refineFrom": [
           "Giant's Ring [10:1] (GF Abl Med-RF)",
           "Ward Card [1:3] (Card Mod)"
@@ -9035,7 +9023,7 @@
         "buy": null,
         "sell": 7500,
         "useDesc": "Teaches GF the Str+60% Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Power Wrist (GFAbl Med-RF); Refine 1x Zell Card (Card Mod)",
         "refineFrom": [
           "Power Wrist [10:1] (GF Abl Med-RF)",
           "Zell Card [1:3] (Card Mod)"
@@ -9133,7 +9121,7 @@
         "buy": null,
         "sell": 7500,
         "useDesc": "Teaches GF the Spr+60% Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Force Armlet (GFAbl Med-RF); Refine 1x Rinoa Card (Card Mod)",
         "refineFrom": [
           "Force Armlet [10:1] (GF Abl Med-RF)",
           "Rinoa Card [1:3] (Card Mod)"
@@ -9181,7 +9169,7 @@
         "buy": null,
         "sell": 7500,
         "useDesc": "Teaches GF the Mag+60% Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Hypno Crown (GFAbl Med-RF); Refine 1x Edea Card (Card Mod)",
         "refineFrom": [
           "Hypno Crown [10:1] (GF Abl Med-RF)",
           "Edea Card [1:3] (Card Mod)"
@@ -9215,7 +9203,7 @@
         "buy": null,
         "sell": 7500,
         "useDesc": "Teaches GF the Spd+40% Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Jet Engine (GFAbl Med-RF); Refine 1x Irvine Card (Card Mod)",
         "refineFrom": [
           "Jet Engine [50:1] (GF Abl Med-RF)",
           "Irvine Card [1:3] (Card Mod)"
@@ -9249,7 +9237,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Teaches GF the Auto-Protect Ability",
-        "obtain": "",
+        "obtain": "Refine 20x Adamantine (GFAbl Med-RF)",
         "refineFrom": [
           "Adamantine [20:1] (GF Abl Med-RF)"
         ],
@@ -9264,7 +9252,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Teaches GF the Auto-Reflect Ability",
-        "obtain": "",
+        "obtain": "Refine 100x Dragon Skin (GFAbl Med-RF); Refine 1x Carbuncle Card (Card Mod)",
         "refineFrom": [
           "Dragon Skin [100:1] (GF Abl Med-RF)",
           "Carbuncle Card [1:3] (Card Mod)"
@@ -9281,7 +9269,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Auto-Haste Ability",
-        "obtain": "",
+        "obtain": "Refine 100x Lightweight (GFAbl Med-RF); Refine 1x Kiros Card (Card Mod)",
         "refineFrom": [
           "Lightweight [100:1] (GF Abl Med-RF)",
           "Kiros Card [1:3] (Card Mod)"
@@ -9297,7 +9285,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Counter Ability",
-        "obtain": "",
+        "obtain": "Refine 2x Glow Curtain (GFAbl Med-RF); Refine 1x Eden Card (Card Mod)",
         "refineFrom": [
           "Glow Curtain [2:1] (GF Abl Med-RF)",
           "Edea Card [1:3] (Card Mod)"
@@ -9313,7 +9301,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Teaches GF the Cover Ability",
-        "obtain": "",
+        "obtain": "Refine 5x Holy War (GFAbl Med-RF)",
         "refineFrom": [
           "Holy War [5:1] (GF Abl Med-RF)"
         ],
@@ -9328,7 +9316,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Teaches GF the Med Data Ability",
-        "obtain": "",
+        "obtain": "Refine 10x Elixir (GFAbl Med-RF); Refine 1x Leviathan Card (Card Mod)",
         "refineFrom": [
           "Elixir [10:1] (GF Abl Med-RF)",
           "Leviathan Card [1:3] (Card Mod)"
@@ -9344,7 +9332,7 @@
         "buy": null,
         "sell": 10000,
         "useDesc": "Teaches GF the Kamikaze Ability",
-        "obtain": "",
+        "obtain": "Refine 100x Cactus Thorn (GFAbl Med-RF)",
         "refineFrom": [],
         "refineTo": [
           "Spd Up [1:1] (Forbid Med-RF)"
@@ -9357,7 +9345,7 @@
         "buy": null,
         "sell": 12500,
         "useDesc": "Teaches GF the Expendx3-1 Ability",
-        "obtain": "",
+        "obtain": "Refine 1x Squall Card (Card Mod)",
         "refineFrom": [
           "Squall Card [1:3] (Card Mod)"
         ],
@@ -9963,7 +9951,7 @@
         "buy": null,
         "sell": 100,
         "useDesc": "Teaches Quistis Bad Breath",
-        "obtain": "",
+        "obtain": "Dropped by Malboro (common); Steal from Malboro (rare)",
         "refineFrom": [
           "Malboro Card [4:1] (Card Mod)"
         ],
@@ -10029,7 +10017,7 @@
         "buy": null,
         "sell": 200,
         "useDesc": "Teaches Quistis Ray Bomb",
-        "obtain": "",
+        "obtain": "Dropped by GIM47N; Stolen from Lvl30+ Blitz (rare)",
         "refineFrom": [
           "---"
         ],
@@ -10044,7 +10032,7 @@
         "buy": null,
         "sell": 250,
         "useDesc": "Teaches Quistis Shockwave Pulsar",
-        "obtain": "",
+        "obtain": "Refine 100x Curse Spike (Tool-RF); Dropped by Master Tonberry",
         "refineFrom": [
           "Curse Spike [100:1] (Tool-RF)*",
           "*Note: Siren must be Lvl 100"
@@ -10316,7 +10304,7 @@
         "section": "Compatibility",
         "buy": null,
         "sell": 75,
-        "useDesc": "Used for refinement",
+        "useDesc": "Raises compatibility with Odin",
         "obtain": "Steal from Forbidden",
         "refineFrom": [
           "Odin Card [1:100] (Card Mod)"
@@ -10604,16 +10592,13 @@
         "section": "Stat Boosting",
         "buy": null,
         "sell": 250,
-        "useDesc": "Raises compatibility with all GF's for one char. by 20.2",
+        "useDesc": "Raises compatibility with all GFs for one character by 20",
         "obtain": "---",
         "refineFrom": [
           "Chubby Chocobo Card [1:100] (Card Mod)",
           "Shaman Stone [1:1] (Tool-RF)"
         ],
-        "refineTo": [
-          "---",
-          "|   Buy"
-        ]
+        "refineTo": []
       },
       {
         "id": "item-weapons-mon-1st",
@@ -11267,6 +11252,46 @@
         "hitBonus": 255,
         "price": 800,
         "weaponsMonthly": "Weapons Monthly 1st Issue"
+      },
+      {
+        "id": "weapon_hyperion",
+        "name": "Hyperion",
+        "type": "HYPERION",
+        "materials": [],
+        "strBonus": 12,
+        "hitBonus": 255,
+        "price": 0,
+        "weaponsMonthly": ""
+      },
+      {
+        "id": "weapon_machine_gun",
+        "name": "Machine Gun",
+        "type": "MACHINE GUN",
+        "materials": [],
+        "strBonus": 14,
+        "hitBonus": 103,
+        "price": 0,
+        "weaponsMonthly": ""
+      },
+      {
+        "id": "weapon_katal",
+        "name": "Katal",
+        "type": "KATAL",
+        "materials": [],
+        "strBonus": 13,
+        "hitBonus": 102,
+        "price": 0,
+        "weaponsMonthly": ""
+      },
+      {
+        "id": "weapon_harpoon",
+        "name": "Harpoon",
+        "type": "HARPOON",
+        "materials": [],
+        "strBonus": 16,
+        "hitBonus": 98,
+        "price": 0,
+        "weaponsMonthly": ""
       }
     ],
     "enemies": [
@@ -16728,6 +16753,604 @@
         "drop": "Steel Orb, Steel Pipe, Steel Pipe, Steel Orb",
         "cardDrop": "Wendigo",
         "scan": "A strong monster, but not good at using magic. Uses powerful physical attacks relying on its strength instead."
+      },
+      {
+        "id": "enemy-ifrit",
+        "name": "Ifrit",
+        "lvMin": 6,
+        "lvMax": 6,
+        "hpMin": 1068,
+        "hpMax": 1068,
+        "ap": 20,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "fire": "absorb",
+          "ice": "weak"
+        },
+        "drawMagic": [
+          "Fire",
+          "Cure",
+          "Scan"
+        ],
+        "mug": null,
+        "drop": "3x–6x G-Returner",
+        "cardDrop": "Ifrit",
+        "scan": "Fire Cavern boss. GF junction target. Immune to Fire, weak to Ice. Fixed Lv 6."
+      },
+      {
+        "id": "enemy-biggs-1",
+        "name": "Biggs",
+        "lvMin": 1,
+        "lvMax": 10,
+        "hpMin": 467,
+        "hpMax": 705,
+        "ap": 4,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Thunder",
+          "Blizzard",
+          "Esuna"
+        ],
+        "mug": "3x Elixir",
+        "drop": "2x Elixir",
+        "cardDrop": null,
+        "scan": "Galbadian soldier. Fought alongside Wedge in Dollet. Mug for Elixirs."
+      },
+      {
+        "id": "enemy-wedge-1",
+        "name": "Wedge",
+        "lvMin": 1,
+        "lvMax": 10,
+        "hpMin": 416,
+        "hpMax": 640,
+        "ap": 4,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Thunder",
+          "Blizzard",
+          "Cure"
+        ],
+        "mug": "3x Cottage",
+        "drop": "2x Cottage",
+        "cardDrop": null,
+        "scan": "Galbadian soldier. Fought alongside Biggs in Dollet. Mug for Cottages."
+      },
+      {
+        "id": "enemy-x-atm092",
+        "name": "X-ATM092",
+        "lvMin": 1,
+        "lvMax": 11,
+        "hpMin": 5072,
+        "hpMax": 5872,
+        "ap": 50,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "thunder": "weak"
+        },
+        "drawMagic": [
+          "Fire",
+          "Blizzard",
+          "Cure",
+          "Protect"
+        ],
+        "mug": "2x Elixir",
+        "drop": "Power Wrist / Orihalcon / Hypno Crown / Force Armlet (on destruction)",
+        "cardDrop": null,
+        "scan": "Spider-type Galbadian war machine. Pursues party in Dollet. Regenerates HP; must be destroyed at end of escape."
+      },
+      {
+        "id": "enemy-seifer-1",
+        "name": "Seifer (Deling City)",
+        "lvMin": 1,
+        "lvMax": 20,
+        "hpMin": 176,
+        "hpMax": 1076,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Cure",
+          "Cura",
+          "Life"
+        ],
+        "mug": "Hero (6.25% chance)",
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Rival SeeD turned sorceress knight. Solo fight before Edea in Deling City parade. Draw Life for stocking."
+      },
+      {
+        "id": "enemy-edea-1",
+        "name": "Edea (Deling City)",
+        "lvMin": 1,
+        "lvMax": 20,
+        "hpMin": 1300,
+        "hpMax": 7000,
+        "ap": 20,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Cura",
+          "Dispel",
+          "Life",
+          "Double"
+        ],
+        "mug": "Elixir",
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Sorceress possessed by Ultimecia. First major boss. Casts Limit Break Ice Strike at low HP. No GF available here."
+      },
+      {
+        "id": "enemy-bgh251f2-1",
+        "name": "BGH251F2 (Missile Base)",
+        "lvMin": 1,
+        "lvMax": 22,
+        "hpMin": 4200,
+        "hpMax": 8400,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "thunder": "weak"
+        },
+        "drawMagic": [
+          "Shell",
+          "Protect",
+          "Stop"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Galbadian mobile battle fortress. Missile Base boss. AP 0, no drops. Use Thunder."
+      },
+      {
+        "id": "enemy-norg-pod",
+        "name": "NORG Pod",
+        "lvMin": 1,
+        "lvMax": 27,
+        "hpMin": 2000,
+        "hpMax": 2000,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Cure",
+          "Cura"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Protective shell surrounding NORG. Fixed HP 2000. No attacks. Destroy both orbs to expose NORG."
+      },
+      {
+        "id": "enemy-bgh251f2-2",
+        "name": "BGH251F2 (FH)",
+        "lvMin": 1,
+        "lvMax": 28,
+        "hpMin": 5100,
+        "hpMax": 7800,
+        "ap": 20,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "thunder": "weak"
+        },
+        "drawMagic": [
+          "Shell",
+          "Protect",
+          "Stop"
+        ],
+        "mug": "Adamantine",
+        "drop": "8x Running Fire / 8x Missile",
+        "cardDrop": null,
+        "scan": "Second encounter with Galbadian battle fortress at Fishermans Horizon. Mug for Adamantine."
+      },
+      {
+        "id": "enemy-raijin-1",
+        "name": "Raijin (solo)",
+        "lvMin": 1,
+        "lvMax": 29,
+        "hpMin": 400,
+        "hpMax": 11600,
+        "ap": 10,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "thunder": "absorb"
+        },
+        "drawMagic": [
+          "Thunder",
+          "Thundara",
+          "Shell",
+          "Protect"
+        ],
+        "mug": "2x Str Up",
+        "drop": "Str Up",
+        "cardDrop": null,
+        "scan": "Seifer's ally. Solo fight in Balamb with 2x G-Soldier. Will not attack female-only parties."
+      },
+      {
+        "id": "enemy-fujin",
+        "name": "Fujin",
+        "lvMin": 1,
+        "lvMax": 29,
+        "hpMin": 300,
+        "hpMax": 8700,
+        "ap": 10,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "wind": "absorb"
+        },
+        "drawMagic": [
+          "Aero",
+          "Cura",
+          "Life",
+          "Pandemona"
+        ],
+        "mug": "Megalixir",
+        "drop": "Megalixir + Combat King 002",
+        "cardDrop": null,
+        "scan": "Seifer's ally. Fought with Raijin in Balamb. Draw Pandemona GF here if missed. Drop: Combat King 002."
+      },
+      {
+        "id": "enemy-raijin-2",
+        "name": "Raijin (with Fujin)",
+        "lvMin": 1,
+        "lvMax": 29,
+        "hpMin": 400,
+        "hpMax": 11600,
+        "ap": 10,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {
+          "thunder": "absorb"
+        },
+        "drawMagic": [
+          "Thunder",
+          "Thundara",
+          "Shell",
+          "Protect"
+        ],
+        "mug": "2x Str Up",
+        "drop": "Str Up",
+        "cardDrop": null,
+        "scan": "Fought alongside Fujin in Balamb. Same stats as solo fight. Gains Raijin Special attack."
+      },
+      {
+        "id": "enemy-seifer-2",
+        "name": "Seifer (Gardens)",
+        "lvMin": 1,
+        "lvMax": 31,
+        "hpMin": 1300,
+        "hpMax": 10300,
+        "ap": 20,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Dispel",
+          "Haste"
+        ],
+        "mug": "8x Mega Phoenix",
+        "drop": "8x Mega-Potion",
+        "cardDrop": null,
+        "scan": "Battle of the Gardens solo fight. Stronger than before; uses Fire Cross limit break."
+      },
+      {
+        "id": "enemy-seifer-3",
+        "name": "Seifer (with Edea)",
+        "lvMin": 1,
+        "lvMax": 32,
+        "hpMin": 1200,
+        "hpMax": 7400,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Dispel",
+          "Haste"
+        ],
+        "mug": "Hero / Holy War",
+        "drop": "Hero / Holy War",
+        "cardDrop": null,
+        "scan": "Tag-team fight with Edea at Galbadia Garden. AP 0 for this fight. Mug/Drop: Hero or Holy War."
+      },
+      {
+        "id": "enemy-edea-2",
+        "name": "Edea (Galbadia Garden)",
+        "lvMin": 1,
+        "lvMax": 32,
+        "hpMin": 500,
+        "hpMax": 16000,
+        "ap": 50,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Blizzard",
+          "Blizzara",
+          "Blizzaga",
+          "Demi",
+          "Esuna",
+          "Alexander"
+        ],
+        "mug": "Royal Crown",
+        "drop": "Force Armlet",
+        "cardDrop": null,
+        "scan": "Second Edea fight. Draw Alexander GF here — last reliable chance until Catoblepas."
+      },
+      {
+        "id": "enemy-red-giant",
+        "name": "Red Giant",
+        "lvMin": 1,
+        "lvMax": 52,
+        "hpMin": 30000,
+        "hpMax": 30000,
+        "ap": 30,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Demi",
+          "Pandemona"
+        ],
+        "mug": null,
+        "drop": "Diamond Armor",
+        "cardDrop": null,
+        "scan": "Ultimecia Castle dungeon boss. Fixed HP 30000. Extreme Vit/Spr — junction Meltdown or use Demi. Draw Pandemona if missed."
+      },
+      {
+        "id": "enemy-sphinxaur",
+        "name": "Sphinxaur",
+        "lvMin": 1,
+        "lvMax": 50,
+        "hpMin": 10000,
+        "hpMax": 10000,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Cure",
+          "Cura",
+          "Curaga"
+        ],
+        "mug": "Elixir",
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Ultimecia Castle entrance area boss. Fixed HP 10000. AP 0. Transforms into Sphinxara when HP depleted."
+      },
+      {
+        "id": "enemy-sphinxara",
+        "name": "Sphinxara",
+        "lvMin": 1,
+        "lvMax": 100,
+        "hpMin": 10000,
+        "hpMax": 10000,
+        "ap": 30,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Fire",
+          "Fira",
+          "Firaga",
+          "Thunder",
+          "Thundara",
+          "Thundaga",
+          "Blizzard",
+          "Blizzara",
+          "Blizzaga",
+          "Cure",
+          "Cura",
+          "Curaga"
+        ],
+        "mug": null,
+        "drop": "Megalixir",
+        "cardDrop": null,
+        "scan": "Second phase of Sphinxaur. Fixed HP 10000. AP 30. Uses Lvl 5 Death and other level-based attacks."
+      },
+      {
+        "id": "enemy-ultimecia-1",
+        "name": "Ultimecia (form 1)",
+        "lvMin": 1,
+        "lvMax": 65,
+        "hpMin": 4600,
+        "hpMax": 43000,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Haste",
+          "Slow",
+          "Reflect",
+          "Demi"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Final boss first form. Casts Apocalypse and Hell's Judgment. No GF junctions — party must use their own."
+      },
+      {
+        "id": "enemy-ultimecia-griever",
+        "name": "Ultimecia (Griever)",
+        "lvMin": 1,
+        "lvMax": 65,
+        "hpMin": 13050,
+        "hpMax": 176250,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Firaga",
+          "Thundaga",
+          "Blizzaga"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Ultimecia merged with Griever. Third final boss form. Uses Shockwave Pulsar. Difficult to stop."
+      },
+      {
+        "id": "enemy-ultimecia-final",
+        "name": "Ultimecia (final)",
+        "lvMin": 1,
+        "lvMax": 65,
+        "hpMin": 16500,
+        "hpMax": 278900,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Flare",
+          "Holy"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "True final boss main body. Uses Great Attractor and Sorceress combo attacks. Defeat to end game."
+      },
+      {
+        "id": "enemy-ultimecia-final-lower",
+        "name": "Ultimecia (appendage)",
+        "lvMin": 1,
+        "lvMax": 65,
+        "hpMin": 2300,
+        "hpMax": 21500,
+        "ap": 0,
+        "exp": 0,
+        "lvUp": false,
+        "cards": {
+          "common": null,
+          "rare": null
+        },
+        "elementals": {},
+        "drawMagic": [
+          "Apocalypse"
+        ],
+        "mug": null,
+        "drop": null,
+        "cardDrop": null,
+        "scan": "Lower appendage of final Ultimecia. Draws and casts Apocalypse against the party. Does not act independently."
       }
     ]
   }
