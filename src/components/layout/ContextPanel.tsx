@@ -77,7 +77,7 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem }: Pr
             <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-600">
               This Chapter
             </p>
-            <p className="text-xs text-slate-400 mt-0.5 truncate">{chapter.title}</p>
+            <p className="text-xs text-slate-400 mt-0.5 leading-relaxed break-words [overflow-wrap:anywhere]">{chapter.title}</p>
           </div>
           <div className="divide-y divide-slate-800/40 max-h-64 overflow-y-auto">
             {chapter.checkpoints.map(cp => {
@@ -99,7 +99,7 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem }: Pr
                         {cp.label}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-500 leading-tight line-clamp-2">{cp.description}</p>
+                    <p className="text-[10px] text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">{cp.description}</p>
                   </div>
                 </div>
               )

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BookOpen, CheckSquare, CreditCard, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap } from 'lucide-react'
+import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
 import { useSearch } from './hooks/useSearch'
@@ -9,6 +9,7 @@ import { BottomNav } from './components/layout/BottomNav'
 import { CommandPalette } from './components/ui/CommandPalette'
 import { GuideView } from './components/views/GuideView'
 import { ChecklistView } from './components/views/ChecklistView'
+import { SidequestView } from './components/views/SidequestView'
 import { GFView } from './components/views/GFView'
 import { CardView } from './components/views/CardView'
 import { RefinementView } from './components/views/RefinementView'
@@ -17,17 +18,31 @@ import { BestiaryView } from './components/views/BestiaryView'
 import { AbilitiesView } from './components/views/AbilitiesView'
 import type { MasterData, ViewMode } from './types'
 import masterDataRaw from './data/ff8_master.json'
+import { SIDEQUESTS } from './data/sidequests'
 
 const data = masterDataRaw as unknown as MasterData
+const VIEW_MODES: ViewMode[] = ['guide', 'checklist', 'sidequests', 'cards', 'gfs', 'abilities', 'refinement', 'items', 'bestiary']
+const initialChapterId =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('chapter')
+    : null
+const initialView =
+  typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('view')
+    : null
 
 const DISC_COLORS: Record<number, string> = {
   1: 'text-teal-400', 2: 'text-indigo-400', 3: 'text-violet-400', 4: 'text-amber-400',
 }
 
-const DESKTOP_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
+const DESKTOP_PRIMARY_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
   { id: 'guide',       icon: <BookOpen size={13} />,      label: 'Guide' },
   { id: 'checklist',   icon: <CheckSquare size={13} />,   label: 'Checklist' },
+  { id: 'sidequests',  icon: <Compass size={13} />,       label: 'Sidequests' },
   { id: 'cards',       icon: <CreditCard size={13} />,    label: 'Cards' },
+]
+
+const DESKTOP_MORE_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
   { id: 'gfs',         icon: <Sparkles size={13} />,      label: 'GFs' },
   { id: 'abilities',   icon: <Zap size={13} />,           label: 'Abilities' },
   { id: 'refinement',  icon: <FlaskConical size={13} />,  label: 'Refine' },
@@ -35,20 +50,43 @@ const DESKTOP_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
   { id: 'bestiary',    icon: <Skull size={13} />,         label: 'Bestiary' },
 ]
 
+const DESKTOP_FULL_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
+  ...DESKTOP_PRIMARY_TABS,
+  ...DESKTOP_MORE_TABS,
+]
+
 export default function App() {
-  const [view, setView] = useState<ViewMode>('guide')
+  const [view, setView] = useState<ViewMode>(
+    VIEW_MODES.includes(initialView as ViewMode) ? initialView as ViewMode : 'guide'
+  )
   const [activeChapterId, setActiveChapterId] = useState(
-    data.chapters.find(c => c.id === 'r0-about')?.id ?? data.chapters[0]?.id ?? ''
+    data.chapters.find(c => c.id === initialChapterId)?.id ??
+    data.chapters.find(c => c.id === 'r0-about')?.id ??
+    data.chapters[0]?.id ??
+    ''
   )
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [desktopMoreOpen, setDesktopMoreOpen] = useState(false)
 
   const tracker = useTracker()
-  const search = useSearch(data)
+  const search = useSearch(data, SIDEQUESTS)
 
   const activeChapterIdx = data.chapters.findIndex(c => c.id === activeChapterId)
   const activeChapter    = data.chapters[activeChapterIdx] ?? data.chapters[0]
   const prevChapter      = activeChapterIdx > 0 ? data.chapters[activeChapterIdx - 1] : null
   const nextChapter      = activeChapterIdx < data.chapters.length - 1 ? data.chapters[activeChapterIdx + 1] : null
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    params.set('chapter', activeChapterId)
+    if (view === 'guide') params.delete('view')
+    else params.set('view', view)
+
+    const query = params.toString()
+    const nextUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`
+    const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`
+    if (nextUrl !== currentUrl) window.history.replaceState(null, '', nextUrl)
+  }, [activeChapterId, view])
 
   // Cmd+K
   useEffect(() => {
@@ -61,6 +99,25 @@ export default function App() {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [search])
+
+  // Local-only render audit hook. This lets browser automation render every
+  // guide chapter directly without relying on scroll/keyboard timing.
+  useEffect(() => {
+    if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) return
+    const w = window as typeof window & {
+      __FF8_CHAPTERS__?: Array<{ id: string; title: string; disc: number }>
+      __FF8_SET_CHAPTER__?: (id: string) => void
+    }
+    w.__FF8_CHAPTERS__ = data.chapters.map(({ id, title, disc }) => ({ id, title, disc }))
+    w.__FF8_SET_CHAPTER__ = (id: string) => {
+      setActiveChapterId(id)
+      setView('guide')
+    }
+    return () => {
+      delete w.__FF8_CHAPTERS__
+      delete w.__FF8_SET_CHAPTER__
+    }
+  }, [])
 
   // ← / → arrow-key chapter navigation (guide view only, not while typing)
   useEffect(() => {
@@ -81,6 +138,8 @@ export default function App() {
     if (result.type === 'chapter') {
       setActiveChapterId(result.id)
       setView('guide')
+    } else if (result.type === 'sidequest') {
+      setView('sidequests')
     } else if (result.chapterId) {
       setActiveChapterId(result.chapterId)
       setView('guide')
@@ -92,6 +151,9 @@ export default function App() {
       setView('abilities')
     } else if (result.type === 'refinement') {
       setView('refinement')
+    } else if (result.type === 'magic') {
+      setActiveChapterId('r0-magic-reference')
+      setView('guide')
     } else if (result.type === 'item' || result.type === 'weapon') {
       setView('items')
     } else if (result.type === 'enemy') {
@@ -112,6 +174,11 @@ export default function App() {
 
   const navigateChapter = useCallback((id: string) => {
     setActiveChapterId(id)
+  }, [])
+
+  const selectView = useCallback((nextView: ViewMode) => {
+    setDesktopMoreOpen(false)
+    setView(nextView)
   }, [])
 
   const chapterProgress = useCallback((chapterId: string) => {
@@ -154,13 +221,62 @@ export default function App() {
         <div className="flex flex-col overflow-hidden">
           {/* Sticky header */}
           <header className="shrink-0 bg-slate-950/80 backdrop-blur-sm">
-            <div className="flex items-center gap-0 px-4 border-b border-slate-700/40">
-              {DESKTOP_TABS.map(tab => (
+            <div className="desktop-tabs-compact relative items-center gap-0 px-4 border-b border-slate-700/40">
+              {DESKTOP_PRIMARY_TABS.map(tab => (
                 <button
                   key={tab.id}
-                  onClick={() => setView(tab.id)}
+                  onClick={() => selectView(tab.id)}
                   className={cn(
-                    'relative flex items-center gap-1.5 px-3 py-2 text-xs transition-colors',
+                    'relative flex items-center gap-1.5 px-3 py-2 text-xs transition-colors whitespace-nowrap',
+                    view === tab.id
+                      ? 'text-teal-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-teal-400 after:rounded-t'
+                      : 'text-slate-500 hover:text-slate-300'
+                  )}
+                >
+                  {tab.icon}{tab.label}
+                </button>
+              ))}
+              <div className="relative">
+                <button
+                  onClick={() => setDesktopMoreOpen(open => !open)}
+                  className={cn(
+                    'relative flex items-center gap-1.5 px-3 py-2 text-xs transition-colors whitespace-nowrap',
+                    DESKTOP_MORE_TABS.some(tab => tab.id === view) || desktopMoreOpen
+                      ? 'text-teal-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-teal-400 after:rounded-t'
+                      : 'text-slate-500 hover:text-slate-300'
+                  )}
+                >
+                  <Ellipsis size={13} />
+                  More
+                </button>
+                {desktopMoreOpen && (
+                  <div className="absolute left-0 top-full z-30 mt-1 w-44 overflow-hidden rounded-lg border border-slate-700/70 bg-slate-950/95 shadow-2xl shadow-black/50">
+                    {DESKTOP_MORE_TABS.map(tab => (
+                      <button
+                        key={tab.id}
+                        onClick={() => selectView(tab.id)}
+                        className={cn(
+                          'flex w-full items-center gap-2 px-3 py-2 text-left text-xs transition-colors',
+                          view === tab.id
+                            ? 'bg-teal-950/30 text-teal-300'
+                            : 'text-slate-400 hover:bg-slate-900/80 hover:text-slate-200'
+                        )}
+                      >
+                        {tab.icon}
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="desktop-tabs-full items-center gap-0 px-4 border-b border-slate-700/40">
+              {DESKTOP_FULL_TABS.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => selectView(tab.id)}
+                  className={cn(
+                    'relative flex items-center gap-1.5 px-3 py-2 text-xs transition-colors whitespace-nowrap',
                     view === tab.id
                       ? 'text-teal-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-teal-400 after:rounded-t'
                       : 'text-slate-500 hover:text-slate-300'
@@ -176,7 +292,7 @@ export default function App() {
                   {activeChapter.disc === 0 ? 'Reference' : `Disc ${activeChapter.disc}`}
                 </span>
                 <span className="text-slate-700">·</span>
-                <span className="text-slate-400 truncate">{activeChapter.title}</span>
+                <span className="text-slate-400 leading-relaxed break-words [overflow-wrap:anywhere]">{activeChapter.title}</span>
               </div>
             )}
           </header>
@@ -205,7 +321,7 @@ export default function App() {
               <span className="text-slate-500 font-normal ml-1">Guide</span>
             </h1>
             {view === 'guide' && activeChapter && (
-              <p className={cn('text-[10px] truncate max-w-[220px]', activeChapter.disc === 0 ? 'text-sky-400' : DISC_COLORS[activeChapter.disc])}>
+              <p className={cn('text-[10px] leading-tight max-w-[260px] break-words [overflow-wrap:anywhere]', activeChapter.disc === 0 ? 'text-sky-400' : DISC_COLORS[activeChapter.disc])}>
                 {activeChapter.disc === 0 ? 'Reference' : `Disc ${activeChapter.disc}`} · {activeChapter.title}
               </p>
             )}
@@ -236,7 +352,10 @@ export default function App() {
           </div>
         )}
 
-        <main className="flex-1 overflow-y-auto px-4 py-4 pb-20">
+        <main
+          className="flex-1 overflow-y-auto px-4 pt-4"
+          style={{ paddingBottom: 'calc(6.5rem + env(safe-area-inset-bottom))' }}
+        >
           {renderView()}
         </main>
 
@@ -263,6 +382,11 @@ export default function App() {
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
             enemies={data.lookup.enemies}
+            magic={data.lookup.magic ?? []}
+            shops={data.lookup.shops ?? []}
+            junctions={data.lookup.junctions ?? []}
+            characters={data.lookup.characters ?? []}
+            sidequests={SIDEQUESTS}
             prevChapter={prevChapter}
             nextChapter={nextChapter}
             onNavigate={navigateChapter}
@@ -273,6 +397,16 @@ export default function App() {
         return (
           <ChecklistView
             data={data}
+            completedItems={tracker.state.completedItems}
+            onToggleItem={tracker.toggleItem}
+            onNavigateToChapter={navigateToChapter}
+          />
+        )
+
+      case 'sidequests':
+        return (
+          <SidequestView
+            sidequests={SIDEQUESTS}
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
             onNavigateToChapter={navigateToChapter}
@@ -304,7 +438,7 @@ export default function App() {
         return <ItemsView items={data.lookup.items} weapons={data.lookup.weapons} />
 
       case 'abilities':
-        return <AbilitiesView gfs={data.lookup.gfs} />
+        return <AbilitiesView gfs={data.lookup.gfs} abilities={data.lookup.abilities ?? []} abilitySections={data.lookup.abilitySections ?? []} />
 
       case 'bestiary':
         return <BestiaryView enemies={data.lookup.enemies} />

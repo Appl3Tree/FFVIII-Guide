@@ -75,6 +75,40 @@ input:focus, button:focus-visible {
   .callout-amber {
     @apply rounded-lg bg-amber-950/25 border-l-[3px] border-amber-500/70 px-4 py-3 space-y-1.5;
   }
+  .bottom-nav-compact {
+    display: flex;
+  }
+  .bottom-nav-full {
+    display: none;
+  }
+  .bottom-nav-compact-overlay {
+    display: block;
+  }
+  .desktop-tabs-compact {
+    display: none;
+  }
+  .desktop-tabs-full {
+    display: none;
+  }
+  @media (min-width: 560px) and (max-width: 1023.98px) {
+    .bottom-nav-compact,
+    .bottom-nav-compact-overlay {
+      display: none;
+    }
+    .bottom-nav-full {
+      display: flex;
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1159.98px) {
+    .desktop-tabs-compact {
+      display: flex;
+    }
+  }
+  @media (min-width: 1160px) {
+    .desktop-tabs-full {
+      display: flex;
+    }
+  }
 }
 
 /* Scrollbar */

@@ -1,15 +1,20 @@
 import { useState, useMemo } from 'react'
 import { cn } from '../../lib/utils'
-import type { GuardianForce } from '../../types'
+import type { Ability, AbilitySection, GuardianForce } from '../../types'
 
 // ─── Ability definitions ───────────────────────────────────────────────────────
-// Descriptions sourced from jegged.com/Games/Final-Fantasy-VIII/Abilities/
 
 type AbilityCategory = 'Junction' | 'Command' | 'Character' | 'GF' | 'Menu' | 'Party'
 
 interface AbilityDef {
   name: string
   desc: string
+  availableTo?: string
+  ap?: string
+  taughtBy?: string
+  detailPresent?: boolean
+  detailLineCount?: number
+  detailCharCount?: number
 }
 
 const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
@@ -35,18 +40,16 @@ const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
     { name: 'Ability x4',   desc: 'Equip up to 4 support abilities simultaneously.' },
   ],
   Command: [
+    { name: 'Attack',    desc: 'Native character command: attack with the equipped weapon; replaced when certain command abilities are equipped.' },
     { name: 'Magic',     desc: 'Cast magic spells from the character\'s stocked magic.' },
     { name: 'GF',        desc: 'Summon a junctioned Guardian Force.' },
     { name: 'Draw',      desc: 'Draw magic from enemies or draw points to stock or use immediately.' },
     { name: 'Item',      desc: 'Use items from the inventory.' },
     { name: 'Card',      desc: 'Attempt to convert a low-HP enemy into a Triple Triad card instead of defeating it.' },
-    { name: 'Mug',       desc: 'Steal an item from an enemy before attacking. Replaces the Attack command.' },
     { name: 'Absorb',    desc: 'Drain HP from an enemy.' },
     { name: 'Darkside',  desc: 'Expend HP to deal heavy non-elemental damage to one enemy.' },
     { name: 'Doom',      desc: 'Inflict the Doom countdown status on one enemy.' },
     { name: 'Defend',    desc: 'Reduce physical damage taken until the character\'s next action.' },
-    { name: 'Cover',     desc: 'Step in front of a party member to take an attack in their place at half damage.' },
-    { name: 'Counter',   desc: 'Automatically counter-attack when struck by a physical hit.' },
     { name: 'Recover',   desc: 'Fully restore one character\'s HP.' },
     { name: 'Revive',    desc: 'Revive a KO\'d party member with a small amount of HP.' },
     { name: 'Treatment', desc: 'Remove all abnormal status effects from one party member.' },
@@ -55,6 +58,7 @@ const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
     { name: 'LV Up',     desc: 'Raise an enemy\'s level, increasing its stats and changing possible card and item drops.' },
     { name: 'Kamikaze',  desc: 'Deal massive damage to one enemy based on the user\'s HP, then KO the user.' },
     { name: 'Devour',    desc: 'Consume a low-HP enemy to gain a permanent stat boost or recover HP/status.' },
+    { name: 'MiniMog',   desc: 'Item-taught command from Mog\'s Amulet; calls MiniMog to restore HP to junctioned GFs.' },
   ],
   Character: [
     { name: 'HP+20%',     desc: 'Increase maximum HP by 20%.' },
@@ -67,6 +71,7 @@ const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
     { name: 'Str Bonus',  desc: 'Gain +1 Strength each time the character levels up.' },
     { name: 'Vit+20%',    desc: 'Increase Vitality by 20%.' },
     { name: 'Vit+40%',    desc: 'Increase Vitality by 40%.' },
+    { name: 'Vit+60%',    desc: 'Increase Vitality by 60%. Taught by Adamantine.' },
     { name: 'Vit Bonus',  desc: 'Gain +1 Vitality each time the character levels up.' },
     { name: 'Mag+20%',    desc: 'Increase Magic by 20%.' },
     { name: 'Mag+40%',    desc: 'Increase Magic by 40%.' },
@@ -74,11 +79,15 @@ const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
     { name: 'Mag Bonus',  desc: 'Gain +1 Magic each time the character levels up.' },
     { name: 'Spr+20%',    desc: 'Increase Spirit by 20%.' },
     { name: 'Spr+40%',    desc: 'Increase Spirit by 40%.' },
+    { name: 'Spr+60%',    desc: 'Increase Spirit by 60%. Taught by Magic Armlet.' },
     { name: 'Spr Bonus',  desc: 'Gain +1 Spirit each time the character levels up.' },
     { name: 'Spd+20%',    desc: 'Increase Speed by 20%.' },
     { name: 'Spd+40%',    desc: 'Increase Speed by 40%.' },
     { name: 'Eva+30%',    desc: 'Increase Evasion by 30%.' },
     { name: 'Luck+50%',   desc: 'Increase Luck by 50%.' },
+    { name: 'Mug',         desc: 'Steal an item from an enemy before attacking. Replaces the Attack command.' },
+    { name: 'Cover',       desc: 'Step in front of a party member to take an attack in their place at half damage.' },
+    { name: 'Counter',     desc: 'Automatically counter-attack when struck by a physical hit.' },
     { name: 'Auto-Haste',   desc: 'Automatically applies Haste at the start of every battle.' },
     { name: 'Auto-Shell',   desc: 'Automatically applies Shell at the start of every battle.' },
     { name: 'Auto-Protect', desc: 'Automatically applies Protect at the start of every battle.' },
@@ -89,6 +98,8 @@ const CATEGORIES: Record<AbilityCategory, AbilityDef[]> = {
     { name: 'Initiative',   desc: 'The character always acts immediately at the start of battle before any enemy.' },
     { name: 'Move-HP Up',   desc: 'Recover HP slowly while walking on the world map or field.' },
     { name: 'Med Data',     desc: 'Doubles the recovery amount of all medicines used in battle.' },
+    { name: 'Return Damage', desc: 'Item-taught ability from Hundred Needles; returns one quarter of received damage to the attacker.' },
+    { name: 'Ribbon',        desc: 'Item-taught ability from Ribbon; protects against status abnormalities.' },
   ],
   GF: [
     { name: 'Boost',       desc: 'During a GF\'s summon animation, press the Boost button to increase damage output.' },
@@ -156,11 +167,23 @@ interface AbilityEntry extends AbilityDef {
 
 interface Props {
   gfs: GuardianForce[]
+  abilities?: Ability[]
+  abilitySections?: AbilitySection[]
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export function AbilitiesView({ gfs }: Props) {
+const SECTION_FOR_CATEGORY: Record<AbilityCategory | 'All', string> = {
+  All: 'Abilities',
+  Junction: 'Junction Abilities',
+  Command: 'Command Abilities',
+  Character: 'Character Abilities',
+  GF: 'GF Abilities',
+  Menu: 'Menu Abilities',
+  Party: 'Party Abilities',
+}
+
+export function AbilitiesView({ gfs, abilities: sourceAbilities = [], abilitySections = [] }: Props) {
   const [activeCategory, setActiveCategory] = useState<AbilityCategory | 'All'>('All')
   const [filter, setFilter] = useState('')
 
@@ -170,8 +193,28 @@ export function AbilitiesView({ gfs }: Props) {
       for (const ab of gf.abilities) {
         if (!teacherMap.has(ab.name)) teacherMap.set(ab.name, [])
         teacherMap.get(ab.name)!.push({ gfName: gf.name, ap: ab.ap })
+        // Alias: GF data uses "Magic" but abilities list uses "Magic (Command)"
+        if (ab.name === 'Magic') {
+          if (!teacherMap.has('Magic (Command)')) teacherMap.set('Magic (Command)', [])
+          teacherMap.get('Magic (Command)')!.push({ gfName: gf.name, ap: ab.ap })
+        }
       }
     }
+    if (sourceAbilities.length) {
+      return sourceAbilities.map(ab => ({
+        name: ab.name,
+        desc: ab.description,
+        category: ab.category,
+        teachers: teacherMap.get(ab.name) ?? [],
+        availableTo: ab.availableTo,
+        ap: ab.ap,
+        taughtBy: ab.taughtBy,
+        detailPresent: ab.detailPresent,
+        detailLineCount: ab.detailLineCount,
+        detailCharCount: ab.detailCharCount,
+      }))
+    }
+
     const result: AbilityEntry[] = []
     for (const [cat, defs] of Object.entries(CATEGORIES) as [AbilityCategory, AbilityDef[]][]) {
       for (const def of defs) {
@@ -179,7 +222,7 @@ export function AbilitiesView({ gfs }: Props) {
       }
     }
     return result
-  }, [gfs])
+  }, [gfs, sourceAbilities])
 
   const visible = useMemo(() => {
     const q = filter.trim().toLowerCase()
@@ -188,20 +231,40 @@ export function AbilitiesView({ gfs }: Props) {
       const textMatch = !q ||
         ab.name.toLowerCase().includes(q) ||
         ab.desc.toLowerCase().includes(q) ||
+        (ab.availableTo ?? '').toLowerCase().includes(q) ||
+        (ab.taughtBy ?? '').toLowerCase().includes(q) ||
         ab.teachers.some(t => t.gfName.toLowerCase().includes(q))
       return catMatch && textMatch
     })
   }, [abilities, activeCategory, filter])
 
-  const categories = Object.keys(CATEGORIES) as AbilityCategory[]
+  const categories = useMemo(() => {
+    const fromSource = [...new Set(abilities.map(ab => ab.category))]
+    return (fromSource.length ? fromSource : Object.keys(CATEGORIES)) as AbilityCategory[]
+  }, [abilities])
   const counts = useMemo(() => {
     const m: Partial<Record<AbilityCategory, number>> = {}
     for (const ab of abilities) m[ab.category] = (m[ab.category] ?? 0) + 1
     return m
   }, [abilities])
+  const activeSection = useMemo(() => {
+    const title = SECTION_FOR_CATEGORY[activeCategory]
+    return abilitySections.find(section => section.title === title)
+  }, [abilitySections, activeCategory])
 
   return (
     <div className="max-w-3xl mx-auto space-y-3">
+      {activeSection && (
+        <section className="rounded-xl border border-slate-700/45 bg-slate-900/45 p-4">
+          <h2 className="text-sm font-semibold text-slate-100">{activeSection.title}</h2>
+          <div className="mt-2 space-y-2 text-xs leading-relaxed text-slate-400">
+            {activeSection.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Filter + category tabs */}
       <div className="space-y-2">
         <input
@@ -249,11 +312,12 @@ export function AbilitiesView({ gfs }: Props) {
           const colors = CATEGORY_COLORS[ab.category]
           // Determine typical AP cost: non-zero is the learn cost; 0 = pre-learned on that GF
           const learnCost = ab.teachers.find(t => t.ap > 0)?.ap
+          const displayAp = ab.ap && ab.ap !== 'N/A' ? ab.ap : learnCost !== undefined ? String(learnCost) : ab.ap
           return (
-            <div key={ab.name} className="py-3 grid grid-cols-[1fr_auto] gap-x-4 gap-y-1">
+            <div key={ab.name} className="py-3 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[1fr_auto]">
               <div className="space-y-0.5">
                 {/* Name row */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   {activeCategory === 'All' && (
                     <span className={cn(
                       'shrink-0 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border',
@@ -262,19 +326,31 @@ export function AbilitiesView({ gfs }: Props) {
                       {ab.category}
                     </span>
                   )}
-                  <span className="text-sm font-semibold text-white">{ab.name}</span>
-                  {learnCost !== undefined && (
-                    <span className="text-[10px] text-slate-500">{learnCost} AP</span>
+                  <span className="text-sm font-semibold text-white break-words [overflow-wrap:anywhere]">{ab.name}</span>
+                  {displayAp && (
+                    <span className="text-[10px] text-slate-500">{displayAp} AP</span>
                   )}
                 </div>
                 {/* Description */}
-                <p className="text-[11px] text-slate-400 leading-snug">{ab.desc}</p>
+                <p className="text-[11px] text-slate-400 leading-relaxed break-words [overflow-wrap:anywhere]">{ab.desc}</p>
+                {(ab.availableTo || ab.taughtBy) && (
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 pt-1 text-[10px] text-slate-500">
+                    {ab.availableTo && (
+                      <span className="break-words [overflow-wrap:anywhere]"><span className="text-slate-600">Available:</span> {ab.availableTo}</span>
+                    )}
+                    {ab.taughtBy && ab.taughtBy !== 'N/A' && (
+                      <span className="break-words [overflow-wrap:anywhere]"><span className="text-slate-600">Taught by:</span> {ab.taughtBy}</span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* GF tags — right-aligned */}
-              <div className="flex flex-wrap gap-1 justify-end content-start max-w-[280px]">
+              <div className="flex flex-wrap gap-1 justify-start content-start sm:max-w-[280px] sm:justify-end">
                 {ab.teachers.length === 0 ? (
-                  <span className="text-[10px] text-slate-600 italic self-start mt-1">Item-taught only</span>
+                  <span className="text-[10px] text-slate-600 italic self-start mt-1">
+                    {ab.availableTo || ab.taughtBy ? 'No native GF learner' : 'Item-taught only'}
+                  </span>
                 ) : ab.teachers.map(t => (
                   <span
                     key={t.gfName}

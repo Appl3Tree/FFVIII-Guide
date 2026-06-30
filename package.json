@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:data": "node scripts/buildMaster.mjs",
+    "audit:render": "node scripts/auditRenderedRoutes.mjs",
+    "audit:guide-quality": "node scripts/auditGuideQuality.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

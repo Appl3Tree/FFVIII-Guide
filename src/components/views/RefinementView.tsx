@@ -100,11 +100,11 @@ function RecipeRow({
   from, fromQty, to, toQty, striped,
 }: { from: string; fromQty: number; to: string; toQty: number; striped?: boolean }) {
   return (
-    <div className={cn('flex items-center gap-2 px-3 py-1.5 text-xs', striped && 'bg-slate-800/25')}>
+    <div className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', striped && 'bg-slate-800/25')}>
       <span className="text-slate-500 font-mono w-5 text-right shrink-0">{fromQty}×</span>
-      <span className="text-slate-200 flex-1 min-w-0 truncate">{from}</span>
-      <span className="text-slate-600 shrink-0">→</span>
-      <span className="text-emerald-300 font-medium flex-1 min-w-0 truncate text-right">
+      <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{from}</span>
+      <span className="text-slate-600 shrink-0 pt-0.5">→</span>
+      <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed text-right break-words [overflow-wrap:anywhere]">
         {toQty}× {to}
       </span>
     </div>
@@ -149,7 +149,7 @@ export function RefinementView({ refinement }: Props) {
   // ── Search results: flat rows across all abilities ──────────────────────────
   const searchResults = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (q.length < 2) return []
+    if (!q) return []
     const out: Array<{ ability: string; from: string; fromQty: number; to: string; toQty: number }> = []
     for (const r of refinement) {
       for (const e of r.entries) {
@@ -161,7 +161,7 @@ export function RefinementView({ refinement }: Props) {
     return out
   }, [query, refinement])
 
-  const isSearching = query.trim().length >= 2
+  const isSearching = query.trim().length >= 1
 
   // ── Toggle for "All" accordion ──────────────────────────────────────────────
   function toggleExpand(ability: string) {
@@ -195,12 +195,12 @@ export function RefinementView({ refinement }: Props) {
         {searchResults.map((r, i) => {
           const accent = ABILITY_ACCENT[r.ability] ?? fallbackAccent
           return (
-            <div key={i} className={cn('flex items-center gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
+            <div key={i} className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
               <span className="text-slate-500 font-mono w-5 text-right shrink-0">{r.fromQty}×</span>
-              <span className="text-slate-200 flex-1 min-w-0 truncate">{r.from}</span>
-              <span className="text-slate-600 shrink-0">→</span>
-              <span className="text-emerald-300 font-medium flex-1 min-w-0 truncate">{r.toQty}× {r.to}</span>
-              <span className={cn('text-[10px] px-1.5 py-0.5 rounded border font-medium shrink-0 hidden sm:inline', accent.badge)}>
+              <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.from}</span>
+              <span className="text-slate-600 shrink-0 pt-0.5">→</span>
+              <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.toQty}× {r.to}</span>
+              <span className={cn('text-[10px] px-1.5 py-0.5 rounded border font-medium shrink-0 hidden sm:inline mt-0.5', accent.badge)}>
                 {r.ability}
               </span>
             </div>
@@ -228,7 +228,7 @@ export function RefinementView({ refinement }: Props) {
         <div className="flex flex-wrap gap-1.5">
           {(['all', 'monster', 'boss', 'gfcard', 'player'] as CardGroup[]).map(id => {
             const meta = id === 'all' ? null : CARD_GROUP_META.find(g => g.id === id)
-            const totalCards = id === 'all' ? 110 : (meta?.sub.flatMap(s => s.cards).length ?? 0)
+            const totalCards = id === 'all' ? CARD_GROUP_META.reduce((n, g) => n + g.sub.reduce((m, s) => m + s.cards.length, 0), 0) : (meta?.sub.flatMap(s => s.cards).length ?? 0)
             const label = id === 'all' ? 'All' : meta?.label ?? id
             const isActive = cardGroup === id
             return (
@@ -268,15 +268,15 @@ export function RefinementView({ refinement }: Props) {
                     const entry = cardEntryMap.get(cardName)
                     if (!entry) return null
                     return (
-                      <div key={cardName} className={cn('flex items-center gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
-                        <span className="text-slate-300 flex-1 min-w-0 truncate">
+                      <div key={cardName} className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
+                        <span className="text-slate-300 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">
                           {entry.fromQty > 1 && (
                             <span className="text-slate-500 font-mono mr-1">{entry.fromQty}×</span>
                           )}
                           {cardName}
                         </span>
-                        <span className="text-slate-600 shrink-0">→</span>
-                        <span className="text-emerald-300 font-medium shrink-0 text-right">
+                        <span className="text-slate-600 shrink-0 pt-0.5">→</span>
+                        <span className="text-emerald-300 font-medium min-w-0 text-right leading-relaxed break-words [overflow-wrap:anywhere]">
                           {entry.toQty > 1 && <span className="font-mono">{entry.toQty}× </span>}
                           {entry.to}
                         </span>
@@ -338,7 +338,7 @@ export function RefinementView({ refinement }: Props) {
           >
             <span className="text-xs font-semibold text-yellow-300">Card Mod</span>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-slate-600">110 recipes</span>
+              <span className="text-[10px] text-slate-600">{cardMod.entries.length} recipes</span>
               <svg
                 className={cn('w-3 h-3 text-slate-600 transition-transform duration-150', expanded.has('Card Mod') && 'rotate-180')}
                 viewBox="0 0 12 12" fill="none"
@@ -360,11 +360,11 @@ export function RefinementView({ refinement }: Props) {
                       if (!entry) return null
                       return (
                         <div key={cardName} className={cn('flex items-start gap-1 px-2 py-1 text-[10px]', i % 2 === 1 && 'bg-slate-800/30')}>
-                          <span className="text-slate-400 min-w-0 flex-1 truncate leading-tight">
+                          <span className="text-slate-400 min-w-0 flex-1 leading-tight break-words [overflow-wrap:anywhere]">
                             {entry.fromQty > 1 && <span className="text-slate-500">{entry.fromQty}×</span>} {cardName}
                           </span>
-                          <span className="text-emerald-400 shrink-0 font-medium text-right leading-tight">
-                            {entry.toQty > 1 && `${entry.toQty}×`}{entry.to}
+                          <span className="text-emerald-400 min-w-0 font-medium text-right leading-tight break-words [overflow-wrap:anywhere]">
+                            {entry.toQty > 1 ? `${entry.toQty}× ` : ''}{entry.to}
                           </span>
                         </div>
                       )
@@ -393,6 +393,15 @@ export function RefinementView({ refinement }: Props) {
 
   return (
     <div className="space-y-3 pb-6 w-full">
+      <div className="glass-panel p-4">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-base font-semibold text-slate-100">Refinement</h2>
+          <span className="text-xs text-slate-500">
+            {refinement.reduce((sum, ability) => sum + ability.entries.length, 0)} recipes across {refinement.length} abilities
+          </span>
+        </div>
+      </div>
+
       {/* Search + category pills */}
       <div className="space-y-2.5">
         {/* Search */}

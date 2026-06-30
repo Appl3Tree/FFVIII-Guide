@@ -12,19 +12,35 @@ interface Props {
 type Tab = 'items' | 'weapons'
 
 const SECTION_COLORS: Record<string, 'teal' | 'amber' | 'indigo' | 'emerald' | 'slate' | 'violet'> = {
-  Recovery:               'teal',
-  Status:                 'amber',
-  Battle:                 'indigo',
-  'Save Point':           'emerald',
-  'GF Recovery':          'violet',
-  'GF Ability Learning':  'violet',
-  Ammunition:             'indigo',
-  Tool:                   'slate',
-  'Blue Magic':           'teal',
-  Compatibility:          'emerald',
-  Various:                'slate',
-  'Stat Boosting':        'amber',
-  Magazine:               'slate',
+  'Restorative Items':     'teal',
+  'Revival Items':         'teal',
+  'Forbidden Medicine':    'violet',
+  'Status Recovery Items': 'amber',
+  'Invincibility Items':   'amber',
+  'Spell Stones':          'indigo',
+  'GF Summon Items':       'violet',
+  Shelters:                'emerald',
+  'GF Recovery Medicine':  'violet',
+  'Rename Card':           'slate',
+  'Amnesia Greens':        'slate',
+  'Junction Ability Items':'violet',
+  'Command Ability Items': 'violet',
+  'GF Enhancement Items':  'violet',
+  'Character Ability Items':'violet',
+  Ammo:                    'indigo',
+  'Refinement Items':      'slate',
+  'Blue Magic Items':      'teal',
+  'GF Compatibility Items':'emerald',
+  Fuel:                    'slate',
+  'Event Items':           'slate',
+  Nametags:                'slate',
+  'GF Recruitment Items':  'violet',
+  'Stat Boosting Items':   'amber',
+  'LuvLuv G':              'emerald',
+  'Weapons Monthly':       'slate',
+  'Combat King':           'slate',
+  'Pet Pals':              'slate',
+  'Occult Fan':            'slate',
 }
 
 const CHARACTER_ORDER = ['Squall', 'Rinoa', 'Zell', 'Irvine', 'Quistis', 'Selphie']
@@ -54,6 +70,15 @@ const CHAR_COLORS: Record<string, 'teal' | 'amber' | 'indigo' | 'emerald' | 'sla
   Ward:    'slate',
 }
 
+function textValue(value: unknown): string {
+  if (Array.isArray(value)) return value.filter(Boolean).join('; ')
+  return value == null ? '' : String(value)
+}
+
+function weaponIssueLabel(value: string) {
+  return value.replace(/^Weapons Monthly\s+/i, 'Weapons Monthly ')
+}
+
 // ─── Item card (compact, expandable) ─────────────────────────────────────────
 
 function ItemCard({ item }: { item: Item }) {
@@ -73,7 +98,7 @@ function ItemCard({ item }: { item: Item }) {
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-sm font-medium text-slate-100 leading-tight">{item.name}</span>
+              <span className="text-sm font-medium text-slate-100 leading-tight break-words [overflow-wrap:anywhere]">{item.name}</span>
               {hasDetail && (
                 open
                   ? <ChevronDown size={10} className="text-slate-500 shrink-0" />
@@ -81,34 +106,36 @@ function ItemCard({ item }: { item: Item }) {
               )}
             </div>
             {item.useDesc && (
-              <p className="text-xs text-slate-500 mt-0.5 leading-snug line-clamp-2">{item.useDesc}</p>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed break-words [overflow-wrap:anywhere]">{item.useDesc}</p>
             )}
           </div>
           <div className="shrink-0 text-right space-y-0.5">
-            {item.buy  != null && <div className="text-xs font-mono text-teal-400">{item.buy.toLocaleString()}g</div>}
-            {item.sell != null && <div className="text-xs font-mono text-slate-600">{item.sell.toLocaleString()}g</div>}
+            {item.buy  != null && <div className="text-xs font-mono text-teal-400"><span className="text-[10px] text-teal-600">Buy </span>{item.buy.toLocaleString()}g</div>}
+            {item.sell != null && <div className="text-xs font-mono text-slate-600"><span className="text-[10px] text-slate-700">Sell </span>{item.sell.toLocaleString()}g</div>}
           </div>
         </div>
       </div>
 
       {open && hasDetail && (
-        <div className="px-3 pb-3 pt-0 space-y-1.5 border-t border-slate-700/40 mt-0 pt-2">
-          {item.obtain && (
+        <div className="px-3 pb-3 pt-2 space-y-1.5 border-t border-slate-700/40">
+          {textValue(item.obtain) && (
             <div className="flex gap-2 text-xs">
               <span className="text-slate-600 shrink-0 w-16">Obtain</span>
-              <span className="text-slate-300">{item.obtain}</span>
+              <span className="text-slate-300 leading-relaxed break-words [overflow-wrap:anywhere]">{textValue(item.obtain)}</span>
             </div>
           )}
           {item.refineFrom.length > 0 && (
             <div className="flex gap-2 text-xs">
-              <span className="text-slate-600 shrink-0 w-16">From</span>
-              <span className="text-slate-400">{item.refineFrom.join('; ')}</span>
+              <span className="text-slate-600 shrink-0 w-16">Refine from</span>
+              <div className="text-slate-400 space-y-0.5 min-w-0">
+                {item.refineFrom.map((r, i) => <div key={i} className="break-words [overflow-wrap:anywhere]">{r}</div>)}
+              </div>
             </div>
           )}
           {item.refineTo.length > 0 && (
             <div className="flex gap-2 text-xs">
               <span className="text-slate-600 shrink-0 w-16">Refines to</span>
-              <span className="text-emerald-400">{item.refineTo.join('; ')}</span>
+              <span className="text-emerald-400 leading-relaxed break-words [overflow-wrap:anywhere]">{item.refineTo.join('; ')}</span>
             </div>
           )}
         </div>
@@ -149,7 +176,7 @@ function ItemSection({
         )}
       </button>
       {!collapsed && (
-        <div className="grid grid-cols-2 gap-2 mb-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
           {items.map(it => <ItemCard key={it.id} item={it} />)}
         </div>
       )}
@@ -163,22 +190,28 @@ function WeaponCard({ weapon }: { weapon: Weapon }) {
   return (
     <div className="rounded-lg border border-slate-700/40 bg-slate-800/30 p-3">
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="text-sm font-medium text-slate-100">{weapon.name}</span>
+        <span className="text-sm font-medium text-slate-100 leading-tight break-words [overflow-wrap:anywhere]">{weapon.name}</span>
         <div className="shrink-0 text-right">
           <div className="text-xs font-mono text-amber-300">+{weapon.strBonus} Str</div>
-          {weapon.hitBonus > 0 && <div className="text-xs font-mono text-sky-400">+{weapon.hitBonus} Hit</div>}
-          <div className="text-xs font-mono text-slate-600">{weapon.price.toLocaleString()}g</div>
+          {weapon.hitBonus > 0 && <div className="text-xs font-mono text-sky-400">{weapon.hitBonus}% Hit</div>}
+          {weapon.price > 0 && <div className="text-xs font-mono text-slate-500">{weapon.price.toLocaleString()}g</div>}
+          {weapon.haggleCost != null && weapon.haggleCost > 0 && weapon.haggleCost !== weapon.price && (
+            <div className="text-[10px] font-mono text-emerald-400">{weapon.haggleCost.toLocaleString()}g Haggle</div>
+          )}
         </div>
       </div>
       <div className="flex flex-wrap gap-1">
         {weapon.materials.map((m, i) => (
-          <span key={i} className="text-xs text-slate-400 bg-slate-700/50 border border-slate-600/40 rounded px-1.5 py-0.5">
+          <span key={i} className="text-xs text-slate-400 bg-slate-700/50 border border-slate-600/40 rounded px-1.5 py-0.5 break-words [overflow-wrap:anywhere]">
             {m}
           </span>
         ))}
       </div>
       {weapon.weaponsMonthly && (
-        <p className="text-xs text-slate-600 mt-1.5">Weapons Mon. {weapon.weaponsMonthly}</p>
+        <p className="text-xs text-slate-600 mt-1.5 break-words [overflow-wrap:anywhere]">{weaponIssueLabel(weapon.weaponsMonthly)}</p>
+      )}
+      {weapon.limitBreaks && (
+        <p className="text-xs text-slate-500 mt-1 break-words [overflow-wrap:anywhere]">Unlocks: {weapon.limitBreaks}</p>
       )}
     </div>
   )
@@ -204,7 +237,7 @@ function WeaponSection({
         <span className="text-xs text-slate-600">{label}</span>
         {guest && <span className="text-xs text-slate-700 italic">non-upgradeable</span>}
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {weapons.map(w => <WeaponCard key={w.id} weapon={w} />)}
       </div>
     </div>
@@ -227,8 +260,8 @@ export function ItemsView({ items, weapons }: Props) {
       if (!q) return true
       return (
         it.name.toLowerCase().includes(q) ||
-        it.obtain.toLowerCase().includes(q) ||
-        it.useDesc.toLowerCase().includes(q) ||
+        textValue(it.obtain).toLowerCase().includes(q) ||
+        textValue(it.useDesc).toLowerCase().includes(q) ||
         it.refineFrom.some(r => r.toLowerCase().includes(q)) ||
         it.refineTo.some(r => r.toLowerCase().includes(q))
       )
@@ -240,6 +273,7 @@ export function ItemsView({ items, weapons }: Props) {
     if (!q) return weapons
     return weapons.filter(w =>
       w.name.toLowerCase().includes(q) ||
+      (w.sourceAliases ?? []).some(alias => alias.toLowerCase().includes(q)) ||
       w.materials.some(m => m.toLowerCase().includes(q)) ||
       (WEAPON_TYPE_TO_CHAR[w.type] ?? '').toLowerCase().includes(q)
     )
@@ -281,7 +315,7 @@ export function ItemsView({ items, weapons }: Props) {
     <div className="space-y-3 pb-6 max-w-3xl mx-auto">
       {/* Header */}
       <div className="glass-panel p-4 space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-base font-semibold text-slate-100">Items & Weapons</h2>
           <div className="flex gap-1.5">
             <button onClick={() => setTab('items')} className={tabBtn('items')}>
@@ -347,7 +381,7 @@ export function ItemsView({ items, weapons }: Props) {
               <p className="py-8 text-center text-sm text-slate-600">No items match "{query}"</p>
             ) : isSearching || section !== 'all' ? (
               /* Flat grid when filtered/searching */
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {filteredItems.map(it => <ItemCard key={it.id} item={it} />)}
               </div>
             ) : (
@@ -371,7 +405,7 @@ export function ItemsView({ items, weapons }: Props) {
             {filteredWeapons.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-600">No weapons match "{query}"</p>
             ) : isSearching ? (
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {filteredWeapons.map(w => <WeaponCard key={w.id} weapon={w} />)}
               </div>
             ) : (

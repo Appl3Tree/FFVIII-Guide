@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Eye, EyeOff, Trophy, AlertTriangle } from 'lucide-react'
+import { ChevronDown, Eye, EyeOff, Trophy, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { ProgressBar } from '../ui/ProgressBar'
@@ -118,6 +118,7 @@ function CheckpointRow({ cp, done, onToggle, onNavigate }: {
   onNavigate: (id: string) => void
 }) {
   const isAch = cp.type === 'achievement'
+  const isMissable = cp.type === 'missable'
   return (
     <div className={cn(
       'px-4 py-3 flex items-start gap-3 border-l-2 transition-colors',
@@ -125,18 +126,19 @@ function CheckpointRow({ cp, done, onToggle, onNavigate }: {
         ? 'opacity-40 border-transparent'
         : isAch
           ? 'border-yellow-600/0 hover:border-yellow-600/60'
-          : 'border-amber-600/0 hover:border-amber-600/60'
+          : isMissable
+            ? 'border-amber-600/0 hover:border-amber-600/60'
+            : 'border-teal-600/0 hover:border-teal-600/60'
     )}>
       <Checkbox checked={done} onChange={() => onToggle(cp.id)} className="mt-0.5 shrink-0" />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-          {isAch
-            ? <Trophy size={11} className="text-yellow-500 shrink-0" />
-            : <AlertTriangle size={11} className="text-amber-500 shrink-0" />
-          }
+          {isAch && <Trophy size={11} className="text-yellow-500 shrink-0" />}
+          {isMissable && <AlertTriangle size={11} className="text-amber-500 shrink-0" />}
+          {!isAch && !isMissable && <CheckCircle2 size={11} className="text-teal-500 shrink-0" />}
           <span className={cn(
             'text-sm font-medium leading-tight',
-            done ? 'line-through text-slate-600' : isAch ? 'text-yellow-200' : 'text-amber-200'
+            done ? 'line-through text-slate-600' : isAch ? 'text-yellow-200' : isMissable ? 'text-amber-200' : 'text-slate-200'
           )}>
             {cp.label}
           </span>
@@ -145,8 +147,11 @@ function CheckpointRow({ cp, done, onToggle, onNavigate }: {
               {cp.achievementType}
             </Badge>
           )}
+          {cp.type === 'task' && (
+            <Badge variant="teal">task</Badge>
+          )}
         </div>
-        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{cp.description}</p>
+        <p className="text-xs text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">{cp.description}</p>
         <button
           onClick={() => onNavigate(cp.chapterId)}
           className="text-xs text-teal-600 hover:text-teal-400 mt-0.5 transition-colors"
@@ -170,8 +175,17 @@ export function ChecklistView({ data, completedItems, onToggleItem, onNavigateTo
   const discs = [...new Set(data.chapters.map(c => c.disc))].filter(d => d > 0).sort()
 
   const getCpsForDisc = (disc: number) => {
-    const chIds = new Set(data.chapters.filter(c => c.disc === disc).map(c => c.id))
-    return allCps.filter(cp => chIds.has(cp.chapterId))
+    const discChapters = data.chapters
+      .filter(c => c.disc === disc)
+      .sort((a, b) => a.index - b.index)
+    const chapterOrder = new Map(discChapters.map((c, i) => [c.id, i]))
+    return allCps
+      .filter(cp => chapterOrder.has(cp.chapterId))
+      .sort((a, b) => {
+        const cOrd = (chapterOrder.get(a.chapterId) ?? 0) - (chapterOrder.get(b.chapterId) ?? 0)
+        if (cOrd !== 0) return cOrd
+        return a.index - b.index
+      })
   }
 
   return (
@@ -201,7 +215,7 @@ export function ChecklistView({ data, completedItems, onToggleItem, onNavigateTo
             <div className="text-xs text-slate-500 mt-0.5">Achievements</div>
             <ProgressBar
               value={allAchs.length ? Math.round((achDone / allAchs.length) * 100) : 0}
-              color="teal"
+              color="amber"
               className="mt-2"
             />
           </div>
@@ -209,7 +223,8 @@ export function ChecklistView({ data, completedItems, onToggleItem, onNavigateTo
             <div className="text-xl font-bold text-amber-300 font-mono">
               {missDone}<span className="text-slate-600 text-base">/{allMisses.length}</span>
             </div>
-            <div className="text-xs text-slate-500 mt-0.5">Missables Handled</div>
+            <div className="text-xs text-slate-500 mt-0.5">Missables Tracked</div>
+            <div className="text-[10px] text-slate-600 mt-0.5">Check when handled</div>
             <ProgressBar
               value={allMisses.length ? Math.round((missDone / allMisses.length) * 100) : 0}
               color="amber"

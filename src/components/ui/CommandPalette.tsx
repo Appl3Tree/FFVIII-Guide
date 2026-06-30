@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Search, X, BookOpen, AlertTriangle, Trophy, CreditCard, Sparkles, FlaskConical, Package, Sword, Skull, Zap } from 'lucide-react'
+import { Search, X, BookOpen, AlertTriangle, Trophy, CreditCard, Sparkles, FlaskConical, Package, Sword, Skull, Zap, CheckCircle2, Compass } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { SearchResult } from '../../hooks/useSearch'
 
@@ -7,9 +7,12 @@ const typeIcons: Record<SearchResult['type'], React.ReactNode> = {
   chapter:     <BookOpen size={14} />,
   missable:    <AlertTriangle size={14} />,
   achievement: <Trophy size={14} />,
+  task:        <CheckCircle2 size={14} />,
+  sidequest:   <Compass size={14} />,
   card:        <CreditCard size={14} />,
   gf:          <Sparkles size={14} />,
   ability:     <Zap size={14} />,
+  magic:       <Zap size={14} />,
   refinement:  <FlaskConical size={14} />,
   item:        <Package size={14} />,
   weapon:      <Sword size={14} />,
@@ -20,9 +23,12 @@ const typeColors: Record<SearchResult['type'], string> = {
   chapter:     'text-teal-400',
   missable:    'text-amber-400',
   achievement: 'text-yellow-400',
+  task:        'text-teal-400',
+  sidequest:   'text-indigo-400',
   card:        'text-indigo-400',
   gf:          'text-violet-400',
   ability:     'text-sky-300',
+  magic:       'text-violet-300',
   refinement:  'text-emerald-400',
   item:        'text-sky-400',
   weapon:      'text-rose-400',
@@ -95,8 +101,8 @@ export function CommandPalette({ open, query, results, onQueryChange, onClose, o
             >
               <span className={cn('mt-0.5 shrink-0', typeColors[r.type])}>{typeIcons[r.type]}</span>
               <div className="min-w-0 flex-1">
-                <div className="text-sm text-white truncate">{r.title}</div>
-                <div className="text-xs text-slate-500 truncate">{r.subtitle}</div>
+                <div className="text-sm text-white leading-tight break-words [overflow-wrap:anywhere]">{r.title}</div>
+                <div className="text-xs text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">{r.subtitle}</div>
               </div>
               <span className={cn('text-xs capitalize shrink-0 mt-0.5 opacity-60', typeColors[r.type])}>
                 {r.type}

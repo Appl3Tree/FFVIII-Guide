@@ -1,15 +1,15 @@
 import { useState, useMemo, useCallback } from 'react'
-import type { MasterData } from '../types'
+import type { MasterData, Sidequest } from '../types'
 
 export interface SearchResult {
   id: string
-  type: 'chapter' | 'achievement' | 'missable' | 'card' | 'gf' | 'ability' | 'refinement' | 'item' | 'weapon' | 'enemy'
+  type: 'chapter' | 'achievement' | 'missable' | 'task' | 'sidequest' | 'card' | 'gf' | 'ability' | 'refinement' | 'magic' | 'item' | 'weapon' | 'enemy'
   title: string
   subtitle: string
   chapterId?: string
 }
 
-export function useSearch(data: MasterData) {
+export function useSearch(data: MasterData, sidequests: Sidequest[] = []) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -37,7 +37,7 @@ export function useSearch(data: MasterData) {
         if (cp.label.toLowerCase().includes(q) || cp.description.toLowerCase().includes(q)) {
           out.push({
             id: cp.id,
-            type: cp.type as 'achievement' | 'missable',
+            type: cp.type,
             title: cp.label,
             subtitle: cp.description.slice(0, 70) + (cp.description.length > 70 ? '…' : ''),
             chapterId: ch.id,
@@ -46,20 +46,60 @@ export function useSearch(data: MasterData) {
       }
     }
 
-    // GF Abilities
-    for (const g of data.lookup.gfs) {
-      for (const ab of g.abilities) {
-        if (ab.name.toLowerCase().includes(q)) {
-          const existing = out.find(r => r.type === 'ability' && r.id === `ability-${ab.name}`)
-          if (existing) {
-            existing.subtitle += `, ${g.name}`
-          } else {
-            out.push({
-              id: `ability-${ab.name}`,
-              type: 'ability',
-              title: ab.name,
-              subtitle: g.name,
-            })
+    // Sidequests
+    for (const sidequest of sidequests) {
+      const haystack = [
+        sidequest.title,
+        sidequest.category,
+        sidequest.summary,
+        sidequest.available,
+        sidequest.deadline,
+        sidequest.rewards.join(' '),
+        sidequest.route.join(' '),
+      ].join(' ').toLowerCase()
+      if (haystack.includes(q)) {
+        out.push({
+          id: sidequest.id,
+          type: 'sidequest',
+          title: sidequest.title,
+          subtitle: `${sidequest.category} · ${sidequest.available.slice(0, 55)}`,
+          chapterId: sidequest.placements[0]?.chapterId,
+        })
+      }
+    }
+
+    // Abilities
+    if (data.lookup.abilities?.length) {
+      for (const ab of data.lookup.abilities) {
+        if (
+          ab.name.toLowerCase().includes(q) ||
+          ab.description.toLowerCase().includes(q) ||
+          ab.availableTo.toLowerCase().includes(q) ||
+          ab.taughtBy.toLowerCase().includes(q)
+        ) {
+          out.push({
+            id: ab.id,
+            type: 'ability',
+            title: ab.name,
+            subtitle: `${ab.category}${ab.ap && ab.ap !== 'N/A' ? ` · ${ab.ap} AP` : ''}${ab.taughtBy && ab.taughtBy !== 'N/A' ? ` · ${ab.taughtBy}` : ''}`,
+          })
+        }
+      }
+    } else {
+      for (const g of data.lookup.gfs) {
+        for (const ab of g.abilities) {
+          if (ab.name.toLowerCase().includes(q)) {
+            const existing = out.find(r => r.type === 'ability' && r.id === `ability-${ab.name}`)
+            if (existing) {
+              existing.subtitle += `, ${g.name}`
+            } else {
+              out.push({
+                id: `ability-${ab.name}`,
+                type: 'ability',
+                title: ab.name,
+                subtitle: g.name,
+              })
+            }
           }
         }
       }
@@ -106,6 +146,24 @@ export function useSearch(data: MasterData) {
       }
     }
 
+    // Magic
+    for (const spell of data.lookup.magic ?? []) {
+      if (
+        spell.name.toLowerCase().includes(q) ||
+        spell.castEffect.toLowerCase().includes(q) ||
+        (spell.acquisition['Refine From'] ?? '').toLowerCase().includes(q) ||
+        (spell.acquisition['Refine Into'] ?? '').toLowerCase().includes(q)
+      ) {
+        out.push({
+          id: spell.id,
+          type: 'magic',
+          title: spell.name,
+          subtitle: `Magic · ${spell.castEffect.slice(0, 55)}`,
+          chapterId: 'r0-magic-reference',
+        })
+      }
+    }
+
     // Items
     for (const it of data.lookup.items) {
       const obtain = Array.isArray(it.obtain) ? it.obtain.join('; ') : (it.obtain ?? '')
@@ -121,7 +179,11 @@ export function useSearch(data: MasterData) {
 
     // Weapons
     for (const w of data.lookup.weapons) {
-      if (w.name.toLowerCase().includes(q) || w.materials.some(m => m.toLowerCase().includes(q))) {
+      if (
+        w.name.toLowerCase().includes(q) ||
+        (w.sourceAliases ?? []).some(alias => alias.toLowerCase().includes(q)) ||
+        w.materials.some(m => m.toLowerCase().includes(q))
+      ) {
         out.push({
           id: w.id,
           type: 'weapon',
@@ -138,8 +200,8 @@ export function useSearch(data: MasterData) {
         e.drawMagic.some((m: string) => m.toLowerCase().includes(q)) ||
         (e.mug?.toLowerCase().includes(q)) ||
         (e.drop?.toLowerCase().includes(q)) ||
-        (e.cards.common?.toLowerCase().includes(q)) ||
-        (e.cards.rare?.toLowerCase().includes(q))
+        (e.cards?.common?.toLowerCase().includes(q)) ||
+        (e.cards?.rare?.toLowerCase().includes(q))
       ) {
         out.push({
           id: e.id,
@@ -151,7 +213,7 @@ export function useSearch(data: MasterData) {
     }
 
     return out.slice(0, 24)
-  }, [query, data])
+  }, [query, data, sidequests])
 
   const openSearch = useCallback(() => setOpen(true), [])
   const closeSearch = useCallback(() => { setOpen(false); setQuery('') }, [])

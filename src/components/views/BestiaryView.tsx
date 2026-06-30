@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { Search, Flame, Snowflake, Zap, Mountain, Wind, Droplets, Sun, Star, ChevronDown, ChevronRight } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Badge } from '../ui/Badge'
+import { mergeDrawLevelBands, mergeValueLevelBands } from '../../lib/enemyLevelData'
 import type { Enemy } from '../../types'
 
 interface Props {
@@ -34,6 +35,7 @@ const ELEM_LABEL: Record<string, string> = {
   poison:'Poison', wind:'Wind', water:'Water', holy:'Holy', gravity:'Gravity',
 }
 const ELEMENTS = ['fire','ice','thunder','earth','wind','water','holy','gravity','poison']
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
 
 function elemColor(val: string): string {
   if (val.includes('(-1)') || val === 'absorb') return 'text-green-400'
@@ -49,9 +51,9 @@ function elemShort(val: string): string {
   if (val.includes('(-1)') || val === 'absorb') return 'Absorb'
   if (val === 'immune' || val === 'no')         return 'Immune'
   if (val === 'mag-miss')                        return 'Miss'
-  if (val === 'yes')                             return 'Vuln'
+  if (val === 'yes')                             return 'Gravity OK'
   if (val === 'weak')                            return '×1.5'
-  return val.replace('x(','×(')
+  return val.replace('x(', '×(').replace(/(\d),(\d)/g, '$1.$2')
 }
 function isWeakness(val: string): boolean {
   if (val.includes('(-1)') || val === 'absorb') return false
@@ -71,7 +73,10 @@ const BOSS_GROUPS: { label: string; color: 'teal'|'amber'|'indigo'|'violet'|'eme
     'enemy-seifer-1','enemy-edea-1',
   ]},
   { label: 'Disc 2', color: 'amber', ids: [
+    'enemy-biggs-2','enemy-wedge-2',
+    'enemy-base-soldier','enemy-base-leader',
     'enemy-bgh251f2-1',
+    'enemy-oilboyle',
     'enemy-norg-pod','enemy-left-orb','enemy-right-orb','enemy-norg',
     'enemy-bgh251f2-2',
     'enemy-raijin-1','enemy-fujin','enemy-raijin-2',
@@ -80,8 +85,9 @@ const BOSS_GROUPS: { label: string; color: 'teal'|'amber'|'indigo'|'violet'|'eme
   ]},
   { label: 'Disc 3', color: 'indigo', ids: [
     'enemy-propagator',
+    'enemy-abadon',
     'enemy-mobile-type-8','enemy-left-probe','enemy-right-probe',
-    'enemy-fujin-2','enemy-seifer-4',
+    'enemy-fujin-2','enemy-raijin-3','enemy-seifer-4',
     'enemy-adel','enemy-rinoa',
   ]},
   { label: 'Optional / Sidequests', color: 'emerald', ids: [
@@ -89,12 +95,12 @@ const BOSS_GROUPS: { label: string; color: 'teal'|'amber'|'indigo'|'violet'|'eme
     'enemy-bahamut','enemy-ultima-weapon','enemy-omega-weapon',
     'enemy-ufo','enemy-pupu',
   ]},
-  { label: 'Ultimecia Castle', color: 'violet', ids: [
+  { label: 'Disc 4 — Ultimecia\'s Castle', color: 'violet', ids: [
     'enemy-sphinxaur','enemy-sphinxara',
     'enemy-tri-point','enemy-trauma','enemy-droma',
     'enemy-red-giant','enemy-krysta','enemy-gargantua','enemy-catoblepas','enemy-tiamat',
   ]},
-  { label: 'Final Battle', color: 'slate', ids: [
+  { label: 'Disc 4 — Final Battle', color: 'slate', ids: [
     'enemy-ultimecia-1','enemy-griever','enemy-ultimecia-griever',
     'enemy-helix','enemy-ultimecia-final','enemy-ultimecia-final-lower',
   ]},
@@ -128,11 +134,93 @@ function DrawList({ spells }: { spells: string[] }) {
   )
 }
 
+function DrawBands({ enemy }: { enemy: Enemy }) {
+  const bands = enemy.drawMagicByLevel ?? []
+  if (!bands.length) return <DrawList spells={enemy.drawMagic} />
+  const displayBands = mergeDrawLevelBands(bands)
+
+  return (
+    <div className="space-y-1">
+      {displayBands.map((band) => (
+        <div key={`${band.lvMin}-${band.lvMax}`} className="flex items-center gap-2 flex-wrap">
+          <span className="w-14 text-[10px] font-mono text-slate-500">
+            Lv {band.lvMin === band.lvMax ? band.lvMin : `${band.lvMin}-${band.lvMax}`}
+          </span>
+          <DrawList spells={band.spells} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ValueBands({
+  bands,
+  fallback,
+  tone = 'slate',
+}: {
+  bands?: Array<{ lvMin: number; lvMax: number; value: string | null }>
+  fallback?: string | null
+  tone?: 'slate' | 'amber' | 'emerald'
+}) {
+  const color = tone === 'amber'
+    ? 'text-amber-300'
+    : tone === 'emerald'
+      ? 'text-emerald-300'
+      : 'text-slate-400'
+
+  if (!bands?.length) {
+    return fallback ? <span className={color}>{fallback}</span> : null
+  }
+  const displayBands = mergeValueLevelBands(bands)
+
+  return (
+    <div className="space-y-1">
+      {displayBands.map((band) => band.value && (
+        <div key={`${band.lvMin}-${band.lvMax}`} className="flex items-baseline gap-2">
+          <span className="w-14 shrink-0 text-[10px] font-mono text-slate-500">
+            Lv {band.lvMin === band.lvMax ? band.lvMin : `${band.lvMin}-${band.lvMax}`}
+          </span>
+          <span className={cn('leading-relaxed', color)}>{band.value}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function EnemyImage({ enemy }: { enemy: Enemy }) {
+  if (!enemy.image) return null
+
+  return (
+    <div className="w-16 h-16 shrink-0 rounded-md border border-slate-700/50 bg-slate-950/40 flex items-center justify-center overflow-hidden">
+      <img
+        src={asset(enemy.image)}
+        alt={`${enemy.name} enemy`}
+        className="max-w-full max-h-full object-contain"
+        loading="lazy"
+      />
+    </div>
+  )
+}
+
 // ─── Enemy card (regular encounters) ─────────────────────────────────────────
 function EnemyCard({ enemy }: { enemy: Enemy }) {
   const [open, setOpen] = useState(false)
-  const notableElems = Object.entries(enemy.elementals)
-  const hasDetail = !!(enemy.drawMagic.length || enemy.mug || enemy.drop || enemy.cards.common || enemy.cards.rare || enemy.cardDrop || notableElems.length || enemy.scan)
+  const notableElems = Object.entries(enemy.elementals ?? {})
+  const hasDetail = !!(
+    enemy.drawMagic.length ||
+    enemy.mug ||
+    enemy.drop ||
+    enemy.devour ||
+    enemy.cards.common ||
+    enemy.cards.rare ||
+    enemy.cardDrop ||
+    notableElems.length ||
+    enemy.elementalWeaknesses ||
+    enemy.elementalResistances ||
+    enemy.statusVulnerabilitiesNote ||
+    enemy.whereFound ||
+    enemy.scan
+  )
 
   return (
     <div
@@ -145,10 +233,11 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
     >
       {/* Header */}
       <div className="p-3">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 items-start gap-2">
+          <EnemyImage enemy={enemy} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 flex-wrap mb-1">
-              <span className="text-sm font-medium text-slate-100 leading-tight">{enemy.name}</span>
+              <span className="text-sm font-medium text-slate-100 leading-tight break-words [overflow-wrap:anywhere]">{enemy.name}</span>
               {enemy.lvUp
                 ? <Badge variant="teal">Lv {enemy.lvMin}–{enemy.lvMax}</Badge>
                 : <Badge variant="slate">Lv {enemy.lvMin === enemy.lvMax ? enemy.lvMin : `${enemy.lvMin}–${enemy.lvMax}`}</Badge>
@@ -167,69 +256,113 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
               </div>
             )}
           </div>
-          <div className="shrink-0 text-right">
-            <div className="text-xs font-mono text-slate-300">
-              {enemy.hpMin === enemy.hpMax
-                ? enemy.hpMin.toLocaleString()
-                : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`} HP
-            </div>
-            <div className="text-xs font-mono text-slate-600">
-              {enemy.ap} AP{enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
-            </div>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-xs font-mono [overflow-wrap:anywhere]">
+          <div className="text-slate-300 break-words">
+            {enemy.hpMin === enemy.hpMax
+              ? enemy.hpMin.toLocaleString()
+              : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`} HP
+          </div>
+          <div className="text-slate-600 break-words">
+            {enemy.ap} AP{enemy.expFormula ? ` · (${enemy.expFormula.replace('x', 'Lv')}) EXP` : enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
           </div>
         </div>
       </div>
 
-      {/* Expanded detail */}
-      {open && (
-        <div className="px-3 pb-3 pt-1 space-y-2 border-t border-slate-700/40 text-xs">
+      {!open && (
+        <div className="px-3 pb-3 space-y-1.5 text-xs">
           {enemy.drawMagic.length > 0 && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14 pt-0.5">Draw</span>
-              <DrawList spells={enemy.drawMagic} />
+              <DrawBands enemy={enemy} />
+            </div>
+          )}
+          {(enemy.mug || enemy.drop || enemy.devour) && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <span className="text-[10px] uppercase tracking-wide text-slate-600">More</span>
+              {enemy.mug && <Badge variant="amber">Mug</Badge>}
+              {enemy.drop && <Badge variant="slate">Drop</Badge>}
+              {enemy.devour && <Badge variant="emerald">Devour</Badge>}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Expanded detail */}
+      {open && (
+        <div className="px-3 pb-3 pt-1 space-y-2 border-t border-slate-700/40 text-xs">
+          {enemy.scan && (
+            <p className="text-slate-500 leading-relaxed italic text-[11px]">{enemy.scan}</p>
+          )}
+          {enemy.drawMagic.length > 0 && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14 pt-0.5">Draw</span>
+              <DrawBands enemy={enemy} />
             </div>
           )}
           {enemy.mug && (
             <div className="flex gap-2">
-              <span className="text-slate-600 shrink-0 w-14">Mug</span>
-              <span className="text-amber-300">{enemy.mug}</span>
+              <span className="text-slate-600 shrink-0 w-14">
+                Mug{enemy.mugChance ? <span className="block text-[9px] text-slate-700">{enemy.mugChance}</span> : null}
+              </span>
+              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" />
             </div>
           )}
           {enemy.drop && (
             <div className="flex gap-2">
-              <span className="text-slate-600 shrink-0 w-14">Drop</span>
-              <span className="text-slate-400">{enemy.drop}</span>
+              <span className="text-slate-600 shrink-0 w-14">
+                Drop{enemy.dropChance ? <span className="block text-[9px] text-slate-700">{enemy.dropChance}</span> : null}
+              </span>
+              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} />
+            </div>
+          )}
+          {enemy.devour && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14">Devour</span>
+              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" />
             </div>
           )}
           {(enemy.cards.common || enemy.cards.rare) && (
             <div className="flex gap-2">
-              <span className="text-slate-600 shrink-0 w-14">Card</span>
+              <span className="text-slate-600 shrink-0 w-14">Card Win</span>
               <span className="text-indigo-300">
-                {[enemy.cards.common, enemy.cards.rare].filter(Boolean).join(' / ')}
+                {[enemy.cards.common && `${enemy.cards.common} (common)`, enemy.cards.rare && `${enemy.cards.rare} (rare)`].filter(Boolean).join(', ')}
               </span>
             </div>
           )}
-          {enemy.cardDrop && enemy.cardDrop !== 'none' && (
+          {enemy.cardDrop && enemy.cardDrop !== 'none' && enemy.cardDrop !== enemy.cards.common && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14">Card Drop</span>
               <span className="text-indigo-400">{enemy.cardDrop}</span>
             </div>
           )}
-          {notableElems.length > 0 && (
-            <div className="flex gap-2 flex-wrap pt-0.5">
-              <span className="text-slate-600 shrink-0 w-14">Elements</span>
-              <span className="flex flex-wrap gap-1.5">
-                {notableElems.map(([elem, val]) => (
-                  <span key={elem} className={cn('flex items-center gap-0.5 text-[10px]', elemColor(val))}>
-                    {ELEM_ICONS[elem]}
-                    <span>{ELEM_LABEL[elem]}: {elemShort(val)}</span>
-                  </span>
-                ))}
-              </span>
+          {(enemy.elementalWeaknesses || enemy.elementalResistances) && (
+            <div className="grid grid-cols-1 gap-1 pt-0.5">
+              {enemy.elementalWeaknesses && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Weak</span>
+                  <span className="text-red-300">{enemy.elementalWeaknesses}</span>
+                </div>
+              )}
+              {enemy.elementalResistances && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Resist</span>
+                  <span className="text-blue-300">{enemy.elementalResistances}</span>
+                </div>
+              )}
             </div>
           )}
-          {enemy.scan && (
-            <p className="text-slate-500 leading-relaxed pt-0.5 border-t border-slate-800/60">{enemy.scan}</p>
+          {enemy.statusVulnerabilitiesNote && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14">Status</span>
+              <span className="text-slate-400 leading-relaxed">{enemy.statusVulnerabilitiesNote}</span>
+            </div>
+          )}
+          {enemy.whereFound && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14">Found</span>
+              <span className="text-slate-400 leading-relaxed">{enemy.whereFound}</span>
+            </div>
           )}
         </div>
       )}
@@ -240,7 +373,7 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
 // ─── Boss card (more info always visible) ────────────────────────────────────
 function BossCard({ enemy }: { enemy: Enemy }) {
   const [open, setOpen] = useState(false)
-  const notableElems = Object.entries(enemy.elementals)
+  const notableElems = Object.entries(enemy.elementals ?? {})
   const hasDraw = enemy.drawMagic.length > 0
   const hasDrop = !!(enemy.drop)
   const hasMug  = !!(enemy.mug)
@@ -248,7 +381,8 @@ function BossCard({ enemy }: { enemy: Enemy }) {
   return (
     <div className="rounded-lg border border-slate-700/40 bg-slate-800/20 overflow-hidden">
       {/* Header row */}
-      <div className="flex items-start gap-3 px-3 py-2.5">
+      <div className="flex min-w-0 flex-wrap items-start gap-3 px-3 py-2.5">
+        <EnemyImage enemy={enemy} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-sm font-medium text-slate-100">{enemy.name}</span>
@@ -258,14 +392,14 @@ function BossCard({ enemy }: { enemy: Enemy }) {
             }
           </div>
         </div>
-        <div className="shrink-0 text-right">
-          <div className="text-xs font-mono text-slate-200">
+        <div className="ml-auto min-w-0 max-w-full text-right [overflow-wrap:anywhere]">
+          <div className="text-xs font-mono text-slate-200 break-words">
             {enemy.hpMin === enemy.hpMax
               ? <><span className="text-slate-500 text-[10px]">Fixed </span>{enemy.hpMin.toLocaleString()}</>
               : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`} HP
           </div>
-          <div className="text-xs font-mono text-slate-600">
-            {enemy.ap > 0 ? `${enemy.ap} AP` : 'No AP'}{enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
+          <div className="text-xs font-mono text-slate-600 break-words">
+            {enemy.ap > 0 ? `${enemy.ap} AP` : 'No AP'}{enemy.expFormula ? ` · ${enemy.expFormula} EXP` : enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
           </div>
         </div>
       </div>
@@ -274,7 +408,7 @@ function BossCard({ enemy }: { enemy: Enemy }) {
       {hasDraw && (
         <div className="px-3 pb-2 flex gap-2 text-xs">
           <span className="text-slate-600 shrink-0 w-12 pt-0.5">Draw</span>
-          <DrawList spells={enemy.drawMagic} />
+          <DrawBands enemy={enemy} />
         </div>
       )}
 
@@ -283,14 +417,24 @@ function BossCard({ enemy }: { enemy: Enemy }) {
         <div className="px-3 pb-2 space-y-1 text-xs">
           {hasDrop && (
             <div className="flex gap-2">
-              <span className="text-slate-600 shrink-0 w-12">Drop</span>
-              <span className="text-slate-300">{enemy.drop}</span>
+              <span className="text-slate-600 shrink-0 w-12">
+                Drop{enemy.dropChance ? <span className="block text-[9px] text-slate-700">{enemy.dropChance}</span> : null}
+              </span>
+              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} />
             </div>
           )}
           {hasMug && (
             <div className="flex gap-2">
-              <span className="text-slate-600 shrink-0 w-12">Mug</span>
-              <span className="text-amber-300">{enemy.mug}</span>
+              <span className="text-slate-600 shrink-0 w-12">
+                Mug{enemy.mugChance ? <span className="block text-[9px] text-slate-700">{enemy.mugChance}</span> : null}
+              </span>
+              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" />
+            </div>
+          )}
+          {enemy.devour && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-12">Devour</span>
+              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" />
             </div>
           )}
         </div>
@@ -305,7 +449,7 @@ function BossCard({ enemy }: { enemy: Enemy }) {
       )}
 
       {/* Expandable: elementals + scan */}
-      {(notableElems.length > 0 || enemy.scan) && (
+      {(notableElems.length > 0 || enemy.elementalWeaknesses || enemy.elementalResistances || enemy.statusVulnerabilitiesNote || enemy.whereFound || enemy.scan) && (
         <>
           <button
             onClick={() => setOpen(o => !o)}
@@ -316,6 +460,9 @@ function BossCard({ enemy }: { enemy: Enemy }) {
           </button>
           {open && (
             <div className="px-3 pb-3 space-y-2 text-xs">
+              {enemy.scan && (
+                <p className="text-slate-500 italic text-[11px] leading-relaxed">{enemy.scan}</p>
+              )}
               {notableElems.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {notableElems.map(([elem, val]) => (
@@ -326,8 +473,29 @@ function BossCard({ enemy }: { enemy: Enemy }) {
                   ))}
                 </div>
               )}
-              {enemy.scan && (
-                <p className="text-slate-500 leading-relaxed">{enemy.scan}</p>
+              {enemy.elementalWeaknesses && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Weak</span>
+                  <span className="text-red-300">{enemy.elementalWeaknesses}</span>
+                </div>
+              )}
+              {enemy.elementalResistances && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Resist</span>
+                  <span className="text-blue-300">{enemy.elementalResistances}</span>
+                </div>
+              )}
+              {enemy.statusVulnerabilitiesNote && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Status</span>
+                  <span className="text-slate-400 leading-relaxed">{enemy.statusVulnerabilitiesNote}</span>
+                </div>
+              )}
+              {enemy.whereFound && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Found</span>
+                  <span className="text-slate-400 leading-relaxed">{enemy.whereFound}</span>
+                </div>
               )}
             </div>
           )}
@@ -396,8 +564,11 @@ export function BestiaryView({ enemies }: Props) {
         e.drawMagic.some(m => m.toLowerCase().includes(q)) ||
         (e.mug?.toLowerCase().includes(q)) ||
         (e.drop?.toLowerCase().includes(q)) ||
+        (e.devour?.toLowerCase().includes(q)) ||
         (e.cards.common?.toLowerCase().includes(q)) ||
         (e.cards.rare?.toLowerCase().includes(q)) ||
+        (e.whereFound?.toLowerCase().includes(q)) ||
+        (e.statusVulnerabilitiesNote?.toLowerCase().includes(q)) ||
         (e.scan?.toLowerCase().includes(q))
       )
     }
@@ -413,6 +584,9 @@ export function BestiaryView({ enemies }: Props) {
       e.drawMagic.some(m => m.toLowerCase().includes(q)) ||
       (e.mug?.toLowerCase().includes(q)) ||
       (e.drop?.toLowerCase().includes(q)) ||
+      (e.devour?.toLowerCase().includes(q)) ||
+      (e.whereFound?.toLowerCase().includes(q)) ||
+      (e.statusVulnerabilitiesNote?.toLowerCase().includes(q)) ||
       (e.scan?.toLowerCase().includes(q))
     )
   }, [bossEnemies, query, isSearching])
@@ -463,7 +637,7 @@ export function BestiaryView({ enemies }: Props) {
         </div>
 
         {/* Element weakness filter (enemies tab only) */}
-        {tab === 'enemies' && !isSearching && (
+        {tab === 'enemies' && (
           <div>
             <p className="text-[10px] text-slate-600 mb-1.5">Filter by weakness</p>
             <div className="flex flex-wrap gap-1">
@@ -502,7 +676,7 @@ export function BestiaryView({ enemies }: Props) {
             {filteredRegular.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-600">No enemies match</p>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
+              <div className={cn('grid gap-2', isSearching || elemFilter ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2')}>
                 {filteredRegular.map(e => <EnemyCard key={e.id} enemy={e} />)}
               </div>
             )}
@@ -515,7 +689,7 @@ export function BestiaryView({ enemies }: Props) {
             <div className="text-xs text-slate-600 mb-4">
               {isSearching
                 ? `${(filteredBosses?.length ?? 0)} of ${bossEnemies.length} bosses`
-                : `${bossEnemies.length} bosses · shown in encounter order · ✦ = drawable GF`
+                : `${bossEnemies.length} bosses · shown in encounter order · ⭐ = drawable GF`
               }
             </div>
 

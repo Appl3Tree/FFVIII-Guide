@@ -59,10 +59,10 @@ export function Sidebar({ chapters, activeChapterId, onSelectChapter, getChapter
                       : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
                   )}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="truncate">{ch.title}</span>
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="min-w-0 flex-1 leading-snug break-words [overflow-wrap:anywhere]">{ch.title}</span>
                     {progress > 0 && (
-                      <span className={cn('shrink-0 text-[10px]', progress === 100 ? 'text-emerald-400' : 'text-slate-600')}>
+                      <span className={cn('shrink-0 text-[10px] pt-0.5', progress === 100 ? 'text-emerald-400' : 'text-slate-600')}>
                         {progress === 100 ? '✓' : `${progress}%`}
                       </span>
                     )}
