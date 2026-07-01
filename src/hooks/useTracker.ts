@@ -36,6 +36,21 @@ export function useTracker() {
     return !!state.completedItems[id]
   }, [state.completedItems])
 
+  const updateNote = useCallback((id: string, value: string) => {
+    setState(s => ({
+      ...s,
+      notes: { ...s.notes, [id]: value },
+    }))
+  }, [])
+
+  const deleteNote = useCallback((id: string) => {
+    setState(s => {
+      const nextNotes = { ...s.notes }
+      delete nextNotes[id]
+      return { ...s, notes: nextNotes }
+    })
+  }, [])
+
   const getProgress = useCallback((
     category: 'achievements' | 'missables' | 'gfs' | 'cards' | 'chapter',
     data: MasterData,
@@ -69,5 +84,5 @@ export function useTracker() {
 
   const resetAll = useCallback(() => setState(defaultState), [])
 
-  return { state, toggleItem, isCompleted, getProgress, resetAll }
+  return { state, toggleItem, isCompleted, getProgress, updateNote, deleteNote, resetAll }
 }

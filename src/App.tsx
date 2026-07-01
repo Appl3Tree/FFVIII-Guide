@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap } from 'lucide-react'
+import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap, NotebookPen } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
 import { useSearch } from './hooks/useSearch'
@@ -7,6 +7,8 @@ import { Sidebar } from './components/layout/Sidebar'
 import { ContextPanel } from './components/layout/ContextPanel'
 import { BottomNav } from './components/layout/BottomNav'
 import { CommandPalette } from './components/ui/CommandPalette'
+import { NotesDrawer } from './components/ui/NotesDrawer'
+import { SupportLinks } from './components/ui/SupportLinks'
 import { GuideView } from './components/views/GuideView'
 import { ChecklistView } from './components/views/ChecklistView'
 import { SidequestView } from './components/views/SidequestView'
@@ -67,6 +69,7 @@ export default function App() {
   )
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [desktopMoreOpen, setDesktopMoreOpen] = useState(false)
+  const [notesOpen, setNotesOpen] = useState(false)
 
   const tracker = useTracker()
   const search = useSearch(data, SIDEQUESTS)
@@ -75,6 +78,7 @@ export default function App() {
   const activeChapter    = data.chapters[activeChapterIdx] ?? data.chapters[0]
   const prevChapter      = activeChapterIdx > 0 ? data.chapters[activeChapterIdx - 1] : null
   const nextChapter      = activeChapterIdx < data.chapters.length - 1 ? data.chapters[activeChapterIdx + 1] : null
+  const hasNotes = Object.values(tracker.state.notes).some(value => value.trim().length > 0)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -192,11 +196,12 @@ export default function App() {
 
         {/* Column 1: Navigation */}
         <div className="glass-panel border-r border-slate-700/60 rounded-none flex flex-col overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-700/40 shrink-0">
+          <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-700/40 shrink-0">
             <h1 className="text-sm font-bold tracking-tight">
               <span className="text-slate-400">FF</span><span className="text-white font-black">VIII</span>
               <span className="text-slate-500 font-normal ml-1">Guide</span>
             </h1>
+            <SupportLinks compact />
           </div>
           <Sidebar
             chapters={data.chapters}
@@ -308,6 +313,8 @@ export default function App() {
             data={data}
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
+            onOpenNotes={() => setNotesOpen(true)}
+            hasNotes={hasNotes}
           />
         </div>
       </div>
@@ -316,10 +323,13 @@ export default function App() {
       <div className="lg:hidden flex flex-col h-dvh">
         <header className="sticky top-0 z-30 glass-panel border-b border-slate-700/50 rounded-none px-4 py-3 flex items-center justify-between">
           <div className="min-w-0">
-            <h1 className="text-sm font-bold tracking-tight leading-tight">
-              <span className="text-slate-400">FF</span><span className="text-white font-black">VIII</span>
-              <span className="text-slate-500 font-normal ml-1">Guide</span>
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-sm font-bold tracking-tight leading-tight">
+                <span className="text-slate-400">FF</span><span className="text-white font-black">VIII</span>
+                <span className="text-slate-500 font-normal ml-1">Guide</span>
+              </h1>
+              <SupportLinks compact />
+            </div>
             {view === 'guide' && activeChapter && (
               <p className={cn('text-[10px] leading-tight max-w-[260px] break-words [overflow-wrap:anywhere]', activeChapter.disc === 0 ? 'text-sky-400' : DISC_COLORS[activeChapter.disc])}>
                 {activeChapter.disc === 0 ? 'Reference' : `Disc ${activeChapter.disc}`} · {activeChapter.title}
@@ -327,11 +337,33 @@ export default function App() {
             )}
           </div>
           <div className="flex items-center gap-1">
-            <button onClick={search.openSearch} className="p-2 text-slate-500 hover:text-slate-200 transition-colors">
+            <button
+              type="button"
+              onClick={() => setNotesOpen(true)}
+              aria-label={hasNotes ? 'Open notes with saved notes' : 'Open notes'}
+              className={cn(
+                'relative p-2 transition-colors',
+                hasNotes ? 'text-teal-300 hover:text-teal-200' : 'text-slate-500 hover:text-slate-200'
+              )}
+            >
+              <NotebookPen size={16} />
+              {hasNotes && <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-teal-300" />}
+            </button>
+            <button
+              type="button"
+              onClick={search.openSearch}
+              aria-label="Open search"
+              className="p-2 text-slate-500 hover:text-slate-200 transition-colors"
+            >
               <Search size={16} />
             </button>
             {view === 'guide' && (
-              <button onClick={() => setSidebarOpen(s => !s)} className="p-2 text-slate-500 hover:text-slate-200 transition-colors">
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(s => !s)}
+                aria-label={sidebarOpen ? 'Close guide menu' : 'Open guide menu'}
+                className="p-2 text-slate-500 hover:text-slate-200 transition-colors"
+              >
                 {sidebarOpen ? <X size={16} /> : <Menu size={16} />}
               </button>
             )}
@@ -339,14 +371,15 @@ export default function App() {
         </header>
 
         {sidebarOpen && view === 'guide' && (
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 z-[70] flex">
             <div className="absolute inset-0 bg-black/70" onClick={() => setSidebarOpen(false)} />
-            <div className="relative w-64 glass-panel h-full overflow-y-auto rounded-none border-r border-slate-700/60">
+            <div className="relative flex h-dvh w-64 flex-col overflow-hidden rounded-none border-r border-slate-700/60 glass-panel">
               <Sidebar
                 chapters={data.chapters}
                 activeChapterId={activeChapterId}
                 onSelectChapter={handleSelectChapter}
                 getChapterProgress={chapterProgress}
+                className="min-h-0 flex-1"
               />
             </div>
           </div>
@@ -369,6 +402,17 @@ export default function App() {
         onQueryChange={search.setQuery}
         onClose={search.closeSearch}
         onSelect={handleSearchSelect}
+      />
+
+      <NotesDrawer
+        open={notesOpen}
+        chapter={activeChapter ?? null}
+        chapters={data.chapters}
+        notes={tracker.state.notes}
+        onClose={() => setNotesOpen(false)}
+        onJumpToChapter={navigateToChapter}
+        onUpdateNote={tracker.updateNote}
+        onDeleteNote={tracker.deleteNote}
       />
     </div>
   )
