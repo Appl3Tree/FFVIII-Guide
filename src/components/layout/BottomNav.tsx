@@ -43,6 +43,7 @@ export function BottomNav({ active, onChange, onSearch }: Props) {
       {moreOpen && (
         <div className="bottom-nav-compact-overlay fixed inset-0 z-40 bg-black/50" onClick={() => setMoreOpen(false)}>
           <div
+            data-testid="mobile-more-menu"
             className="absolute bottom-[calc(3.75rem+env(safe-area-inset-bottom))] left-3 right-3 rounded-xl border border-slate-700/70 bg-slate-950/95 p-2 shadow-2xl shadow-black/60"
             onClick={event => event.stopPropagation()}
           >
@@ -63,14 +64,6 @@ export function BottomNav({ active, onChange, onSearch }: Props) {
                   <span className="leading-none">{tab.label}</span>
                 </button>
               ))}
-              <button
-                onClick={() => { setMoreOpen(false); onSearch() }}
-                aria-label="Search"
-                className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border border-slate-800/80 bg-slate-900/65 px-2 py-2 text-[10px] text-slate-400 transition-colors hover:border-slate-700 hover:text-slate-200"
-              >
-                <Search size={16} />
-                <span className="leading-none">Search</span>
-              </button>
             </div>
           </div>
         </div>

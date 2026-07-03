@@ -225,7 +225,7 @@ export default function App() {
         {/* Column 2: Main content */}
         <div className="flex flex-col overflow-hidden">
           {/* Sticky header */}
-          <header className="shrink-0 bg-slate-950/80 backdrop-blur-sm">
+          <header className="relative z-50 shrink-0 bg-slate-950/80 backdrop-blur-sm">
             <div className="desktop-tabs-compact relative items-center gap-0 px-4 border-b border-slate-700/40">
               {DESKTOP_PRIMARY_TABS.map(tab => (
                 <button
@@ -243,6 +243,7 @@ export default function App() {
               ))}
               <div className="relative">
                 <button
+                  aria-label="More sections"
                   onClick={() => setDesktopMoreOpen(open => !open)}
                   className={cn(
                     'relative flex items-center gap-1.5 px-3 py-2 text-xs transition-colors whitespace-nowrap',
@@ -255,7 +256,7 @@ export default function App() {
                   More
                 </button>
                 {desktopMoreOpen && (
-                  <div className="absolute left-0 top-full z-30 mt-1 w-44 overflow-hidden rounded-lg border border-slate-700/70 bg-slate-950/95 shadow-2xl shadow-black/50">
+                  <div data-testid="desktop-more-menu" className="absolute left-0 top-full z-[80] mt-1 w-44 overflow-hidden rounded-lg border border-slate-700/70 bg-slate-950/95 shadow-2xl shadow-black/50">
                     {DESKTOP_MORE_TABS.map(tab => (
                       <button
                         key={tab.id}

@@ -232,6 +232,95 @@ async function auditTarget(send, target, viewport) {
   return { ...target, viewport, failed, states, allBrokenImages }
 }
 
+async function auditResponsiveNav(send) {
+  const navUrl = `${baseUrl}?audit=headless-render&chapter=r0-about`
+  const visibleExpression = `
+    const visible = (el) => {
+      if (!el) return false;
+      const style = getComputedStyle(el);
+      if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0 && r.bottom >= 0 && r.right >= 0 && r.top <= innerHeight && r.left <= innerWidth;
+    };
+  `
+  const results = []
+
+  await send('Emulation.setDeviceMetricsOverride', {
+    width: 1100,
+    height: 720,
+    deviceScaleFactor: 1,
+    mobile: false,
+  })
+  await send('Page.navigate', { url: navUrl })
+  await waitForApp(send)
+  await delay(150)
+  await evalValue(send, `(() => { document.querySelector('button[aria-label="More sections"]')?.click(); return true; })()`)
+  await delay(100)
+  const desktopState = await evalValue(send, `(() => {
+    ${visibleExpression}
+    const menu = document.querySelector('[data-testid="desktop-more-menu"]');
+    const buttons = Array.from(menu?.querySelectorAll('button') ?? []).filter(visible);
+    const coveredButtons = buttons.map(button => {
+      const r = button.getBoundingClientRect();
+      const x = Math.round(r.left + r.width / 2);
+      const y = Math.round(r.top + r.height / 2);
+      const top = document.elementFromPoint(x, y);
+      return button.contains(top) ? null : {
+        label: (button.innerText || button.getAttribute('aria-label') || '').trim(),
+        coveredBy: (top?.innerText || top?.getAttribute?.('aria-label') || top?.className || top?.tagName || '').toString().replace(/\\s+/g, ' ').trim().slice(0, 160),
+      };
+    }).filter(Boolean);
+    return {
+      viewport: { width: innerWidth, height: innerHeight },
+      menuVisible: visible(menu),
+      menuLabels: buttons.map(button => (button.innerText || '').replace(/\\s+/g, ' ').trim()),
+      coveredButtons,
+    };
+  })()`)
+  results.push({
+    kind: 'nav',
+    id: 'desktop-compact-more-stacking',
+    viewport: { name: 'desktop-compact', width: 1100, height: 720, mobile: false },
+    failed: !desktopState.menuVisible || desktopState.menuLabels.length !== DESKTOP_MORE_COUNT || desktopState.coveredButtons.length > 0,
+    states: { opened: desktopState },
+  })
+
+  await send('Emulation.setDeviceMetricsOverride', {
+    width: 390,
+    height: 844,
+    deviceScaleFactor: 1,
+    mobile: true,
+  })
+  await send('Page.navigate', { url: navUrl })
+  await waitForApp(send)
+  await delay(150)
+  await evalValue(send, `(() => { document.querySelector('.bottom-nav-compact button[aria-label="More tabs"]')?.click(); return true; })()`)
+  await delay(100)
+  const mobileState = await evalValue(send, `(() => {
+    ${visibleExpression}
+    const menu = document.querySelector('[data-testid="mobile-more-menu"]');
+    const menuButtons = Array.from(menu?.querySelectorAll('button') ?? []).filter(visible);
+    const compactSearch = document.querySelector('.bottom-nav-compact button[aria-label="Search"]');
+    return {
+      viewport: { width: innerWidth, height: innerHeight },
+      menuVisible: visible(menu),
+      menuLabels: menuButtons.map(button => (button.innerText || button.getAttribute('aria-label') || '').replace(/\\s+/g, ' ').trim()),
+      bottomSearchVisible: visible(compactSearch),
+    };
+  })()`)
+  results.push({
+    kind: 'nav',
+    id: 'mobile-more-no-search-duplicate',
+    viewport: { name: 'mobile', width: 390, height: 844, mobile: true },
+    failed: !mobileState.menuVisible || !mobileState.bottomSearchVisible || mobileState.menuLabels.includes('Search'),
+    states: { opened: mobileState },
+  })
+
+  return results
+}
+
+const DESKTOP_MORE_COUNT = 5
+
 const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ffviii-guide-render-audit-'))
 let chrome
 
@@ -268,6 +357,17 @@ try {
         results.push({ ...target, viewport, failed: true, error: String(error?.stack ?? error) })
       }
     }
+  }
+  try {
+    results.push(...await auditResponsiveNav(send))
+  } catch (error) {
+    results.push({
+      kind: 'nav',
+      id: 'responsive-nav',
+      viewport: { name: 'interactive', width: 0, height: 0, mobile: false },
+      failed: true,
+      error: String(error?.stack ?? error),
+    })
   }
 
   await send('Emulation.clearDeviceMetricsOverride')
