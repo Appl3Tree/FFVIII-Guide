@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc -b",
     "build": "tsc -b && vite build",
     "audit:render": "node scripts/auditRenderedRoutes.mjs",
     "audit:search": "node scripts/auditSearchRelevance.mjs",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "clsx": "^2.1.1",
+    "firebase": "^12.16.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.453.0",
     "react": "^18.3.1",

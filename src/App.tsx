@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap, NotebookPen } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
@@ -9,6 +9,8 @@ import { BottomNav } from './components/layout/BottomNav'
 import { CommandPalette } from './components/ui/CommandPalette'
 import { NotesDrawer } from './components/ui/NotesDrawer'
 import { SupportLinks } from './components/ui/SupportLinks'
+import { AuthControl } from './components/ui/AuthControl'
+import { SyncConflictModal } from './components/ui/SyncConflictModal'
 import { GuideView } from './components/views/GuideView'
 import { ChecklistView } from './components/views/ChecklistView'
 import { SidequestView } from './components/views/SidequestView'
@@ -21,6 +23,7 @@ import { AbilitiesView } from './components/views/AbilitiesView'
 import type { MasterData, ViewMode } from './types'
 import masterDataRaw from './data/ff8_master.json'
 import { SIDEQUESTS } from './data/sidequests'
+import { createProgressLabeler } from './lib/progressLabels'
 
 const data = masterDataRaw as unknown as MasterData
 const VIEW_MODES: ViewMode[] = ['guide', 'checklist', 'sidequests', 'cards', 'gfs', 'abilities', 'refinement', 'items', 'bestiary']
@@ -73,6 +76,7 @@ export default function App() {
 
   const tracker = useTracker()
   const search = useSearch(data, SIDEQUESTS)
+  const formatProgressLabel = useMemo(() => createProgressLabeler(data, SIDEQUESTS), [])
 
   const activeChapterIdx = data.chapters.findIndex(c => c.id === activeChapterId)
   const activeChapter    = data.chapters[activeChapterIdx] ?? data.chapters[0]
@@ -275,6 +279,9 @@ export default function App() {
                   </div>
                 )}
               </div>
+              <div className="ml-auto w-[15rem] min-w-0 py-1">
+                <AuthControl tracker={tracker} />
+              </div>
             </div>
             <div className="desktop-tabs-full items-center gap-0 px-4 border-b border-slate-700/40">
               {DESKTOP_FULL_TABS.map(tab => (
@@ -291,6 +298,9 @@ export default function App() {
                   {tab.icon}{tab.label}
                 </button>
               ))}
+              <div className="ml-auto w-[15rem] min-w-0 py-1">
+                <AuthControl tracker={tracker} />
+              </div>
             </div>
             {view === 'guide' && activeChapter && (
               <div className="px-4 py-1.5 flex items-center gap-3 text-xs border-b border-slate-700/30">
@@ -323,7 +333,7 @@ export default function App() {
       {/* ── Mobile ── */}
       <div className="lg:hidden flex flex-col h-dvh">
         <header className="sticky top-0 z-30 glass-panel border-b border-slate-700/50 rounded-none px-4 py-3 flex items-center justify-between">
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1 pr-2">
             <div className="flex items-center gap-2">
               <h1 className="text-sm font-bold tracking-tight leading-tight">
                 <span className="text-slate-400">FF</span><span className="text-white font-black">VIII</span>
@@ -336,6 +346,9 @@ export default function App() {
                 {activeChapter.disc === 0 ? 'Reference' : `Disc ${activeChapter.disc}`} · {activeChapter.title}
               </p>
             )}
+            <div className="mt-2 max-w-[13.5rem]">
+              <AuthControl tracker={tracker} />
+            </div>
           </div>
           <div className="flex items-center gap-1">
             <button
@@ -415,6 +428,14 @@ export default function App() {
         onUpdateNote={tracker.updateNote}
         onDeleteNote={tracker.deleteNote}
       />
+
+      {tracker.syncConflict && (
+        <SyncConflictModal
+          conflict={tracker.syncConflict}
+          formatLabel={formatProgressLabel}
+          onResolve={tracker.resolveSyncConflict}
+        />
+      )}
     </div>
   )
 

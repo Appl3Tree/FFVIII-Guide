@@ -31,7 +31,7 @@ export function SupportLinks({ compact = false }: Props) {
             key={link.href}
             href={link.href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             title={link.title}
             aria-label={link.title}
             className={cn(
@@ -55,7 +55,7 @@ export function SupportLinks({ compact = false }: Props) {
             key={link.href}
             href={link.href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             title={link.title}
             className={`inline-flex min-w-0 items-center justify-center gap-1.5 rounded-lg border border-slate-800/80 bg-slate-900/45 px-2 py-1.5 text-[11px] font-medium text-slate-500 transition-colors ${link.accent}`}
           >

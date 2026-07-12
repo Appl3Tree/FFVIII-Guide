@@ -1256,7 +1256,7 @@ export function ImageGrid({ images }: { images: GuideImage[] }) {
             image.wide && 'sm:col-span-2 2xl:col-span-2'
           )}
         >
-          <a href={image.src} target="_blank" rel="noreferrer" className="group block">
+          <a href={image.src} target="_blank" rel="noopener noreferrer" className="group block">
             <div className="relative bg-slate-950">
               <img
                 src={image.src}
