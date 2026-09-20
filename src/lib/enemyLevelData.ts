@@ -46,21 +46,19 @@ function sameSpellList(a: string[], b: string[]) {
 }
 
 /**
- * FFVIII's ordinary encounter rule: floor the active-party average, then
- * choose either average ±1 below level 10 or average ±floor(average / 5) at
- * level 10 and above. The game clamps the result to levels 1–100.
+ * FFVIII's ordinary encounter rule: choose either floor(4/5 × average) or
+ * floor(6/5 × average), then clamp the result to levels 1–100.
  */
 export function possiblePartyEnemyLevels(levels: number[]) {
   const safeLevels = levels.length ? levels.map(level => clampLevel(level)) : [1]
   const averageLevel = safeLevels.reduce((sum, level) => sum + level, 0) / safeLevels.length
   const baseLevel = Math.floor(averageLevel)
-  const variance = baseLevel < 10 ? 1 : Math.floor(baseLevel / 5)
   return {
     averageLevel,
     baseLevel,
     possibleLevels: uniqueSorted([
-      clampLevel(baseLevel - variance),
-      clampLevel(baseLevel + variance),
+      clampLevel(Math.floor(averageLevel * 4 / 5)),
+      clampLevel(Math.floor(averageLevel * 6 / 5)),
     ]),
   }
 }
