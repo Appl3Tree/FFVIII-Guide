@@ -2,7 +2,9 @@ import { Trophy, AlertTriangle, NotebookPen } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { ProgressBar } from '../ui/ProgressBar'
-import type { Chapter, MasterData } from '../../types'
+import { PlayerContextPanel } from './PlayerContextPanel'
+import type { PartyLevelContext } from '../../lib/enemyLevelData'
+import type { Chapter, CharacterProfile, GuardianForce, MagicSpell, MasterData, TrackerState } from '../../types'
 
 interface Props {
   chapter: Chapter | null
@@ -11,6 +13,17 @@ interface Props {
   onToggleItem: (id: string) => void
   onOpenNotes: () => void
   hasNotes: boolean
+  characters: CharacterProfile[]
+  magic: MagicSpell[]
+  gfs: GuardianForce[]
+  availableMagicIds: ReadonlySet<string>
+  state: TrackerState
+  partyContext: PartyLevelContext
+  onToggleParty: (characterId: string) => void
+  onSetLevel: (characterId: string, level: number) => void
+  onToggleMagic: (characterId: string, spellId: string) => void
+  onToggleGFAbility: (gfId: string, abilityName: string) => void
+  onSetProgressionChapter: (chapterId: string) => void
 }
 
 const DISC_COLORS_PANEL: Record<number, { label: string; text: string; bar: 'teal' | 'indigo' | 'violet' | 'amber' }> = {
@@ -20,7 +33,7 @@ const DISC_COLORS_PANEL: Record<number, { label: string; text: string; bar: 'tea
   4: { label: 'Disc 4', text: 'text-amber-400',  bar: 'amber' },
 }
 
-export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes }: Props) {
+export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes, characters, magic, gfs, availableMagicIds, state, partyContext, onToggleParty, onSetLevel, onToggleMagic, onToggleGFAbility, onSetProgressionChapter }: Props) {
   const allCps = data.chapters.flatMap(ch => ch.checkpoints)
   const allAchs = allCps.filter(cp => cp.type === 'achievement')
   const allMisses = allCps.filter(cp => cp.type === 'missable')
@@ -58,6 +71,21 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOp
       </div>
 
       <div className="mt-3 min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+        <PlayerContextPanel
+          characters={characters}
+          magic={magic}
+          gfs={gfs}
+          chapters={data.chapters}
+          availableMagicIds={availableMagicIds}
+          state={state}
+          partyContext={partyContext}
+          onToggleParty={onToggleParty}
+          onSetLevel={onSetLevel}
+          onToggleMagic={onToggleMagic}
+          onToggleGFAbility={onToggleGFAbility}
+          onSetProgressionChapter={onSetProgressionChapter}
+        />
+
         {chapter && chapter.checkpoints.length > 0 && (
           <div className="glass-panel p-0 overflow-hidden">
             <div className="px-3 py-2 border-b border-slate-700/40">

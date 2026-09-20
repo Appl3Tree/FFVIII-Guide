@@ -5,12 +5,15 @@ import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
-import type { GuardianForce } from '../../types'
+import { isGFAbilityLearned, recommendedGFAbilities } from '../../lib/playerState'
+import type { GuardianForce, TrackerState } from '../../types'
 
 interface Props {
   gfs: GuardianForce[]
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
+  learnedGFAbilities: TrackerState['learnedGFAbilities']
+  onToggleAbility: (gfId: string, abilityName: string) => void
 }
 
 const ELEMENT_VARIANTS: Record<string, 'teal' | 'indigo' | 'amber' | 'emerald' | 'red' | 'violet' | 'slate' | 'sky'> = {
@@ -23,7 +26,7 @@ function cleanLocation(loc: string): string {
   return loc.replace(/^\d+\.\s*/, '').replace(/^\d+\)\s*/, '').trim()
 }
 
-export function GFView({ gfs, completedItems, onToggleItem }: Props) {
+export function GFView({ gfs, completedItems, onToggleItem, learnedGFAbilities, onToggleAbility }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null)
   const obtained = gfs.filter(g => completedItems[g.id]).length
 
@@ -44,7 +47,9 @@ export function GFView({ gfs, completedItems, onToggleItem }: Props) {
           const obtained = !!completedItems[gf.id]
           const isExpanded = expanded === gf.id
           const elemVariant = ELEMENT_VARIANTS[gf.element] ?? 'slate'
-          const learningPreview = gf.learningOrder?.slice(0, 3) ?? []
+          const learningPreview = recommendedGFAbilities(gf).slice(0, 3)
+          const recommended = recommendedGFAbilities(gf)
+          const learnedCount = recommended.filter(ability => isGFAbilityLearned({ learnedGFAbilities }, gf.id, ability.name)).length
 
           return (
             <div key={gf.id} className={cn('glass-panel overflow-hidden', obtained && 'border-emerald-600/30')}>
@@ -66,12 +71,13 @@ export function GFView({ gfs, completedItems, onToggleItem }: Props) {
                       <span className="text-[10px] uppercase tracking-wide text-slate-600">Learn</span>
                       {learningPreview.map((item, idx) => (
                         <span
-                          key={`${gf.id}-${item}-${idx}`}
+                          key={`${gf.id}-${item.name}-${idx}`}
                           className="inline-flex items-center rounded border border-violet-700/25 bg-violet-950/20 px-1.5 py-0.5 text-[10px] leading-tight text-violet-200"
                         >
-                          {idx + 1}. {item}
+                          {idx + 1}. {item.name}
                         </span>
                       ))}
+                      <span className="text-[10px] text-emerald-300/80">{learnedCount}/{recommended.length}</span>
                     </div>
                   )}
                 </div>
@@ -118,27 +124,26 @@ export function GFView({ gfs, completedItems, onToggleItem }: Props) {
                         <div>
                           <p className="text-xs text-slate-600 mb-1.5">Abilities ({gf.abilities.length})</p>
                           <div className="grid grid-cols-1 gap-1 max-h-52 overflow-y-auto">
-                            {(() => {
-                              const sorted = gf.learningOrder?.length
-                                ? [...gf.abilities].sort((a, b) => {
-                                    const ai = gf.learningOrder!.indexOf(a.name)
-                                    const bi = gf.learningOrder!.indexOf(b.name)
-                                    if (ai === -1 && bi === -1) return 0
-                                    if (ai === -1) return 1
-                                    if (bi === -1) return -1
-                                    return ai - bi
-                                  })
-                                : gf.abilities
-                              return sorted.map((ab, idx) => (
-                                <div key={idx} className="flex flex-wrap items-start justify-between gap-1.5 text-xs bg-slate-800/40 rounded-md px-2.5 py-1.5">
-                                  <span className="text-slate-300 break-words [overflow-wrap:anywhere]">{ab.name}</span>
-                                  <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-0.5 text-slate-500">
+                            {recommended.map((ab, idx) => {
+                              const learned = isGFAbilityLearned({ learnedGFAbilities }, gf.id, ab.name)
+                              return (
+                                <button
+                                  type="button"
+                                  key={idx}
+                                  onClick={() => onToggleAbility(gf.id, ab.name)}
+                                  className={cn('flex w-full flex-wrap items-start justify-between gap-1.5 rounded-md px-2.5 py-1.5 text-left text-xs transition-colors', learned ? 'bg-emerald-950/20' : 'bg-slate-800/40 hover:bg-slate-800/70')}
+                                >
+                                  <span className={cn('break-words [overflow-wrap:anywhere]', learned ? 'text-slate-500 line-through' : 'text-slate-300')}>
+                                    {learned && <CheckCircle2 size={11} className="mr-1 inline text-emerald-400" />}
+                                    {ab.name}
+                                  </span>
+                                  <span className="flex flex-wrap items-center justify-end gap-x-2 gap-y-0.5 text-slate-500">
                                     <span>{ab.ap > 0 ? `${ab.ap} AP` : 'Pre-learned'}</span>
                                     {ab.requires && <span className="text-teal-500/70">Requires {ab.requires}</span>}
-                                  </div>
-                                </div>
-                              ))
-                            })()}
+                                  </span>
+                                </button>
+                              )
+                            })}
                           </div>
                         </div>
                       )}

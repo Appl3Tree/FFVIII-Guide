@@ -11,6 +11,8 @@ import {
 import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import type { MasterData, TrackerState } from '../types'
 import { auth, db, firebaseEnabled, googleProvider, GUIDE_SLUG } from '../lib/firebase'
+import { clampCharacterLevel, gfAbilityKey, MAX_ACTIVE_PARTY_SIZE } from '../lib/playerState'
+import { defaultProgressionChapterId, validProgressionChapterId } from '../lib/progression'
 
 const STORAGE_KEY = 'ffviii-tracker-v2'
 const SYNC_DEBOUNCE_MS = 1000
@@ -39,9 +41,17 @@ export interface SyncConflict {
   }
 }
 
-const defaultState: TrackerState = {
-  completedItems: {},
-  notes: {},
+function createDefaultState(data: MasterData): TrackerState {
+  const characters = data.lookup.characters ?? []
+  return {
+    completedItems: {},
+    notes: {},
+    magicCompletedByCharacter: {},
+    learnedGFAbilities: {},
+    characterLevels: Object.fromEntries(characters.map(character => [character.id, 1])),
+    activeParty: Object.fromEntries(characters.map((character, index) => [character.id, index < 3])),
+    progressionChapterId: defaultProgressionChapterId(data.chapters),
+  }
 }
 
 function activeChecked(checked: Record<string, boolean>) {
@@ -91,21 +101,89 @@ function parseChecked(value: unknown): Record<string, boolean> {
   return activeChecked(value as Record<string, boolean>)
 }
 
+function parseNotes(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .filter(([, item]) => typeof item === 'string')
+      .map(([key, item]) => [key, item as string]),
+  )
+}
+
+function parseNestedChecked(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, parseChecked(item)]),
+  )
+}
+
+function parseNumbers(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .filter(([, item]) => typeof item === 'number' && Number.isFinite(item))
+      .map(([key, item]) => [key, clampCharacterLevel(item as number)]),
+  )
+}
+
+function parseActiveParty(value: unknown) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null
+  return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, item === true]))
+}
+
+function normalizeActiveParty(data: MasterData, requested: Record<string, boolean>) {
+  const characters = data.lookup.characters ?? []
+  const selectedIds = characters
+    .filter(character => requested[character.id])
+    .slice(0, MAX_ACTIVE_PARTY_SIZE)
+    .map(character => character.id)
+  const ids = selectedIds.length > 0
+    ? selectedIds
+    : characters.slice(0, MAX_ACTIVE_PARTY_SIZE).map(character => character.id)
+  return Object.fromEntries(characters.map(character => [character.id, ids.includes(character.id)]))
+}
+
 function errorMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback
 }
 
-function loadState(): TrackerState {
+function parseTrackerState(value: unknown, data: MasterData): TrackerState {
+  const parsed = value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Partial<TrackerState> & { checked?: unknown }
+    : {}
+  const defaults = createDefaultState(data)
+  const parsedActiveParty = parseActiveParty(parsed.activeParty)
+  return {
+    completedItems: parseChecked(parsed.completedItems ?? parsed.checked),
+    notes: parseNotes(parsed.notes),
+    magicCompletedByCharacter: parseNestedChecked(parsed.magicCompletedByCharacter),
+    learnedGFAbilities: parseChecked(parsed.learnedGFAbilities),
+    characterLevels: { ...defaults.characterLevels, ...parseNumbers(parsed.characterLevels) },
+    activeParty: parsedActiveParty
+      ? normalizeActiveParty(data, parsedActiveParty)
+      : defaults.activeParty,
+    progressionChapterId: validProgressionChapterId(data.chapters, parsed.progressionChapterId),
+  }
+}
+
+function stateHasPlayerProgress(state: TrackerState, data: MasterData) {
+  const defaults = createDefaultState(data)
+  return Object.keys(state.notes).length > 0 ||
+    Object.keys(state.completedItems).length > 0 ||
+    Object.keys(state.magicCompletedByCharacter).some(characterId => Object.keys(state.magicCompletedByCharacter[characterId] ?? {}).length > 0) ||
+    Object.keys(state.learnedGFAbilities).length > 0 ||
+    Object.entries(defaults.characterLevels).some(([id, level]) => state.characterLevels[id] !== level) ||
+    Object.entries(defaults.activeParty).some(([id, active]) => state.activeParty[id] !== active)
+    || state.progressionChapterId !== defaults.progressionChapterId
+}
+
+function loadState(data: MasterData): TrackerState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return defaultState
-    const parsed = JSON.parse(raw) as Partial<TrackerState>
-    return {
-      completedItems: parseChecked(parsed.completedItems),
-      notes: parsed.notes && typeof parsed.notes === 'object' && !Array.isArray(parsed.notes) ? parsed.notes as Record<string, string> : {},
-    }
+    if (!raw) return createDefaultState(data)
+    return parseTrackerState(JSON.parse(raw), data)
   } catch {
-    return defaultState
+    return createDefaultState(data)
   }
 }
 
@@ -114,17 +192,18 @@ function guideDocRef(uid: string) {
   return doc(db, 'users', uid, 'guides', GUIDE_SLUG)
 }
 
-async function saveCheckedToCloud(uid: string, checked: Record<string, boolean>) {
+async function saveStateToCloud(uid: string, state: TrackerState) {
   await setDoc(guideDocRef(uid), {
-    checked: activeChecked(checked),
+    checked: activeChecked(state.completedItems),
+    state,
     guideSlug: GUIDE_SLUG,
-    schemaVersion: 1,
+    schemaVersion: 2,
     updatedAt: serverTimestamp(),
   })
 }
 
-export function useTracker() {
-  const [state, setState] = useState<TrackerState>(loadState)
+export function useTracker(data: MasterData) {
+  const [state, setState] = useState<TrackerState>(() => loadState(data))
   const [user, setUser] = useState<User | null>(null)
   const [authStatus, setAuthStatus] = useState<AuthStatus>(firebaseEnabled ? 'loading' : 'disabled')
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(firebaseEnabled ? 'local' : 'local')
@@ -172,19 +251,26 @@ export function useTracker() {
 
       try {
         const snapshot = await getDoc(guideDocRef(nextUser.uid))
-        const cloudChecked = parseChecked(snapshot.exists() ? snapshot.data().checked : {})
+        const cloudData = snapshot.exists() ? snapshot.data() : {}
+        const cloudState = parseTrackerState(cloudData.state ?? cloudData, data)
+        const cloudHasPlayerState = Boolean(cloudData.state)
+        const cloudChecked = activeChecked(cloudState.completedItems)
         const localChecked = activeChecked(stateRef.current.completedItems)
         const localEmpty = checkedCount(localChecked) === 0
         const cloudEmpty = checkedCount(cloudChecked) === 0
+        const localHasPlayerState = stateHasPlayerProgress(stateRef.current, data)
 
         if (localEmpty && !cloudEmpty) {
-          setState(current => ({ ...current, completedItems: cloudChecked }))
+          setState(current => ({ ...current, completedItems: cloudChecked, ...(cloudHasPlayerState ? cloudState : {}) }))
           setSyncStatus('saved')
         } else if (!localEmpty && cloudEmpty) {
           setSyncStatus('syncing')
-          await saveCheckedToCloud(nextUser.uid, localChecked)
+          await saveStateToCloud(nextUser.uid, stateRef.current)
           setSyncStatus('saved')
         } else if (sameChecked(localChecked, cloudChecked)) {
+          if (!localHasPlayerState && cloudHasPlayerState) {
+            setState(current => ({ ...current, ...cloudState }))
+          }
           setSyncStatus('saved')
         } else if (!localEmpty && !cloudEmpty) {
           syncBlockedRef.current = true
@@ -198,7 +284,7 @@ export function useTracker() {
         setSyncStatus('issue')
       }
     })
-  }, [])
+  }, [data])
 
   useEffect(() => {
     const currentUser = userRef.current
@@ -209,7 +295,7 @@ export function useTracker() {
       try {
         savingRef.current = true
         setSyncStatus('syncing')
-        await saveCheckedToCloud(currentUser.uid, stateRef.current.completedItems)
+        await saveStateToCloud(currentUser.uid, stateRef.current)
         setSyncStatus('saved')
       } catch (error) {
         console.error('Cloud progress save failed:', errorMessage(error, 'Unknown Firebase error.'))
@@ -222,7 +308,7 @@ export function useTracker() {
     return () => {
       if (!savingRef.current && debounceRef.current) window.clearTimeout(debounceRef.current)
     }
-  }, [state.completedItems])
+  }, [state, data])
 
   const setCheck = useCallback((key: string, next?: boolean) => {
     setState(current => {
@@ -242,6 +328,67 @@ export function useTracker() {
   const isCompleted = useCallback((id: string) => {
     return !!state.completedItems[id]
   }, [state.completedItems])
+
+  const setMagicCompleted = useCallback((characterId: string, spellId: string, next?: boolean) => {
+    setState(current => {
+      const currentCharacter = current.magicCompletedByCharacter[characterId] ?? {}
+      const nextCompleted = typeof next === 'boolean' ? next : !currentCharacter[spellId]
+      const characterCompleted = { ...currentCharacter }
+      if (nextCompleted) characterCompleted[spellId] = true
+      else delete characterCompleted[spellId]
+      return {
+        ...current,
+        magicCompletedByCharacter: {
+          ...current.magicCompletedByCharacter,
+          [characterId]: characterCompleted,
+        },
+      }
+    })
+  }, [])
+
+  const setGFAbilityLearned = useCallback((gfId: string, abilityName: string, next?: boolean) => {
+    setState(current => {
+      const key = gfAbilityKey(gfId, abilityName)
+      const nextLearned = typeof next === 'boolean' ? next : !current.learnedGFAbilities[key]
+      const learnedGFAbilities = { ...current.learnedGFAbilities }
+      if (nextLearned) learnedGFAbilities[key] = true
+      else delete learnedGFAbilities[key]
+      return { ...current, learnedGFAbilities }
+    })
+  }, [])
+
+  const setCharacterLevel = useCallback((characterId: string, level: number) => {
+    setState(current => ({
+      ...current,
+      characterLevels: {
+        ...current.characterLevels,
+        [characterId]: clampCharacterLevel(level),
+      },
+    }))
+  }, [])
+
+  const setActiveCharacter = useCallback((characterId: string, next?: boolean) => {
+    let changed = false
+    setState(current => {
+      const active = !!current.activeParty[characterId]
+      const nextActive = typeof next === 'boolean' ? next : !active
+      const activeCount = Object.values(current.activeParty).filter(Boolean).length
+      if (nextActive === active || (nextActive && activeCount >= MAX_ACTIVE_PARTY_SIZE) || (!nextActive && activeCount <= 1)) {
+        return current
+      }
+      changed = true
+      return {
+        ...current,
+        activeParty: { ...current.activeParty, [characterId]: nextActive },
+      }
+    })
+    return changed
+  }, [])
+
+  const setProgressionChapter = useCallback((chapterId: string) => {
+    const validId = validProgressionChapterId(data.chapters, chapterId)
+    setState(current => ({ ...current, progressionChapterId: validId }))
+  }, [data])
 
   const updateNote = useCallback((id: string, value: string) => {
     setState(current => ({
@@ -289,7 +436,7 @@ export function useTracker() {
     return Math.round((done / ids.length) * 100)
   }, [state.completedItems])
 
-  const resetAll = useCallback(() => setState(defaultState), [])
+  const resetAll = useCallback(() => setState(createDefaultState(data)), [data])
 
   const signInWithEmail = useCallback(async (email: string, password: string) => {
     setAuthError(null)
@@ -360,7 +507,7 @@ export function useTracker() {
     setSyncStatus('syncing')
 
     try {
-      await saveCheckedToCloud(userRef.current.uid, selected)
+      await saveStateToCloud(userRef.current.uid, { ...stateRef.current, completedItems: activeChecked(selected) })
       setSyncStatus('saved')
     } catch (error) {
       console.error('Cloud progress conflict resolution failed:', errorMessage(error, 'Unknown Firebase error.'))
@@ -374,6 +521,11 @@ export function useTracker() {
     setCheck,
     toggleItem,
     isCompleted,
+    setMagicCompleted,
+    setGFAbilityLearned,
+    setCharacterLevel,
+    setActiveCharacter,
+    setProgressionChapter,
     getProgress,
     updateNote,
     deleteNote,

@@ -2,11 +2,17 @@ import { useState, useMemo } from 'react'
 import { Search, Flame, Snowflake, Zap, Mountain, Wind, Droplets, Sun, Star, ChevronDown, ChevronRight } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Badge } from '../ui/Badge'
-import { mergeDrawLevelBands, mergeValueLevelBands } from '../../lib/enemyLevelData'
-import type { Enemy } from '../../types'
+import { contextualDrawMagic, contextualEnemyAbilities, contextualValue, formatPossibleLevels, mergeDrawLevelBands, mergeValueLevelBands, resolveEnemyLevelContext, statsForEnemyLevels, type ContextualOption, type PartyLevelContext } from '../../lib/enemyLevelData'
+import { charactersNeedingSpell } from '../../lib/playerState'
+import type { CharacterProfile, Enemy, MagicSpell } from '../../types'
 
 interface Props {
   enemies: Enemy[]
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
 }
 
 type Tab = 'enemies' | 'bosses'
@@ -134,7 +140,62 @@ function DrawList({ spells }: { spells: string[] }) {
   )
 }
 
-function DrawBands({ enemy }: { enemy: Enemy }) {
+function ContextOptionLabel({ option }: { option: ContextualOption }) {
+  return (
+    <span title={option.guaranteed ? 'Available at every possible spawn level' : `Only available at level ${formatPossibleLevels(option.levels)}`}>
+      {option.value}
+      {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">Lv {formatPossibleLevels(option.levels)}</span>}
+    </span>
+  )
+}
+
+function ContextDrawList({ options, characters, activePartyIds, magic, magicCompletedByCharacter }: {
+  options: ContextualOption[]
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+}) {
+  return (
+    <span className="flex flex-wrap gap-1">
+      {options.map(option => {
+        const needers = charactersNeedingSpell(option.value, characters.filter(character => activePartyIds.includes(character.id)), magic, { magicCompletedByCharacter })
+        return (
+          <span
+            key={option.value}
+            title={needers.length ? `Still needed by ${needers.map(character => character.name).join(', ')}` : undefined}
+            className={cn(
+              'inline-flex max-w-full items-center gap-0.5 rounded border px-1.5 py-0.5 text-[10px]',
+              option.guaranteed ? 'border-violet-700/40 bg-slate-800/60 text-violet-300' : 'border-amber-700/45 bg-amber-950/20 text-amber-200'
+            )}
+          >
+            <ContextOptionLabel option={option} />
+            {needers.length > 0 && <span className="ml-1 text-[9px] text-teal-300/80">· {needers.map(character => character.name.split(' ')[0]).join(', ')}</span>}
+          </span>
+        )
+      })}
+    </span>
+  )
+}
+
+function DrawBands({
+  enemy,
+  levelContext,
+  characters,
+  activePartyIds,
+  magic,
+  magicCompletedByCharacter,
+}: {
+  enemy: Enemy
+  levelContext?: ReturnType<typeof resolveEnemyLevelContext>
+  characters?: CharacterProfile[]
+  activePartyIds?: string[]
+  magic?: MagicSpell[]
+  magicCompletedByCharacter?: Record<string, Record<string, boolean>>
+}) {
+  if (levelContext && characters && magic && magicCompletedByCharacter) {
+    return <ContextDrawList options={contextualDrawMagic(enemy, levelContext.levels)} characters={characters} activePartyIds={activePartyIds ?? []} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />
+  }
   const bands = enemy.drawMagicByLevel ?? []
   if (!bands.length) return <DrawList spells={enemy.drawMagic} />
   const displayBands = mergeDrawLevelBands(bands)
@@ -157,16 +218,32 @@ function ValueBands({
   bands,
   fallback,
   tone = 'slate',
+  levelContext,
 }: {
   bands?: Array<{ lvMin: number; lvMax: number; value: string | null }>
   fallback?: string | null
   tone?: 'slate' | 'amber' | 'emerald'
+  levelContext?: ReturnType<typeof resolveEnemyLevelContext>
 }) {
   const color = tone === 'amber'
     ? 'text-amber-300'
     : tone === 'emerald'
       ? 'text-emerald-300'
       : 'text-slate-400'
+
+  if (levelContext) {
+    const options = contextualValue(bands, fallback, levelContext.levels)
+    if (!options.length) return null
+    return (
+      <div className="flex flex-wrap gap-1">
+        {options.map(option => (
+          <span key={option.value} title={option.guaranteed ? 'Applies at every possible spawn level' : `Only applies at level ${formatPossibleLevels(option.levels)}`} className={cn('leading-relaxed', color, !option.guaranteed && 'text-amber-300')}>
+            <ContextOptionLabel option={option} />
+          </span>
+        ))}
+      </div>
+    )
+  }
 
   if (!bands?.length) {
     return fallback ? <span className={color}>{fallback}</span> : null
@@ -203,9 +280,21 @@ function EnemyImage({ enemy }: { enemy: Enemy }) {
 }
 
 // ─── Enemy card (regular encounters) ─────────────────────────────────────────
-function EnemyCard({ enemy }: { enemy: Enemy }) {
+function EnemyCard({ enemy, partyContext, characters, activePartyIds, magic, magicCompletedByCharacter }: {
+  enemy: Enemy
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+}) {
   const [open, setOpen] = useState(false)
+  const levelContext = resolveEnemyLevelContext(enemy, partyContext)
+  const currentStats = statsForEnemyLevels(enemy, levelContext.levels)
+  const currentHpValues = [...new Set(currentStats.map(stat => stat.hp))]
+  const abilityOptions = contextualEnemyAbilities(enemy, levelContext.levels)
   const notableElems = Object.entries(enemy.elementals ?? {})
+    .filter(([, value]) => value && !/^normal$/i.test(value))
   const hasDetail = !!(
     enemy.drawMagic.length ||
     enemy.mug ||
@@ -220,6 +309,7 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
     enemy.statusVulnerabilitiesNote ||
     enemy.whereFound ||
     enemy.scan
+    || abilityOptions.length
   )
 
   return (
@@ -238,10 +328,8 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 flex-wrap mb-1">
               <span className="text-sm font-medium text-slate-100 leading-tight break-words [overflow-wrap:anywhere]">{enemy.name}</span>
-              {enemy.lvUp
-                ? <Badge variant="teal">Lv {enemy.lvMin}–{enemy.lvMax}</Badge>
-                : <Badge variant="slate">Lv {enemy.lvMin === enemy.lvMax ? enemy.lvMin : `${enemy.lvMin}–${enemy.lvMax}`}</Badge>
-              }
+              <Badge variant={levelContext.source === 'fixed' ? 'slate' : 'teal'}>Lv {formatPossibleLevels(levelContext.levels)}</Badge>
+              {levelContext.source !== 'normal' && <span className="text-[10px] text-amber-300/70">{levelContext.sourceLabel}</span>}
               {open && <span className="text-slate-600"><ChevronDown size={10} /></span>}
               {!open && hasDetail && <span className="text-slate-600"><ChevronRight size={10} /></span>}
             </div>
@@ -259,9 +347,11 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
         </div>
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-xs font-mono [overflow-wrap:anywhere]">
           <div className="text-slate-300 break-words">
-            {enemy.hpMin === enemy.hpMax
+            {currentHpValues.length > 0
+              ? `${currentHpValues.map(value => value.toLocaleString()).join(' / ')} HP`
+              : enemy.hpMin === enemy.hpMax
               ? enemy.hpMin.toLocaleString()
-              : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`} HP
+              : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()} HP`}
           </div>
           <div className="text-slate-600 break-words">
             {enemy.ap} AP{enemy.expFormula ? ` · (${enemy.expFormula.replace('x', 'Lv')}) EXP` : enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
@@ -274,7 +364,7 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
           {enemy.drawMagic.length > 0 && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14 pt-0.5">Draw</span>
-              <DrawBands enemy={enemy} />
+              <DrawBands enemy={enemy} levelContext={levelContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />
             </div>
           )}
           {(enemy.mug || enemy.drop || enemy.devour) && (
@@ -297,7 +387,7 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
           {enemy.drawMagic.length > 0 && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14 pt-0.5">Draw</span>
-              <DrawBands enemy={enemy} />
+              <DrawBands enemy={enemy} levelContext={levelContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />
             </div>
           )}
           {enemy.mug && (
@@ -305,7 +395,7 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
               <span className="text-slate-600 shrink-0 w-14">
                 Mug{enemy.mugChance ? <span className="block text-[9px] text-slate-700">{enemy.mugChance}</span> : null}
               </span>
-              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" />
+              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" levelContext={levelContext} />
             </div>
           )}
           {enemy.drop && (
@@ -313,13 +403,13 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
               <span className="text-slate-600 shrink-0 w-14">
                 Drop{enemy.dropChance ? <span className="block text-[9px] text-slate-700">{enemy.dropChance}</span> : null}
               </span>
-              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} />
+              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} levelContext={levelContext} />
             </div>
           )}
           {enemy.devour && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14">Devour</span>
-              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" />
+              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" levelContext={levelContext} />
             </div>
           )}
           {(enemy.cards.common || enemy.cards.rare) && (
@@ -358,6 +448,18 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
               <span className="text-slate-400 leading-relaxed">{enemy.statusVulnerabilitiesNote}</span>
             </div>
           )}
+          {abilityOptions.length > 0 && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14">Abilities</span>
+              <span className="text-amber-200/80">{abilityOptions.map(option => `${option.value}${option.guaranteed ? '' : ` (Lv ${formatPossibleLevels(option.levels)})`}`).join(' · ')}</span>
+            </div>
+          )}
+          {currentStats.length > 0 && (
+            <div className="flex gap-2">
+              <span className="text-slate-600 shrink-0 w-14">Stats</span>
+              <span className="text-slate-400">{currentStats.map(stat => `Lv ${stat.level}: HP ${stat.hp.toLocaleString()} · STR ${stat.str} · MAG ${stat.mag} · VIT ${stat.vit} · SPR ${stat.spr} · SPD ${stat.spd} · EVA ${stat.eva}`).join(' / ')}</span>
+            </div>
+          )}
           {enemy.whereFound && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-14">Found</span>
@@ -371,9 +473,21 @@ function EnemyCard({ enemy }: { enemy: Enemy }) {
 }
 
 // ─── Boss card (more info always visible) ────────────────────────────────────
-function BossCard({ enemy }: { enemy: Enemy }) {
+function BossCard({ enemy, partyContext, characters, activePartyIds, magic, magicCompletedByCharacter }: {
+  enemy: Enemy
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+}) {
   const [open, setOpen] = useState(false)
+  const levelContext = resolveEnemyLevelContext(enemy, partyContext)
+  const currentStats = statsForEnemyLevels(enemy, levelContext.levels)
+  const currentHpValues = [...new Set(currentStats.map(stat => stat.hp))]
+  const abilityOptions = contextualEnemyAbilities(enemy, levelContext.levels)
   const notableElems = Object.entries(enemy.elementals ?? {})
+    .filter(([, value]) => value && !/^normal$/i.test(value))
   const hasDraw = enemy.drawMagic.length > 0
   const hasDrop = !!(enemy.drop)
   const hasMug  = !!(enemy.mug)
@@ -386,17 +500,17 @@ function BossCard({ enemy }: { enemy: Enemy }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-sm font-medium text-slate-100">{enemy.name}</span>
-            {enemy.lvUp
-              ? <Badge variant="teal">Lv {enemy.lvMin}–{enemy.lvMax}</Badge>
-              : <Badge variant="slate">Lv {enemy.lvMin === enemy.lvMax ? enemy.lvMin : `${enemy.lvMin}–${enemy.lvMax}`}</Badge>
-            }
+            <Badge variant={levelContext.source === 'fixed' ? 'slate' : 'teal'}>Lv {formatPossibleLevels(levelContext.levels)}</Badge>
+            {levelContext.source !== 'normal' && <span className="text-[10px] text-amber-300/70">{levelContext.sourceLabel}</span>}
           </div>
         </div>
         <div className="ml-auto min-w-0 max-w-full text-right [overflow-wrap:anywhere]">
           <div className="text-xs font-mono text-slate-200 break-words">
-            {enemy.hpMin === enemy.hpMax
+            {currentHpValues.length > 0
+              ? `${currentHpValues.map(value => value.toLocaleString()).join(' / ')} HP`
+              : enemy.hpMin === enemy.hpMax
               ? <><span className="text-slate-500 text-[10px]">Fixed </span>{enemy.hpMin.toLocaleString()}</>
-              : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`} HP
+              : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()} HP`}
           </div>
           <div className="text-xs font-mono text-slate-600 break-words">
             {enemy.ap > 0 ? `${enemy.ap} AP` : 'No AP'}{enemy.expFormula ? ` · ${enemy.expFormula} EXP` : enemy.exp > 0 ? ` · ${enemy.exp} EXP` : ''}
@@ -408,7 +522,7 @@ function BossCard({ enemy }: { enemy: Enemy }) {
       {hasDraw && (
         <div className="px-3 pb-2 flex gap-2 text-xs">
           <span className="text-slate-600 shrink-0 w-12 pt-0.5">Draw</span>
-          <DrawBands enemy={enemy} />
+          <DrawBands enemy={enemy} levelContext={levelContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />
         </div>
       )}
 
@@ -420,7 +534,7 @@ function BossCard({ enemy }: { enemy: Enemy }) {
               <span className="text-slate-600 shrink-0 w-12">
                 Drop{enemy.dropChance ? <span className="block text-[9px] text-slate-700">{enemy.dropChance}</span> : null}
               </span>
-              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} />
+              <ValueBands bands={enemy.dropByLevel} fallback={enemy.drop} levelContext={levelContext} />
             </div>
           )}
           {hasMug && (
@@ -428,13 +542,13 @@ function BossCard({ enemy }: { enemy: Enemy }) {
               <span className="text-slate-600 shrink-0 w-12">
                 Mug{enemy.mugChance ? <span className="block text-[9px] text-slate-700">{enemy.mugChance}</span> : null}
               </span>
-              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" />
+              <ValueBands bands={enemy.mugByLevel} fallback={enemy.mug} tone="amber" levelContext={levelContext} />
             </div>
           )}
           {enemy.devour && (
             <div className="flex gap-2">
               <span className="text-slate-600 shrink-0 w-12">Devour</span>
-              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" />
+              <ValueBands bands={enemy.devourByLevel} fallback={enemy.devour} tone="emerald" levelContext={levelContext} />
             </div>
           )}
         </div>
@@ -449,7 +563,7 @@ function BossCard({ enemy }: { enemy: Enemy }) {
       )}
 
       {/* Expandable: elementals + scan */}
-      {(notableElems.length > 0 || enemy.elementalWeaknesses || enemy.elementalResistances || enemy.statusVulnerabilitiesNote || enemy.whereFound || enemy.scan) && (
+      {(notableElems.length > 0 || enemy.elementalWeaknesses || enemy.elementalResistances || enemy.statusVulnerabilitiesNote || enemy.whereFound || enemy.scan || abilityOptions.length > 0) && (
         <>
           <button
             onClick={() => setOpen(o => !o)}
@@ -497,6 +611,18 @@ function BossCard({ enemy }: { enemy: Enemy }) {
                   <span className="text-slate-400 leading-relaxed">{enemy.whereFound}</span>
                 </div>
               )}
+              {abilityOptions.length > 0 && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Abilities</span>
+                  <span className="text-amber-200/80">{abilityOptions.map(option => `${option.value}${option.guaranteed ? '' : ` (Lv ${formatPossibleLevels(option.levels)})`}`).join(' · ')}</span>
+                </div>
+              )}
+              {currentStats.length > 0 && (
+                <div className="flex gap-2">
+                  <span className="text-slate-600 shrink-0 w-14">Stats</span>
+                  <span className="text-slate-400">{currentStats.map(stat => `Lv ${stat.level}: HP ${stat.hp.toLocaleString()} · STR ${stat.str} · MAG ${stat.mag} · VIT ${stat.vit} · SPR ${stat.spr} · SPD ${stat.spd} · EVA ${stat.eva}`).join(' / ')}</span>
+                </div>
+              )}
             </div>
           )}
         </>
@@ -507,11 +633,16 @@ function BossCard({ enemy }: { enemy: Enemy }) {
 
 // ─── Boss group section ───────────────────────────────────────────────────────
 function BossSection({
-  label, color, enemies,
+  label, color, enemies, partyContext, characters, activePartyIds, magic, magicCompletedByCharacter,
 }: {
   label: string
   color: 'teal'|'amber'|'indigo'|'violet'|'emerald'|'slate'
   enemies: Enemy[]
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
 }) {
   const [collapsed, setCollapsed] = useState(false)
   if (!enemies.length) return null
@@ -530,7 +661,7 @@ function BossSection({
       </button>
       {!collapsed && (
         <div className="space-y-2">
-          {enemies.map(e => <BossCard key={e.id} enemy={e} />)}
+          {enemies.map(e => <BossCard key={e.id} enemy={e} partyContext={partyContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />)}
         </div>
       )}
     </div>
@@ -538,7 +669,7 @@ function BossSection({
 }
 
 // ─── Main view ────────────────────────────────────────────────────────────────
-export function BestiaryView({ enemies }: Props) {
+export function BestiaryView({ enemies, partyContext, characters, activePartyIds, magic, magicCompletedByCharacter }: Props) {
   const [tab, setTab]         = useState<Tab>('enemies')
   const [query, setQuery]     = useState('')
   const [elemFilter, setElemFilter] = useState<string | null>(null)
@@ -624,6 +755,11 @@ export function BestiaryView({ enemies }: Props) {
             </button>
           </div>
         </div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500">
+          <span>Active party: {partyContext.activeCharacterIds.length ? partyContext.activeCharacterIds.map(id => characters.find(character => character.id === id)?.name.split(' ')[0] ?? id).join(' · ') : 'none'}</span>
+          <span className="font-mono text-teal-300/80">Possible enemy levels: {formatPossibleLevels(partyContext.possibleLevels)}</span>
+          <span className="text-slate-600">Level-dependent values show guaranteed vs possible spawns.</span>
+        </div>
 
         <div className="relative">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -676,8 +812,8 @@ export function BestiaryView({ enemies }: Props) {
             {filteredRegular.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-600">No enemies match</p>
             ) : (
-              <div className={cn('grid gap-2', isSearching || elemFilter ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2')}>
-                {filteredRegular.map(e => <EnemyCard key={e.id} enemy={e} />)}
+                <div className={cn('grid gap-2', isSearching || elemFilter ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2')}>
+                {filteredRegular.map(e => <EnemyCard key={e.id} enemy={e} partyContext={partyContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />)}
               </div>
             )}
           </>
@@ -697,11 +833,11 @@ export function BestiaryView({ enemies }: Props) {
               filteredBosses?.length === 0
                 ? <p className="py-8 text-center text-sm text-slate-600">No bosses match "{query}"</p>
                 : <div className="space-y-2">
-                    {filteredBosses?.map(e => <BossCard key={e.id} enemy={e} />)}
+                    {filteredBosses?.map(e => <BossCard key={e.id} enemy={e} partyContext={partyContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />)}
                   </div>
             ) : (
-              bossGroups.map(g => (
-                <BossSection key={g.label} label={g.label} color={g.color} enemies={g.enemies} />
+                bossGroups.map(g => (
+                <BossSection key={g.label} label={g.label} color={g.color} enemies={g.enemies} partyContext={partyContext} characters={characters} activePartyIds={activePartyIds} magic={magic} magicCompletedByCharacter={magicCompletedByCharacter} />
               ))
             )}
           </>

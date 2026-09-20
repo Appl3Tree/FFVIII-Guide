@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, FlaskConical, Package, Skull, Zap } from 'lucide-react'
+import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, FlaskConical, Package, Skull, Zap, UserRound } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { ViewMode } from '../../types'
 
@@ -16,6 +16,7 @@ const primaryTabs: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
 ]
 
 const moreTabs: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
+  { id: 'player',      label: 'Player',   icon: <UserRound size={16} /> },
   { id: 'cards',       label: 'Cards',   icon: <CreditCard size={16} /> },
   { id: 'gfs',         label: 'GFs',      icon: <Sparkles size={16} /> },
   { id: 'abilities',   label: 'Abilities',icon: <Zap size={16} /> },

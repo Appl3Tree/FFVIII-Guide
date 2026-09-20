@@ -216,6 +216,19 @@ export interface Enemy {
   undead?: boolean
   drawMagic: string[]
   drawMagicByLevel?: Array<{ lvMin: number; lvMax: number; spells: string[] }>
+  abilities?: string[]
+  abilitiesByLevel?: Array<{ lvMin: number; lvMax: number; abilities: string[] }>
+  statsByLevel?: Array<{
+    level: number
+    hp: number
+    str: number
+    mag: number
+    vit: number
+    spr: number
+    spd: number
+    eva: number
+    exp: number
+  }>
   mug: string | null
   mugByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null }>
   mugChance?: string | null
@@ -292,8 +305,15 @@ export interface MasterData {
 export interface TrackerState {
   completedItems: Record<string, boolean>
   notes: Record<string, string>
+  /** Spell completion is character-specific; a completed spell represents 100 stocked copies. */
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+  /** GF ability learning is keyed by `${gfId}:${abilityName}`. */
+  learnedGFAbilities: Record<string, boolean>
+  characterLevels: Record<string, number>
+  activeParty: Record<string, boolean>
+  progressionChapterId: string
 }
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 
-export type ViewMode = 'guide' | 'checklist' | 'sidequests' | 'cards' | 'gfs' | 'abilities' | 'refinement' | 'items' | 'bestiary'
+export type ViewMode = 'guide' | 'checklist' | 'sidequests' | 'cards' | 'gfs' | 'abilities' | 'refinement' | 'items' | 'bestiary' | 'player'

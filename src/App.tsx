@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap, NotebookPen } from 'lucide-react'
+import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap, NotebookPen, UserRound } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
 import { useSearch } from './hooks/useSearch'
@@ -20,13 +20,23 @@ import { RefinementView } from './components/views/RefinementView'
 import { ItemsView } from './components/views/ItemsView'
 import { BestiaryView } from './components/views/BestiaryView'
 import { AbilitiesView } from './components/views/AbilitiesView'
+import { PlayerView } from './components/views/PlayerView'
 import type { MasterData, ViewMode } from './types'
 import masterDataRaw from './data/ff8_master.json'
+import bestiaryRaw from './data/ff8_bestiary.json'
 import { SIDEQUESTS } from './data/sidequests'
 import { createProgressLabeler } from './lib/progressLabels'
+import { createPartyLevelContext } from './lib/enemyLevelData'
+import { createCanonicalEnemyLookup } from './lib/bestiaryData'
+import { magicAvailableByProgression } from './lib/progression'
 
-const data = masterDataRaw as unknown as MasterData
-const VIEW_MODES: ViewMode[] = ['guide', 'checklist', 'sidequests', 'cards', 'gfs', 'abilities', 'refinement', 'items', 'bestiary']
+const baseData = masterDataRaw as unknown as MasterData
+const canonicalEnemies = createCanonicalEnemyLookup(baseData.lookup.enemies, bestiaryRaw as unknown as Parameters<typeof createCanonicalEnemyLookup>[1])
+const data: MasterData = {
+  ...baseData,
+  lookup: { ...baseData.lookup, enemies: canonicalEnemies },
+}
+const VIEW_MODES: ViewMode[] = ['guide', 'checklist', 'sidequests', 'cards', 'gfs', 'abilities', 'refinement', 'items', 'bestiary', 'player']
 const initialChapterId =
   typeof window !== 'undefined'
     ? new URLSearchParams(window.location.search).get('chapter')
@@ -48,6 +58,7 @@ const DESKTOP_PRIMARY_TABS: { id: ViewMode; icon: React.ReactNode; label: string
 ]
 
 const DESKTOP_MORE_TABS: { id: ViewMode; icon: React.ReactNode; label: string }[] = [
+  { id: 'player',      icon: <UserRound size={13} />,    label: 'Player' },
   { id: 'gfs',         icon: <Sparkles size={13} />,      label: 'GFs' },
   { id: 'abilities',   icon: <Zap size={13} />,           label: 'Abilities' },
   { id: 'refinement',  icon: <FlaskConical size={13} />,  label: 'Refine' },
@@ -74,7 +85,7 @@ export default function App() {
   const [desktopMoreOpen, setDesktopMoreOpen] = useState(false)
   const [notesOpen, setNotesOpen] = useState(false)
 
-  const tracker = useTracker()
+  const tracker = useTracker(data)
   const search = useSearch(data, SIDEQUESTS)
   const formatProgressLabel = useMemo(() => createProgressLabeler(data, SIDEQUESTS), [])
 
@@ -83,6 +94,18 @@ export default function App() {
   const prevChapter      = activeChapterIdx > 0 ? data.chapters[activeChapterIdx - 1] : null
   const nextChapter      = activeChapterIdx < data.chapters.length - 1 ? data.chapters[activeChapterIdx + 1] : null
   const hasNotes = Object.values(tracker.state.notes).some(value => value.trim().length > 0)
+  const playerCharacters = data.lookup.characters ?? []
+  const partyContext = createPartyLevelContext(
+    playerCharacters.filter(character => tracker.state.activeParty[character.id]).map(character => character.id),
+    tracker.state.characterLevels,
+  )
+  const availableMagicIds = useMemo(() => magicAvailableByProgression(
+    data.chapters,
+    tracker.state.progressionChapterId,
+    data.lookup.enemies,
+    data.lookup.magic ?? [],
+    partyContext,
+  ), [tracker.state.progressionChapterId, tracker.state.characterLevels, tracker.state.activeParty, partyContext])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -326,6 +349,17 @@ export default function App() {
             onToggleItem={tracker.toggleItem}
             onOpenNotes={() => setNotesOpen(true)}
             hasNotes={hasNotes}
+            characters={playerCharacters}
+            magic={data.lookup.magic ?? []}
+            gfs={data.lookup.gfs}
+            availableMagicIds={availableMagicIds}
+            state={tracker.state}
+            partyContext={partyContext}
+            onToggleParty={tracker.setActiveCharacter}
+            onSetLevel={tracker.setCharacterLevel}
+            onToggleMagic={tracker.setMagicCompleted}
+            onToggleGFAbility={tracker.setGFAbilityLearned}
+            onSetProgressionChapter={tracker.setProgressionChapter}
           />
         </div>
       </div>
@@ -456,6 +490,10 @@ export default function App() {
             prevChapter={prevChapter}
             nextChapter={nextChapter}
             onNavigate={navigateChapter}
+            characterLevels={tracker.state.characterLevels}
+            activePartyIds={partyContext.activeCharacterIds}
+            magicCompletedByCharacter={tracker.state.magicCompletedByCharacter}
+            onToggleMagic={tracker.setMagicCompleted}
           />
         ) : null
 
@@ -485,6 +523,8 @@ export default function App() {
             gfs={data.lookup.gfs}
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
+            learnedGFAbilities={tracker.state.learnedGFAbilities}
+            onToggleAbility={tracker.setGFAbilityLearned}
           />
         )
 
@@ -507,7 +547,22 @@ export default function App() {
         return <AbilitiesView gfs={data.lookup.gfs} abilities={data.lookup.abilities ?? []} abilitySections={data.lookup.abilitySections ?? []} />
 
       case 'bestiary':
-        return <BestiaryView enemies={data.lookup.enemies} />
+        return <BestiaryView enemies={data.lookup.enemies} partyContext={partyContext} characters={playerCharacters} activePartyIds={partyContext.activeCharacterIds} magic={data.lookup.magic ?? []} magicCompletedByCharacter={tracker.state.magicCompletedByCharacter} />
+
+      case 'player':
+        return (
+          <PlayerView
+            characters={playerCharacters}
+            magic={data.lookup.magic ?? []}
+            gfs={data.lookup.gfs}
+            state={tracker.state}
+            availableMagicIds={availableMagicIds}
+            onToggleMagic={tracker.setMagicCompleted}
+            onToggleGFAbility={tracker.setGFAbilityLearned}
+            onSetLevel={tracker.setCharacterLevel}
+            onToggleParty={tracker.setActiveCharacter}
+          />
+        )
 
       default:
         return null

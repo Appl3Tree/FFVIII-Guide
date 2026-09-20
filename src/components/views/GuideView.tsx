@@ -24,7 +24,18 @@ import {
   Zap,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
-import { drawMagicForLevel, valueForLevel } from '../../lib/enemyLevelData'
+import {
+  contextualDrawMagic,
+  contextualEnemyAbilities,
+  contextualValue,
+  createPartyLevelContext,
+  formatPossibleLevels,
+  resolveEnemyLevelContext,
+  statsForEnemyLevels,
+  type ContextualOption,
+  type PartyLevelContext,
+} from '../../lib/enemyLevelData'
+import { charactersNeedingSpell, isMagicCompleted, magicByName } from '../../lib/playerState'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ContextualVisualAid, ImageGrid, contextualVisualAidPlacement, getBossImages } from './VisualAids'
@@ -54,6 +65,10 @@ interface Props {
   prevChapter?: Chapter | null
   nextChapter?: Chapter | null
   onNavigate?: (id: string) => void
+  characterLevels?: Record<string, number>
+  activePartyIds?: string[]
+  magicCompletedByCharacter?: Record<string, Record<string, boolean>>
+  onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
 }
 
 // ─── Inline rendering ─────────────────────────────────────────────────────────
@@ -549,9 +564,20 @@ function tidyRecipeText(value: string | undefined) {
   return value.replace(/\)(?=[A-Z0-9])/g, ') · ')
 }
 
-function MagicReference({ content, spells }: { content: string; spells: MagicSpell[] }) {
+function MagicReference({
+  content,
+  spells,
+  characters,
+  magicCompletedByCharacter,
+}: {
+  content: string
+  spells: MagicSpell[]
+  characters: CharacterProfile[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+}) {
   const [query, setQuery] = useState('')
   const [focusStat, setFocusStat] = useState<MagicStat>('Str')
+  const [selectedCharacterId, setSelectedCharacterId] = useState(characters[0]?.id ?? '')
   const q = query.trim().toLowerCase()
   const paragraphs = content.split('\n\n').filter(p => p.trim())
 
@@ -571,6 +597,11 @@ function MagicReference({ content, spells }: { content: string; spells: MagicSpe
     })
     .sort((a, b) => statNumber(b.statJunctions[focusStat]) - statNumber(a.statJunctions[focusStat]))
 
+  const selectedCharacter = characters.find(character => character.id === selectedCharacterId) ?? characters[0]
+  const owned = selectedCharacter
+    ? filtered.filter(spell => !!magicCompletedByCharacter[selectedCharacter.id]?.[spell.id])
+    : []
+
   return (
     <div className="space-y-4">
       {paragraphs.map((paragraph, i) => (
@@ -587,6 +618,11 @@ function MagicReference({ content, spells }: { content: string; spells: MagicSpe
             <p className="mt-1 text-sm text-slate-400">
               {filtered.length} of {spells.length} spells · sorted by <span className="font-semibold text-slate-200">{focusStat}-J</span>
             </p>
+            {selectedCharacter && (
+              <p className="mt-1 text-xs text-teal-300/80">
+                {selectedCharacter.name.split(' ')[0]} owned best: <span className="font-semibold">{owned[0]?.name ?? 'none marked'}</span> · 100 stock assumed
+              </p>
+            )}
           </div>
           <div className="relative min-w-0 xl:w-72">
             <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
@@ -617,18 +653,45 @@ function MagicReference({ content, spells }: { content: string; spells: MagicSpe
             </button>
           ))}
         </div>
+        {characters.length > 0 && (
+          <div className="mt-3 flex items-center gap-2 overflow-x-auto">
+            <span className="shrink-0 text-[10px] uppercase tracking-wide text-slate-600">Owned for</span>
+            {characters.map(character => (
+              <button
+                type="button"
+                key={character.id}
+                onClick={() => setSelectedCharacterId(character.id)}
+                className={cn(
+                  'shrink-0 rounded-md border px-2.5 py-1 text-xs transition-colors',
+                  selectedCharacter?.id === character.id
+                    ? 'border-teal-500/45 bg-teal-950/30 text-teal-200'
+                    : 'border-slate-800 bg-slate-950/30 text-slate-500 hover:text-slate-300'
+                )}
+              >
+                {character.name.split(' ')[0]}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="grid gap-3 xl:grid-cols-2">
-        {filtered.map(spell => (
-          <MagicSpellCard key={spell.id} spell={spell} focusStat={focusStat} />
+        {filtered.map((spell, index) => (
+          <MagicSpellCard
+            key={spell.id}
+            spell={spell}
+            focusStat={focusStat}
+            owned={!!selectedCharacter && !!magicCompletedByCharacter[selectedCharacter.id]?.[spell.id]}
+            theoreticalBest={index === 0}
+            ownedBest={owned.length > 0 && spell.id === owned[0].id}
+          />
         ))}
       </div>
     </div>
   )
 }
 
-function MagicSpellCard({ spell, focusStat }: { spell: MagicSpell; focusStat: MagicStat }) {
+function MagicSpellCard({ spell, focusStat, owned, theoreticalBest, ownedBest }: { spell: MagicSpell; focusStat: MagicStat; owned: boolean; theoreticalBest: boolean; ownedBest: boolean }) {
   const focusValue = spell.statJunctions[focusStat]
   const refineFrom = tidyRecipeText(spell.acquisition['Refine From'])
   const refineInto = tidyRecipeText(spell.acquisition['Refine Into'])
@@ -637,7 +700,12 @@ function MagicSpellCard({ spell, focusStat }: { spell: MagicSpell; focusStat: Ma
     <article className="rounded-xl border border-slate-700/45 bg-slate-900/45 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="text-base font-semibold text-slate-100">{spell.name}</h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className={cn('text-base font-semibold', owned ? 'text-slate-100' : 'text-slate-400')}>{spell.name}</h2>
+            {owned && <Badge variant="teal">owned · 100</Badge>}
+            {theoreticalBest && <Badge variant="violet">theoretical best</Badge>}
+            {ownedBest && <Badge variant="emerald">best owned</Badge>}
+          </div>
           <p className="mt-1 text-sm leading-relaxed text-slate-400">{spell.castEffect}</p>
         </div>
         <div className="rounded-lg border border-violet-500/30 bg-violet-950/30 px-3 py-2 text-center shrink-0">
@@ -1960,7 +2028,25 @@ function achTypeBadge(t: string) {
 
 // ─── Area encounter card ──────────────────────────────────────────────────────
 
-function AreaEncounterCard({ area, enemies }: { area: AreaEncounter; enemies: Enemy[] }) {
+function AreaEncounterCard({
+  area,
+  enemies,
+  partyContext,
+  characters,
+  activePartyIds,
+  magic,
+  magicCompletedByCharacter,
+  onToggleMagic,
+}: {
+  area: AreaEncounter
+  enemies: Enemy[]
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+  onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+}) {
   const enemyMap = new Map(enemies.map(e => [e.id, e]))
   const [expanded, setExpanded] = useState(false)
 
@@ -1982,7 +2068,19 @@ function AreaEncounterCard({ area, enemies }: { area: AreaEncounter; enemies: En
         {area.enemies.map((ae, ei) => {
           const enemy = enemyMap.get(ae.id)
           return (
-	            <EnemyRow key={ei} ae={ae} enemy={enemy ?? null} showFull={expanded} mugAvailable={area.mugAvailable !== false} />
+            <EnemyRow
+              key={ei}
+              ae={ae}
+              enemy={enemy ?? null}
+              showFull={expanded}
+              mugAvailable={area.mugAvailable !== false}
+              partyContext={partyContext}
+              characters={characters}
+              activePartyIds={activePartyIds}
+              magic={magic}
+              magicCompletedByCharacter={magicCompletedByCharacter}
+              onToggleMagic={onToggleMagic}
+            />
           )
         })}
       </div>
@@ -1992,35 +2090,60 @@ function AreaEncounterCard({ area, enemies }: { area: AreaEncounter; enemies: En
 
 function EnemyRow({
   ae,
-	  enemy,
-	  showFull,
-	  mugAvailable,
-	}: {
-	  ae: { id: string; name: string; notes?: string; lvMin?: number; lvMax?: number; hp?: number; drawMagic?: string[]; mug?: string | null }
-	  enemy: Enemy | null
-	  showFull: boolean
-	  mugAvailable: boolean
-	}) {
+  enemy,
+  showFull,
+  mugAvailable,
+  partyContext,
+  characters,
+  activePartyIds,
+  magic,
+  magicCompletedByCharacter,
+  onToggleMagic,
+}: {
+  ae: AreaEncounter['enemies'][number]
+  enemy: Enemy | null
+  showFull: boolean
+  mugAvailable: boolean
+  partyContext: PartyLevelContext
+  characters: CharacterProfile[]
+  activePartyIds: string[]
+  magic: MagicSpell[]
+  magicCompletedByCharacter: Record<string, Record<string, boolean>>
+  onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+}) {
   const [noteOpen, setNoteOpen] = useState(false)
   const notes = ae.notes ?? ''
+  const activeCharacters = characters.filter(character => activePartyIds.includes(character.id))
+  const spellsByName = magicByName(magic)
   const noteLong = notes.length > 90
 
-  const dispLvMin = ae.lvMin ?? enemy?.lvMin ?? 1
-  const dispLvMax = ae.lvMax ?? enemy?.lvMax ?? 1
-  const showRange = dispLvMin !== dispLvMax
-
-  const draws  = ae.drawMagic ?? drawMagicForLevel(enemy, dispLvMin, dispLvMax)
-  const mugSource = mugAvailable && Object.prototype.hasOwnProperty.call(ae, 'mug')
-	    ? ae.mug
-	    : mugAvailable ? valueForLevel(enemy?.mugByLevel, enemy?.mug, dispLvMin, dispLvMax) : null
-  const mugRaw = mugSource && mugSource !== 'has nothing' ? mugSource.split(',')[0].trim() : null
+  const levelContext = enemy ? resolveEnemyLevelContext(enemy, partyContext, { lvMin: ae.lvMin, lvMax: ae.lvMax }) : null
+  const drawOptions: ContextualOption[] = ae.drawMagic
+    ? ae.drawMagic.map(value => ({ value, levels: levelContext?.levels ?? [], guaranteed: true }))
+    : contextualDrawMagic(enemy, levelContext?.levels ?? [])
+  const mugOptions = !mugAvailable
+    ? []
+    : Object.prototype.hasOwnProperty.call(ae, 'mug')
+      ? contextualValue(undefined, ae.mug, levelContext?.levels ?? [])
+      : contextualValue(enemy?.mugByLevel, enemy?.mug, levelContext?.levels ?? [])
+  const dropOptions = contextualValue(enemy?.dropByLevel, enemy?.drop, levelContext?.levels ?? [])
+  const abilityOptions = contextualEnemyAbilities(enemy, levelContext?.levels ?? [])
+  const elementalDetails = enemy
+    ? Object.entries(enemy.elementals ?? {}).filter(([, value]) => value && !/^normal$/i.test(value))
+    : []
+  const currentStats = statsForEnemyLevels(enemy, levelContext?.levels ?? [])
+  const currentHpValues = [...new Set(currentStats.map(stat => stat.hp))]
   const hpText = ae.hp !== undefined
     ? ae.hp.toLocaleString()
+    : currentHpValues.length > 0
+      ? currentHpValues.map(value => value.toLocaleString()).join(' / ')
     : enemy
       ? enemy.hpMin === enemy.hpMax
         ? enemy.hpMin.toLocaleString()
         : `${enemy.hpMin.toLocaleString()}-${enemy.hpMax.toLocaleString()}`
       : undefined
+
+  const optionLabel = (option: ContextualOption) => option.guaranteed ? option.value : `${option.value} · Lv ${formatPossibleLevels(option.levels)}`
 
   return (
     <div className="min-w-0 px-4 py-2.5 text-xs space-y-1.5">
@@ -2028,10 +2151,10 @@ function EnemyRow({
       <div className="flex min-w-0 items-center justify-between gap-3 flex-wrap">
         <div className="flex min-w-0 items-center gap-2 flex-wrap">
           <span className="text-slate-100 font-semibold break-words">{ae.name}</span>
-          {enemy && (
+          {enemy && levelContext && (
             <span className="min-w-0 text-slate-600 font-mono text-[10px] break-words">
-              {showRange ? `Lv ${dispLvMin}–${dispLvMax}` : `Lv ${dispLvMin}`}
-	              {hpText !== undefined && <> · {hpText} HP</>}
+              Lv {formatPossibleLevels(levelContext.levels)} · {levelContext.sourceLabel}
+              {hpText !== undefined && <> · {hpText} HP</>}
             </span>
           )}
         </div>
@@ -2053,27 +2176,94 @@ function EnemyRow({
       </div>
 
       {/* Draw / Mug pills */}
-      {(draws.length > 0 || mugRaw) && (
+      {(drawOptions.length > 0 || mugOptions.length > 0 || dropOptions.length > 0) && (
         <div className="flex min-w-0 items-start gap-x-3 gap-y-1 flex-wrap">
-          {draws.length > 0 && (
+          {drawOptions.length > 0 && (
             <div className="flex min-w-0 items-center gap-1 flex-wrap">
               <span className="text-violet-400 font-medium text-[10px] uppercase tracking-wide shrink-0">Draw</span>
               <div className="flex min-w-0 gap-1 flex-wrap">
-                {(showFull ? draws : draws.slice(0, 4)).map(s => (
-                  <SpellPill key={s} name={s} variant="draw" />
+                {(showFull ? drawOptions : drawOptions.slice(0, 4)).map(option => (
+                  <span key={option.value} className="min-w-0">
+                    <SpellPill name={option.value} variant="draw" />
+                    {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
+                    {(() => {
+                      const needers = charactersNeedingSpell(option.value, activeCharacters, magic, { magicCompletedByCharacter })
+                      const spell = spellsByName.get(option.value.toLowerCase().replace(/[^a-z0-9]+/g, ''))
+                      return needers.length > 0 ? (
+                        <span className="ml-1 inline-flex items-center gap-1 text-[9px] text-teal-300/80">
+                          <span>needed by</span>
+                          {needers.map(character => (
+                            <label key={character.id} className="inline-flex cursor-pointer items-center gap-0.5 rounded border border-teal-800/50 px-1 py-0.5 hover:bg-teal-950/50">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(spell && isMagicCompleted({ magicCompletedByCharacter }, character.id, spell.id))}
+                                disabled={!spell || !onToggleMagic}
+                                onChange={() => spell && onToggleMagic?.(character.id, spell.id)}
+                                className="accent-teal-400"
+                              />
+                              {character.name.split(' ')[0]}
+                            </label>
+                          ))}
+                        </span>
+                      ) : null
+                    })()}
+                  </span>
                 ))}
-                {!showFull && draws.length > 4 && (
-                  <span className="text-violet-600 text-[10px] self-center">+{draws.length - 4}</span>
+                {!showFull && drawOptions.length > 4 && (
+                  <span className="text-violet-600 text-[10px] self-center">+{drawOptions.length - 4}</span>
                 )}
               </div>
             </div>
           )}
-          {mugRaw && (
+          {mugOptions.length > 0 && (
             <div className="flex min-w-0 items-center gap-1 flex-wrap">
               <span className="text-amber-400 font-medium text-[10px] uppercase tracking-wide shrink-0">Mug</span>
-              <SpellPill name={mugRaw} variant="mug" />
+              {mugOptions.map(option => (
+                <span key={option.value} title={optionLabel(option)}>
+                  <SpellPill name={option.value} variant="mug" />
+                  {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
+                </span>
+              ))}
             </div>
           )}
+          {dropOptions.length > 0 && (
+            <div className="flex min-w-0 items-center gap-1 flex-wrap">
+              <span className="text-slate-500 font-medium text-[10px] uppercase tracking-wide shrink-0">Drop</span>
+              {dropOptions.map(option => (
+                <span key={option.value} title={optionLabel(option)}>
+                  <SpellPill name={option.value} variant="gf" />
+                  {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {showFull && enemy && (elementalDetails.length > 0 || enemy.elementalWeaknesses || enemy.elementalResistances || enemy.statusVulnerabilitiesNote) && (
+        <div className="grid gap-1 text-[11px] leading-relaxed">
+          {elementalDetails.length > 0 && <div><span className="text-cyan-300">Elements:</span> <span className="text-slate-400">{elementalDetails.map(([element, value]) => `${element}: ${value}`).join(' · ')}</span></div>}
+          {enemy.elementalWeaknesses && <div><span className="text-red-300">Weak:</span> <span className="text-slate-400">{enemy.elementalWeaknesses}</span></div>}
+          {enemy.elementalResistances && <div><span className="text-blue-300">Resist:</span> <span className="text-slate-400">{enemy.elementalResistances}</span></div>}
+          {enemy.statusVulnerabilitiesNote && <div><span className="text-slate-500">Status:</span> <span className="text-slate-400">{enemy.statusVulnerabilitiesNote}</span></div>}
+        </div>
+      )}
+
+      {showFull && abilityOptions.length > 0 && (
+        <div className="rounded-md border border-slate-800/70 bg-slate-950/20 px-2 py-1.5 text-[11px]">
+          <span className="mr-2 text-amber-300/80">Abilities</span>
+          <span className="text-slate-400">
+            {abilityOptions.map(option => `${option.value}${option.guaranteed ? '' : ` (possible Lv ${formatPossibleLevels(option.levels)})`}`).join(' · ')}
+          </span>
+        </div>
+      )}
+
+      {showFull && currentStats.length > 0 && (
+        <div className="rounded-md border border-slate-800/70 bg-slate-950/20 px-2 py-1.5 text-[11px]">
+          <span className="mr-2 text-cyan-300/80">Stats</span>
+          <span className="text-slate-400">
+            {currentStats.map(stat => `Lv ${stat.level}: HP ${stat.hp.toLocaleString()} · STR ${stat.str} · MAG ${stat.mag} · VIT ${stat.vit} · SPR ${stat.spr} · SPD ${stat.spd} · EVA ${stat.eva}`).join(' / ')}
+          </span>
         </div>
       )}
 
@@ -2405,7 +2595,7 @@ const DISC_NAV_COLORS: Record<number, { border: string; text: string; label: str
   4: { border: 'border-amber-700/50',  text: 'text-amber-400',  label: 'Disc 4' },
 }
 
-export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate }: Props) {
+export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate, characterLevels = {}, activePartyIds = [], magicCompletedByCharacter = {}, onToggleMagic }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
 
   // Scroll the nearest overflow-y-auto ancestor to the top whenever the
@@ -2433,6 +2623,7 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
   const totalCps = chapter.checkpoints.length
   const doneCps  = chapter.checkpoints.filter(cp => completedItems[cp.id]).length
   const encounters = chapter.encounters ?? []
+  const partyContext = createPartyLevelContext(activePartyIds, characterLevels)
 
   const discStyle = DISC_HEADER[chapter.disc] ?? DISC_HEADER[1]
 
@@ -2479,7 +2670,7 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
       {chapter.id === 'r0-controls-interface' ? (
         <ControlsReference content={chapter.content} />
       ) : chapter.id === 'r0-magic-reference' ? (
-        <MagicReference content={chapter.content} spells={magic} />
+        <MagicReference content={chapter.content} spells={magic} characters={characters} magicCompletedByCharacter={magicCompletedByCharacter} />
       ) : chapter.id === 'r0-shop-reference' ? (
         <ShopReference content={chapter.content} shops={shops} />
       ) : chapter.id === 'r0-junction-reference' ? (
@@ -2524,7 +2715,16 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
               <div key={di} className="space-y-3">
                 {aidPlacement === 'before' && <ContextualVisualAid chapterId={chapter.id} paragraphText={para} />}
                 {area
-                  ? <AreaEncounterCard area={area} enemies={enemies} />
+                  ? <AreaEncounterCard
+                      area={area}
+                      enemies={enemies}
+                      partyContext={partyContext}
+                      characters={characters}
+                      activePartyIds={activePartyIds}
+                      magic={magic}
+                      magicCompletedByCharacter={magicCompletedByCharacter}
+                      onToggleMagic={onToggleMagic}
+                    />
                   : shouldRenderAsRouteStep(paras, idx, chapter.id)
                     ? <RouteStep text={para} />
                     : renderParagraphBlock(para, chapter.id)
