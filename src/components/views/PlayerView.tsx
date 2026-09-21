@@ -20,6 +20,7 @@ interface Props {
   magic: MagicSpell[]
   gfs: GuardianForce[]
   availableMagicIds: ReadonlySet<string>
+  visibleGFIds: ReadonlySet<string>
   state: TrackerState
   onToggleMagic: (characterId: string, spellId: string) => void
   onToggleGFAbility: (gfId: string, abilityName: string) => void
@@ -42,6 +43,7 @@ export function PlayerView({
   magic,
   gfs,
   availableMagicIds,
+  visibleGFIds,
   state,
   onToggleMagic,
   onToggleGFAbility,
@@ -56,8 +58,8 @@ export function PlayerView({
   const activeIds = activeCharacterIds(state, characters)
   const party = createPartyLevelContext(activeIds, state.characterLevels)
   const selectedCharacter = characters.find(character => character.id === selectedCharacterId) ?? characters[0]
-  const acquiredGFs = gfs.filter(gf => state.completedItems[gf.id])
-  const selectedGF = acquiredGFs.find(gf => gf.id === selectedGFId) ?? acquiredGFs[0]
+  const visibleGFs = gfs.filter(gf => visibleGFIds.has(gf.id))
+  const selectedGF = visibleGFs.find(gf => gf.id === selectedGFId) ?? visibleGFs[0]
 
   const visibleMagic = useMemo(() => {
     const query = magicQuery.trim().toLowerCase()
@@ -236,7 +238,7 @@ export function PlayerView({
           <p className="mt-1 text-sm text-slate-400">Recommended abilities are expanded from each GF’s existing learning order and prerequisites.</p>
         </div>
         <div className="grid gap-2 p-3 sm:grid-cols-2 xl:grid-cols-3">
-          {acquiredGFs.map(gf => {
+          {visibleGFs.map(gf => {
             const abilities = recommendedGFAbilities(gf)
             const learned = abilities.filter(ability => isGFAbilityLearned(state, gf.id, ability.name)).length
             const selected = selectedGF?.id === gf.id
@@ -259,9 +261,9 @@ export function PlayerView({
               </button>
             )
           })}
-          {acquiredGFs.length === 0 && (
+          {visibleGFs.length === 0 && (
             <p className="col-span-full rounded-lg border border-slate-800 bg-slate-950/25 px-3 py-4 text-sm text-slate-600">
-              Mark a GF acquired in the GFs section to track its recommended learning path here.
+              Mark a GF acquired in the GFs section or advance the Guide progression to its availability point to track its recommended learning path here.
             </p>
           )}
         </div>

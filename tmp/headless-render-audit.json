@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T13:55:31.692Z",
+  "generatedAt": "2026-09-21T14:21:52.544Z",
   "targetCount": 55,
   "resultCount": 112,
   "failureCount": 2,
@@ -997,7 +997,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 18111,
+          "bodyTextLength": 18104,
           "bodyTextSample": "FFVIIIGuide Disc 1 · Preparing for the Exam Progress saved locally Local only Disc 1 Ch. 1 0/6 checkpoints Preparing for the Exam After the opening cinematic, S",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -1014,7 +1014,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 18111,
+          "bodyTextLength": 18104,
           "bodyTextSample": "FFVIIIGuide Disc 1 · Preparing for the Exam Progress saved locally Local only Disc 1 Ch. 1 0/6 checkpoints Preparing for the Exam After the opening cinematic, S",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -1031,7 +1031,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 18111,
+          "bodyTextLength": 18104,
           "bodyTextSample": "FFVIIIGuide Disc 1 · Preparing for the Exam Progress saved locally Local only Disc 1 Ch. 1 0/6 checkpoints Preparing for the Exam After the opening cinematic, S",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3769,7 +3769,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-about",
-          "bodyTextLength": 7816,
+          "bodyTextLength": 7860,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3786,7 +3786,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-about",
-          "bodyTextLength": 7816,
+          "bodyTextLength": 7860,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3803,7 +3803,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-about",
-          "bodyTextLength": 7816,
+          "bodyTextLength": 7860,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3835,7 +3835,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-controls-interface",
-          "bodyTextLength": 3176,
+          "bodyTextLength": 3220,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3852,7 +3852,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-controls-interface",
-          "bodyTextLength": 3176,
+          "bodyTextLength": 3220,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3869,7 +3869,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-controls-interface",
-          "bodyTextLength": 3176,
+          "bodyTextLength": 3220,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3901,7 +3901,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-shop-reference",
-          "bodyTextLength": 5391,
+          "bodyTextLength": 5435,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3918,7 +3918,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-shop-reference",
-          "bodyTextLength": 5391,
+          "bodyTextLength": 5435,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3935,7 +3935,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-shop-reference",
-          "bodyTextLength": 5391,
+          "bodyTextLength": 5435,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3967,7 +3967,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-sidequest-index",
-          "bodyTextLength": 5070,
+          "bodyTextLength": 5114,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -3984,7 +3984,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-sidequest-index",
-          "bodyTextLength": 5070,
+          "bodyTextLength": 5114,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4001,7 +4001,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-sidequest-index",
-          "bodyTextLength": 5070,
+          "bodyTextLength": 5114,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4033,7 +4033,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-characters",
-          "bodyTextLength": 4425,
+          "bodyTextLength": 4469,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4050,7 +4050,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-characters",
-          "bodyTextLength": 4425,
+          "bodyTextLength": 4469,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4067,7 +4067,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-characters",
-          "bodyTextLength": 4425,
+          "bodyTextLength": 4469,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4099,7 +4099,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-combat-mechanics",
-          "bodyTextLength": 13087,
+          "bodyTextLength": 13131,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4116,7 +4116,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-combat-mechanics",
-          "bodyTextLength": 13087,
+          "bodyTextLength": 13131,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4133,7 +4133,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-combat-mechanics",
-          "bodyTextLength": 13087,
+          "bodyTextLength": 13131,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4165,7 +4165,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-status-effects",
-          "bodyTextLength": 8417,
+          "bodyTextLength": 8461,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4182,7 +4182,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-status-effects",
-          "bodyTextLength": 8417,
+          "bodyTextLength": 8461,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4199,7 +4199,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-status-effects",
-          "bodyTextLength": 8417,
+          "bodyTextLength": 8461,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4231,7 +4231,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-junction-reference",
-          "bodyTextLength": 5609,
+          "bodyTextLength": 5653,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4248,7 +4248,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-junction-reference",
-          "bodyTextLength": 5609,
+          "bodyTextLength": 5653,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4265,7 +4265,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-junction-reference",
-          "bodyTextLength": 5609,
+          "bodyTextLength": 5653,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4297,7 +4297,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-seed-system",
-          "bodyTextLength": 10410,
+          "bodyTextLength": 10454,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4314,7 +4314,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-seed-system",
-          "bodyTextLength": 10410,
+          "bodyTextLength": 10454,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4331,7 +4331,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-seed-system",
-          "bodyTextLength": 10410,
+          "bodyTextLength": 10454,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4363,7 +4363,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-triple-triad-rules",
-          "bodyTextLength": 10712,
+          "bodyTextLength": 10756,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4380,7 +4380,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-triple-triad-rules",
-          "bodyTextLength": 10712,
+          "bodyTextLength": 10756,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4397,7 +4397,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-triple-triad-rules",
-          "bodyTextLength": 10712,
+          "bodyTextLength": 10756,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4429,7 +4429,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-gf-mechanics",
-          "bodyTextLength": 19241,
+          "bodyTextLength": 19285,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4446,7 +4446,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-gf-mechanics",
-          "bodyTextLength": 19241,
+          "bodyTextLength": 19285,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4463,7 +4463,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-gf-mechanics",
-          "bodyTextLength": 19241,
+          "bodyTextLength": 19285,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4495,7 +4495,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-magic-reference",
-          "bodyTextLength": 22051,
+          "bodyTextLength": 22095,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4512,7 +4512,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-magic-reference",
-          "bodyTextLength": 22051,
+          "bodyTextLength": 22095,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4529,7 +4529,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-magic-reference",
-          "bodyTextLength": 22051,
+          "bodyTextLength": 22095,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4561,7 +4561,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-story-lore-music",
-          "bodyTextLength": 9790,
+          "bodyTextLength": 9834,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4578,7 +4578,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-story-lore-music",
-          "bodyTextLength": 9790,
+          "bodyTextLength": 9834,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4595,7 +4595,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=r0-story-lore-music",
-          "bodyTextLength": 9790,
+          "bodyTextLength": 9834,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4627,7 +4627,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 20646,
+          "bodyTextLength": 20683,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4644,7 +4644,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 20646,
+          "bodyTextLength": 20683,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4661,7 +4661,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-preparing-for-the-exam",
-          "bodyTextLength": 20646,
+          "bodyTextLength": 20683,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4693,7 +4693,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-seed-exam",
-          "bodyTextLength": 13544,
+          "bodyTextLength": 13588,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4710,7 +4710,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-seed-exam",
-          "bodyTextLength": 13544,
+          "bodyTextLength": 13588,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4727,7 +4727,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-seed-exam",
-          "bodyTextLength": 13544,
+          "bodyTextLength": 13588,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4759,7 +4759,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-after-the-exam",
-          "bodyTextLength": 13345,
+          "bodyTextLength": 13389,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4776,7 +4776,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-after-the-exam",
-          "bodyTextLength": 13345,
+          "bodyTextLength": 13389,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4793,7 +4793,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-after-the-exam",
-          "bodyTextLength": 13345,
+          "bodyTextLength": 13389,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4825,7 +4825,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-timber-mission",
-          "bodyTextLength": 16256,
+          "bodyTextLength": 16300,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4842,7 +4842,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-timber-mission",
-          "bodyTextLength": 16256,
+          "bodyTextLength": 16300,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4859,7 +4859,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-the-timber-mission",
-          "bodyTextLength": 16256,
+          "bodyTextLength": 16300,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4891,7 +4891,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-dollet-exploration",
-          "bodyTextLength": 11716,
+          "bodyTextLength": 11760,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4908,7 +4908,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-dollet-exploration",
-          "bodyTextLength": 11716,
+          "bodyTextLength": 11760,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4925,7 +4925,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-dollet-exploration",
-          "bodyTextLength": 11716,
+          "bodyTextLength": 11760,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4957,7 +4957,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-journey-to-galbadia-garden",
-          "bodyTextLength": 11500,
+          "bodyTextLength": 11544,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4974,7 +4974,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-journey-to-galbadia-garden",
-          "bodyTextLength": 11500,
+          "bodyTextLength": 11544,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -4991,7 +4991,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-journey-to-galbadia-garden",
-          "bodyTextLength": 11500,
+          "bodyTextLength": 11544,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5023,7 +5023,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-galbadia-garden",
-          "bodyTextLength": 10373,
+          "bodyTextLength": 10417,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5040,7 +5040,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-galbadia-garden",
-          "bodyTextLength": 10373,
+          "bodyTextLength": 10417,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5057,7 +5057,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-galbadia-garden",
-          "bodyTextLength": 10373,
+          "bodyTextLength": 10417,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5089,7 +5089,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-deling-city",
-          "bodyTextLength": 20049,
+          "bodyTextLength": 20093,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5106,7 +5106,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-deling-city",
-          "bodyTextLength": 20049,
+          "bodyTextLength": 20093,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5123,7 +5123,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d1-deling-city",
-          "bodyTextLength": 20049,
+          "bodyTextLength": 20093,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5155,7 +5155,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-winhill",
-          "bodyTextLength": 4988,
+          "bodyTextLength": 5032,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5172,7 +5172,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-winhill",
-          "bodyTextLength": 4988,
+          "bodyTextLength": 5032,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5189,7 +5189,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-winhill",
-          "bodyTextLength": 4988,
+          "bodyTextLength": 5032,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5221,7 +5221,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-escape",
-          "bodyTextLength": 12303,
+          "bodyTextLength": 12347,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5238,7 +5238,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-escape",
-          "bodyTextLength": 12303,
+          "bodyTextLength": 12347,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5255,7 +5255,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-escape",
-          "bodyTextLength": 12303,
+          "bodyTextLength": 12347,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5287,7 +5287,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-missile-base",
-          "bodyTextLength": 12048,
+          "bodyTextLength": 12092,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5304,7 +5304,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-missile-base",
-          "bodyTextLength": 12048,
+          "bodyTextLength": 12092,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5321,7 +5321,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-missile-base",
-          "bodyTextLength": 12048,
+          "bodyTextLength": 12092,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5353,7 +5353,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb-garden",
-          "bodyTextLength": 14389,
+          "bodyTextLength": 14433,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5370,7 +5370,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb-garden",
-          "bodyTextLength": 14389,
+          "bodyTextLength": 14433,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5387,7 +5387,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb-garden",
-          "bodyTextLength": 14389,
+          "bodyTextLength": 14433,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5419,7 +5419,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-fishermans-horizon",
-          "bodyTextLength": 8919,
+          "bodyTextLength": 8963,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5436,7 +5436,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-fishermans-horizon",
-          "bodyTextLength": 8919,
+          "bodyTextLength": 8963,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5453,7 +5453,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-fishermans-horizon",
-          "bodyTextLength": 8919,
+          "bodyTextLength": 8963,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5485,7 +5485,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-garden-festival",
-          "bodyTextLength": 4517,
+          "bodyTextLength": 4561,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5502,7 +5502,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-garden-festival",
-          "bodyTextLength": 4517,
+          "bodyTextLength": 4561,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5519,7 +5519,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-the-garden-festival",
-          "bodyTextLength": 4517,
+          "bodyTextLength": 4561,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5551,7 +5551,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-exploring-the-world",
-          "bodyTextLength": 10258,
+          "bodyTextLength": 10302,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5568,7 +5568,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-exploring-the-world",
-          "bodyTextLength": 10258,
+          "bodyTextLength": 10302,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5585,7 +5585,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-exploring-the-world",
-          "bodyTextLength": 10258,
+          "bodyTextLength": 10302,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5617,7 +5617,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb",
-          "bodyTextLength": 11810,
+          "bodyTextLength": 11854,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5634,7 +5634,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb",
-          "bodyTextLength": 11810,
+          "bodyTextLength": 11854,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5651,7 +5651,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-return-to-balamb",
-          "bodyTextLength": 11810,
+          "bodyTextLength": 11854,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5683,7 +5683,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-trabia-garden",
-          "bodyTextLength": 5091,
+          "bodyTextLength": 5135,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5700,7 +5700,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-trabia-garden",
-          "bodyTextLength": 5091,
+          "bodyTextLength": 5135,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5717,7 +5717,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-trabia-garden",
-          "bodyTextLength": 5091,
+          "bodyTextLength": 5135,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5749,7 +5749,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-battle-of-the-gardens",
-          "bodyTextLength": 11020,
+          "bodyTextLength": 11064,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5766,7 +5766,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-battle-of-the-gardens",
-          "bodyTextLength": 11020,
+          "bodyTextLength": 11064,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5783,7 +5783,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d2-battle-of-the-gardens",
-          "bodyTextLength": 11020,
+          "bodyTextLength": 11064,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5815,7 +5815,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-aftermath",
-          "bodyTextLength": 7982,
+          "bodyTextLength": 8026,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5832,7 +5832,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-aftermath",
-          "bodyTextLength": 7982,
+          "bodyTextLength": 8026,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5849,7 +5849,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-aftermath",
-          "bodyTextLength": 7982,
+          "bodyTextLength": 8026,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5881,7 +5881,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-trabia-canyon",
-          "bodyTextLength": 6471,
+          "bodyTextLength": 6515,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5898,7 +5898,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-trabia-canyon",
-          "bodyTextLength": 6471,
+          "bodyTextLength": 6515,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5915,7 +5915,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-trabia-canyon",
-          "bodyTextLength": 6471,
+          "bodyTextLength": 6515,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5947,7 +5947,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-picking-up-the-trail",
-          "bodyTextLength": 5526,
+          "bodyTextLength": 5570,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5964,7 +5964,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-picking-up-the-trail",
-          "bodyTextLength": 5526,
+          "bodyTextLength": 5570,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -5981,7 +5981,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-picking-up-the-trail",
-          "bodyTextLength": 5526,
+          "bodyTextLength": 5570,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6013,7 +6013,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-journey-to-the-silent-country",
-          "bodyTextLength": 10682,
+          "bodyTextLength": 10726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6030,7 +6030,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-journey-to-the-silent-country",
-          "bodyTextLength": 10682,
+          "bodyTextLength": 10726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6047,7 +6047,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-journey-to-the-silent-country",
-          "bodyTextLength": 10682,
+          "bodyTextLength": 10726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6079,7 +6079,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-resistance",
-          "bodyTextLength": 5880,
+          "bodyTextLength": 5924,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6096,7 +6096,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-resistance",
-          "bodyTextLength": 5880,
+          "bodyTextLength": 5924,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6113,7 +6113,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-resistance",
-          "bodyTextLength": 5880,
+          "bodyTextLength": 5924,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6145,7 +6145,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-esthar",
-          "bodyTextLength": 10735,
+          "bodyTextLength": 10779,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6162,7 +6162,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-esthar",
-          "bodyTextLength": 10735,
+          "bodyTextLength": 10779,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6179,7 +6179,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-esthar",
-          "bodyTextLength": 10735,
+          "bodyTextLength": 10779,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6211,7 +6211,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-siege-of-esthar",
-          "bodyTextLength": 12559,
+          "bodyTextLength": 12603,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6228,7 +6228,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-siege-of-esthar",
-          "bodyTextLength": 12559,
+          "bodyTextLength": 12603,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6245,7 +6245,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-siege-of-esthar",
-          "bodyTextLength": 12559,
+          "bodyTextLength": 12603,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6277,7 +6277,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-lunar-base",
-          "bodyTextLength": 4970,
+          "bodyTextLength": 5014,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6294,7 +6294,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-lunar-base",
-          "bodyTextLength": 4970,
+          "bodyTextLength": 5014,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6311,7 +6311,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-lunar-base",
-          "bodyTextLength": 4970,
+          "bodyTextLength": 5014,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6343,7 +6343,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-ragnarok",
-          "bodyTextLength": 5671,
+          "bodyTextLength": 5715,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6360,7 +6360,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-ragnarok",
-          "bodyTextLength": 5671,
+          "bodyTextLength": 5715,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6377,7 +6377,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-ragnarok",
-          "bodyTextLength": 5671,
+          "bodyTextLength": 5715,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6409,7 +6409,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-back-on-earth",
-          "bodyTextLength": 15739,
+          "bodyTextLength": 15783,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6426,7 +6426,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-back-on-earth",
-          "bodyTextLength": 15739,
+          "bodyTextLength": 15783,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6443,7 +6443,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-back-on-earth",
-          "bodyTextLength": 15739,
+          "bodyTextLength": 15783,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6475,7 +6475,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-final-mission",
-          "bodyTextLength": 13427,
+          "bodyTextLength": 13471,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6492,7 +6492,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-final-mission",
-          "bodyTextLength": 13427,
+          "bodyTextLength": 13471,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6509,7 +6509,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d3-the-final-mission",
-          "bodyTextLength": 13427,
+          "bodyTextLength": 13471,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6541,7 +6541,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-awakening",
-          "bodyTextLength": 4781,
+          "bodyTextLength": 4825,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6558,7 +6558,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-awakening",
-          "bodyTextLength": 4781,
+          "bodyTextLength": 4825,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6575,7 +6575,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-awakening",
-          "bodyTextLength": 4781,
+          "bodyTextLength": 4825,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6607,7 +6607,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-commencement-room",
-          "bodyTextLength": 4577,
+          "bodyTextLength": 4621,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6624,7 +6624,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-commencement-room",
-          "bodyTextLength": 4577,
+          "bodyTextLength": 4621,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6641,7 +6641,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-commencement-room",
-          "bodyTextLength": 4577,
+          "bodyTextLength": 4621,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6673,7 +6673,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-ultimecia-castle",
-          "bodyTextLength": 23035,
+          "bodyTextLength": 23079,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6690,7 +6690,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-ultimecia-castle",
-          "bodyTextLength": 23035,
+          "bodyTextLength": 23079,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6707,7 +6707,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-ultimecia-castle",
-          "bodyTextLength": 23035,
+          "bodyTextLength": 23079,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6739,7 +6739,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-final-preparations",
-          "bodyTextLength": 7733,
+          "bodyTextLength": 7777,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6756,7 +6756,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-final-preparations",
-          "bodyTextLength": 7733,
+          "bodyTextLength": 7777,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6773,7 +6773,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-final-preparations",
-          "bodyTextLength": 7733,
+          "bodyTextLength": 7777,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6805,7 +6805,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-final-battle",
-          "bodyTextLength": 6682,
+          "bodyTextLength": 6726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6822,7 +6822,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-final-battle",
-          "bodyTextLength": 6682,
+          "bodyTextLength": 6726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6839,7 +6839,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&chapter=d4-the-final-battle",
-          "bodyTextLength": 6682,
+          "bodyTextLength": 6726,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6871,7 +6871,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=checklist&chapter=r0-about",
-          "bodyTextLength": 10057,
+          "bodyTextLength": 10101,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6888,7 +6888,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=checklist&chapter=r0-about",
-          "bodyTextLength": 10057,
+          "bodyTextLength": 10101,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6905,7 +6905,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=checklist&chapter=r0-about",
-          "bodyTextLength": 10057,
+          "bodyTextLength": 10101,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6937,7 +6937,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=sidequests&chapter=r0-about",
-          "bodyTextLength": 4570,
+          "bodyTextLength": 4614,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6954,7 +6954,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=sidequests&chapter=r0-about",
-          "bodyTextLength": 4570,
+          "bodyTextLength": 4614,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -6971,7 +6971,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=sidequests&chapter=r0-about",
-          "bodyTextLength": 4570,
+          "bodyTextLength": 4614,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7003,7 +7003,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=cards&chapter=r0-about",
-          "bodyTextLength": 11359,
+          "bodyTextLength": 11403,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7020,7 +7020,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=cards&chapter=r0-about",
-          "bodyTextLength": 11359,
+          "bodyTextLength": 11403,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7037,7 +7037,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=cards&chapter=r0-about",
-          "bodyTextLength": 11359,
+          "bodyTextLength": 11403,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7069,7 +7069,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=gfs&chapter=r0-about",
-          "bodyTextLength": 4569,
+          "bodyTextLength": 4613,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7086,7 +7086,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=gfs&chapter=r0-about",
-          "bodyTextLength": 4569,
+          "bodyTextLength": 4613,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7103,7 +7103,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=gfs&chapter=r0-about",
-          "bodyTextLength": 4569,
+          "bodyTextLength": 4613,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7135,7 +7135,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=abilities&chapter=r0-about",
-          "bodyTextLength": 18030,
+          "bodyTextLength": 18074,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7152,7 +7152,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=abilities&chapter=r0-about",
-          "bodyTextLength": 18030,
+          "bodyTextLength": 18074,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7169,7 +7169,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=abilities&chapter=r0-about",
-          "bodyTextLength": 18030,
+          "bodyTextLength": 18074,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7201,7 +7201,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=refinement&chapter=r0-about",
-          "bodyTextLength": 2747,
+          "bodyTextLength": 2791,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7218,7 +7218,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=refinement&chapter=r0-about",
-          "bodyTextLength": 2747,
+          "bodyTextLength": 2791,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7235,7 +7235,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=refinement&chapter=r0-about",
-          "bodyTextLength": 2747,
+          "bodyTextLength": 2791,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7267,7 +7267,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=items&chapter=r0-about",
-          "bodyTextLength": 9635,
+          "bodyTextLength": 9679,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7284,7 +7284,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=items&chapter=r0-about",
-          "bodyTextLength": 9635,
+          "bodyTextLength": 9679,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7301,7 +7301,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=items&chapter=r0-about",
-          "bodyTextLength": 9635,
+          "bodyTextLength": 9679,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7333,7 +7333,7 @@
       "states": {
         "top": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=bestiary&chapter=r0-about",
-          "bodyTextLength": 12155,
+          "bodyTextLength": 12199,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7350,7 +7350,7 @@
         },
         "middle": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=bestiary&chapter=r0-about",
-          "bodyTextLength": 12155,
+          "bodyTextLength": 12199,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,
@@ -7367,7 +7367,7 @@
         },
         "bottom": {
           "url": "http://localhost:5173/FFVIII-Guide/?audit=headless-render&view=bestiary&chapter=r0-about",
-          "bodyTextLength": 12155,
+          "bodyTextLength": 12199,
           "bodyTextSample": "FFVIIIGuide CHAPTERS REFERENCE About This Guide Controls & Interface Shop Reference Sidequest Index Character Reference Combat Mechanics Status Effects Junction",
           "docOverflow": 0,
           "bodyOverflow": 0,

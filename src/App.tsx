@@ -28,7 +28,7 @@ import { SIDEQUESTS } from './data/sidequests'
 import { createProgressLabeler } from './lib/progressLabels'
 import { createPartyLevelContext } from './lib/enemyLevelData'
 import { createCanonicalEnemyLookup } from './lib/bestiaryData'
-import { magicAvailableByProgression } from './lib/progression'
+import { gfIdsAvailableByProgression, magicAvailableByProgression } from './lib/progression'
 
 const baseData = masterDataRaw as unknown as MasterData
 const canonicalEnemies = createCanonicalEnemyLookup(baseData.lookup.enemies, bestiaryRaw as unknown as Parameters<typeof createCanonicalEnemyLookup>[1])
@@ -110,6 +110,16 @@ export default function App() {
     data.lookup.magic ?? [],
     partyContext,
   ), [tracker.state.progressionChapterId, tracker.state.characterLevels, tracker.state.activeParty, partyContext])
+  const availableGFIds = useMemo(() => gfIdsAvailableByProgression(
+    data.chapters,
+    tracker.state.progressionChapterId,
+    data.lookup.gfs,
+  ), [tracker.state.progressionChapterId])
+  const visibleGFIds = useMemo(() => new Set(
+    data.lookup.gfs
+      .filter(gf => tracker.state.completedItems[gf.id] || availableGFIds.has(gf.id))
+      .map(gf => gf.id),
+  ), [availableGFIds, tracker.state.completedItems])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -374,6 +384,7 @@ export default function App() {
             magic={data.lookup.magic ?? []}
             gfs={data.lookup.gfs}
             availableMagicIds={availableMagicIds}
+            visibleGFIds={visibleGFIds}
             state={tracker.state}
             partyContext={partyContext}
             onToggleParty={tracker.setActiveCharacter}
@@ -579,6 +590,7 @@ export default function App() {
             gfs={data.lookup.gfs}
             state={tracker.state}
             availableMagicIds={availableMagicIds}
+            visibleGFIds={visibleGFIds}
             onToggleMagic={tracker.setMagicCompleted}
             onToggleGFAbility={tracker.setGFAbilityLearned}
             onSetLevel={tracker.setCharacterLevel}

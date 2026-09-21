@@ -8,6 +8,7 @@ import {
   isMagicCompleted,
   recommendedGFProgress,
 } from '../../lib/playerState'
+import { orderedStoryChapters } from '../../lib/progression'
 import type { Chapter, CharacterProfile, GuardianForce, MagicSpell, TrackerState } from '../../types'
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   gfs: GuardianForce[]
   chapters: Chapter[]
   availableMagicIds: ReadonlySet<string>
+  visibleGFIds: ReadonlySet<string>
   state: TrackerState
   partyContext: PartyLevelContext
   onToggleParty: (characterId: string) => void
@@ -43,6 +45,7 @@ export function PlayerContextPanel({
   gfs,
   chapters,
   availableMagicIds,
+  visibleGFIds,
   state,
   partyContext,
   onToggleParty,
@@ -57,9 +60,8 @@ export function PlayerContextPanel({
   const [magicQuery, setMagicQuery] = useState('')
   const [showAllMagic, setShowAllMagic] = useState(false)
   const [selectedGFId, setSelectedGFId] = useState(() => {
-    const acquired = new Set(gfs.filter(gf => state.completedItems[gf.id]).map(gf => gf.id))
-    const firstRemaining = recommendedGFProgress(gfs, state, acquired).find(progress => progress.remaining > 0)
-    return firstRemaining?.gf.id ?? gfs.find(gf => acquired.has(gf.id))?.id ?? ''
+    const firstRemaining = recommendedGFProgress(gfs, state, visibleGFIds).find(progress => progress.remaining > 0)
+    return firstRemaining?.gf.id ?? gfs.find(gf => visibleGFIds.has(gf.id))?.id ?? ''
   })
   const [gfDisplay, setGFDisplay] = useState<GFDisplay>('remaining')
   const [showAllAbilities, setShowAllAbilities] = useState(false)
@@ -67,11 +69,10 @@ export function PlayerContextPanel({
   const activeCharacters = partyContext.activeCharacterIds
     .map(id => characters.find(character => character.id === id))
     .filter((character): character is CharacterProfile => Boolean(character))
-  const acquiredGFIds = useMemo(() => new Set(gfs.filter(gf => state.completedItems[gf.id]).map(gf => gf.id)), [gfs, state.completedItems])
-  const gfProgress = useMemo(() => recommendedGFProgress(gfs, state, acquiredGFIds), [gfs, state, acquiredGFIds])
+  const gfProgress = useMemo(() => recommendedGFProgress(gfs, state, visibleGFIds), [gfs, state, visibleGFIds])
   const selectedGFProgress = gfProgress.find(progress => progress.gf.id === selectedGFId) ?? gfProgress[0]
   const selectedMagicCharacter = characters.find(character => character.id === magicCharacterId) ?? activeCharacters[0] ?? characters[0]
-  const progressionChapters = chapters.filter(chapter => chapter.disc > 0).sort((a, b) => a.disc - b.disc || a.index - b.index)
+  const progressionChapters = orderedStoryChapters(chapters)
   const progressionChapter = progressionChapters.find(chapter => chapter.id === state.progressionChapterId) ?? progressionChapters[0]
 
   const activeMagicNeeds = activeCharacters.map(character => ({

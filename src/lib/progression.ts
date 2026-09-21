@@ -1,4 +1,4 @@
-import type { Chapter, Enemy, MagicSpell } from '../types'
+import type { Chapter, Enemy, GuardianForce, MagicSpell } from '../types'
 import { contextualDrawMagic, resolveEnemyLevelContext, type PartyLevelContext } from './enemyLevelData'
 import { magicByName } from './playerState'
 
@@ -18,6 +18,44 @@ export function validProgressionChapterId(chapters: Chapter[], chapterId: unknow
   return typeof chapterId === 'string' && orderedStoryChapters(chapters).some(chapter => chapter.id === chapterId)
     ? chapterId
     : defaultProgressionChapterId(chapters)
+}
+
+export interface ProgressionAvailability {
+  orderedChapters: Chapter[]
+  reachedChapters: Chapter[]
+  reachedChapterIds: ReadonlySet<string>
+  hasReached: (availabilityChapterId?: string | null) => boolean
+}
+
+/**
+ * Resolves the selected story point once so progression-aware features share
+ * the same chronological ordering and never need chapter-name comparisons.
+ */
+export function createProgressionAvailability(chapters: Chapter[], selectedChapterId: string): ProgressionAvailability {
+  const orderedChapters = orderedStoryChapters(chapters)
+  const selectedIndex = Math.max(0, orderedChapters.findIndex(chapter => chapter.id === selectedChapterId))
+  const reachedChapters = orderedChapters.slice(0, selectedIndex + 1)
+  const reachedChapterIds = new Set(reachedChapters.map(chapter => chapter.id))
+
+  return {
+    orderedChapters,
+    reachedChapters,
+    reachedChapterIds,
+    hasReached: availabilityChapterId => typeof availabilityChapterId === 'string' && reachedChapterIds.has(availabilityChapterId),
+  }
+}
+
+export function gfIdsAvailableByProgression(
+  chapters: Chapter[],
+  chapterId: string,
+  gfs: GuardianForce[],
+) {
+  const progression = createProgressionAvailability(chapters, chapterId)
+  return new Set(
+    gfs
+      .filter(gf => progression.hasReached(gf.availabilityChapterId))
+      .map(gf => gf.id),
+  )
 }
 
 function escapeRegExp(value: string) {
@@ -44,11 +82,10 @@ export function magicAvailableByProgression(
 ) {
   const spellMap = magicByName(magic)
   const available = new Set<string>()
-  const ordered = orderedStoryChapters(chapters)
-  const selectedIndex = Math.max(0, ordered.findIndex(chapter => chapter.id === chapterId))
+  const progression = createProgressionAvailability(chapters, chapterId)
   const enemyMap = new Map(enemies.map(enemy => [enemy.id, enemy]))
 
-  for (const chapter of ordered.slice(0, selectedIndex + 1)) {
+  for (const chapter of progression.reachedChapters) {
     for (const paragraph of chapter.content.split(/\n\s*\n/)) {
       if (!/draw\s+point/i.test(paragraph)) continue
       for (const spell of magic) {

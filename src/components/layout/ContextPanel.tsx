@@ -17,6 +17,7 @@ interface Props {
   magic: MagicSpell[]
   gfs: GuardianForce[]
   availableMagicIds: ReadonlySet<string>
+  visibleGFIds: ReadonlySet<string>
   state: TrackerState
   partyContext: PartyLevelContext
   onToggleParty: (characterId: string) => void
@@ -33,7 +34,7 @@ const DISC_COLORS_PANEL: Record<number, { label: string; text: string; bar: 'tea
   4: { label: 'Disc 4', text: 'text-amber-400',  bar: 'amber' },
 }
 
-export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes, characters, magic, gfs, availableMagicIds, state, partyContext, onToggleParty, onSetLevel, onToggleMagic, onToggleGFAbility, onSetProgressionChapter }: Props) {
+export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes, characters, magic, gfs, availableMagicIds, visibleGFIds, state, partyContext, onToggleParty, onSetLevel, onToggleMagic, onToggleGFAbility, onSetProgressionChapter }: Props) {
   const allCps = data.chapters.flatMap(ch => ch.checkpoints)
   const allAchs = allCps.filter(cp => cp.type === 'achievement')
   const allMisses = allCps.filter(cp => cp.type === 'missable')
@@ -77,6 +78,7 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOp
           gfs={gfs}
           chapters={data.chapters}
           availableMagicIds={availableMagicIds}
+          visibleGFIds={visibleGFIds}
           state={state}
           partyContext={partyContext}
           onToggleParty={onToggleParty}

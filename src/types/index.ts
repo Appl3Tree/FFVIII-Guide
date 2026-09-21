@@ -49,6 +49,8 @@ export interface GuardianForce {
   element: string
   attack: string
   location: string
+  /** Earliest chronological Guide chapter where this GF can be obtained. */
+  availabilityChapterId?: string
   abilities: GFAbility[]
   learningOrder?: string[]
 }
