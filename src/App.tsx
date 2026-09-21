@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef } from 'react'
 import { BookOpen, CheckSquare, Compass, CreditCard, Ellipsis, Sparkles, Search, Menu, X, FlaskConical, Package, Skull, Zap, NotebookPen, UserRound } from 'lucide-react'
 import { cn } from './lib/utils'
 import { useTracker } from './hooks/useTracker'
@@ -84,6 +84,10 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [desktopMoreOpen, setDesktopMoreOpen] = useState(false)
   const [notesOpen, setNotesOpen] = useState(false)
+  const desktopMainRef = useRef<HTMLElement>(null)
+  const mobileMainRef = useRef<HTMLElement>(null)
+  const viewScrollPositions = useRef<Partial<Record<ViewMode, number>>>({})
+  const pendingScrollRestore = useRef<ViewMode | null>(null)
 
   const tracker = useTracker(data)
   const search = useSearch(data, SIDEQUESTS)
@@ -164,53 +168,70 @@ export default function App() {
     return () => window.removeEventListener('keydown', handler)
   }, [view, prevChapter, nextChapter, search.open])
 
+  const activeScrollContainer = useCallback(() => {
+    return window.matchMedia('(min-width: 1024px)').matches
+      ? desktopMainRef.current
+      : mobileMainRef.current
+  }, [])
+
+  const selectView = useCallback((nextView: ViewMode) => {
+    if (nextView === view) return
+    const scroller = activeScrollContainer()
+    if (scroller) viewScrollPositions.current[view] = scroller.scrollTop
+    pendingScrollRestore.current = nextView
+    setDesktopMoreOpen(false)
+    setView(nextView)
+  }, [activeScrollContainer, view])
+
   const handleSearchSelect = useCallback((result: { type: string; chapterId?: string; id: string }) => {
     search.closeSearch()
     if (result.type === 'chapter') {
       setActiveChapterId(result.id)
-      setView('guide')
+      selectView('guide')
     } else if (result.type === 'sidequest') {
-      setView('sidequests')
+      selectView('sidequests')
     } else if (result.chapterId) {
       setActiveChapterId(result.chapterId)
-      setView('guide')
+      selectView('guide')
     } else if (result.type === 'card') {
-      setView('cards')
+      selectView('cards')
     } else if (result.type === 'gf') {
-      setView('gfs')
+      selectView('gfs')
     } else if (result.type === 'ability') {
-      setView('abilities')
+      selectView('abilities')
     } else if (result.type === 'refinement') {
-      setView('refinement')
+      selectView('refinement')
     } else if (result.type === 'magic') {
       setActiveChapterId('r0-magic-reference')
-      setView('guide')
+      selectView('guide')
     } else if (result.type === 'item' || result.type === 'weapon') {
-      setView('items')
+      selectView('items')
     } else if (result.type === 'enemy') {
-      setView('bestiary')
+      selectView('bestiary')
     }
-  }, [search])
+  }, [search, selectView])
 
   const handleSelectChapter = useCallback((id: string) => {
     setActiveChapterId(id)
-    setView('guide')
+    selectView('guide')
     setSidebarOpen(false)
-  }, [])
+  }, [selectView])
 
   const navigateToChapter = useCallback((id: string) => {
     setActiveChapterId(id)
-    setView('guide')
-  }, [])
+    selectView('guide')
+  }, [selectView])
 
   const navigateChapter = useCallback((id: string) => {
     setActiveChapterId(id)
   }, [])
 
-  const selectView = useCallback((nextView: ViewMode) => {
-    setDesktopMoreOpen(false)
-    setView(nextView)
-  }, [])
+  useLayoutEffect(() => {
+    if (pendingScrollRestore.current !== view) return
+    const scroller = activeScrollContainer()
+    if (scroller) scroller.scrollTop = viewScrollPositions.current[view] ?? 0
+    pendingScrollRestore.current = null
+  }, [activeScrollContainer, view])
 
   const chapterProgress = useCallback((chapterId: string) => {
     return tracker.getProgress('chapter', data, chapterId)
@@ -335,7 +356,7 @@ export default function App() {
               </div>
             )}
           </header>
-          <main className="flex-1 overflow-y-auto px-6 py-5">
+          <main ref={desktopMainRef} className="flex-1 overflow-y-auto px-6 py-5">
             {renderView()}
           </main>
         </div>
@@ -434,13 +455,14 @@ export default function App() {
         )}
 
         <main
+          ref={mobileMainRef}
           className="flex-1 overflow-y-auto px-4 pt-4"
           style={{ paddingBottom: 'calc(6.5rem + env(safe-area-inset-bottom))' }}
         >
           {renderView()}
         </main>
 
-        <BottomNav active={view} onChange={setView} onSearch={search.openSearch} />
+        <BottomNav active={view} onChange={selectView} onSearch={search.openSearch} />
       </div>
 
       <CommandPalette

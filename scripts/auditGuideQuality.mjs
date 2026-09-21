@@ -313,7 +313,6 @@ const EXPECTED_MISSABLE_ROUTE = [
   'End of Disc 3',
   'Missed GFs',
   'Eden',
-  'Ultima Weapon, Omega Weapon',
   'PuPu Card',
 ]
 for (const chapter of data.chapters) {
