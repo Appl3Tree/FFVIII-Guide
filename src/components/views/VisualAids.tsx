@@ -32,7 +32,7 @@ export function contextualVisualAidPlacement(chapterId: string, paragraphText: s
   ) return 'before'
 
   if (
-    chapterId === 'd1-galbadia-garden' &&
+    chapterId === 'd1-deling-city' &&
     (hasCalloutTitle(paragraphText, 'Tomb route map') || hasCalloutTitle(paragraphText, 'To obtain the GF Brothers'))
   ) return 'before'
 
@@ -148,10 +148,10 @@ export function getBossImages(chapterId: string, bossName: string): GuideImage[]
         wide: true,
       },
     ],
-    'd1-galbadia-garden:sacred': [
+    'd1-deling-city:sacred': [
       { src: namedGuideImage('tomb-of-the-unknown-king', 'sacred-boss.png'), alt: 'Sacred boss battle screenshot', caption: 'Sacred boss battle', wide: true },
     ],
-    'd1-galbadia-garden:minotaur': [
+    'd1-deling-city:minotaur': [
       { src: namedGuideImage('tomb-of-the-unknown-king', 'sacred-minotaur-boss.png'), alt: 'Sacred and Minotaur boss battle screenshot', caption: 'Sacred and Minotaur boss battle', wide: true },
     ],
     'd1-deling-city:2x iguion': [
@@ -646,7 +646,7 @@ export function ContextualVisualAid({ chapterId, paragraphText }: InlineAidProps
   }
 
   if (
-    chapterId === 'd1-galbadia-garden' &&
+    chapterId === 'd1-deling-city' &&
     (hasCalloutTitle(paragraphText, 'Tomb route map') || hasCalloutTitle(paragraphText, 'To obtain the GF Brothers'))
   ) {
     return (

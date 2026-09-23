@@ -256,21 +256,26 @@ Status: **Fully audited.** The party mapping, excavation-site enemy tiers, all t
 
 ### Galbadia Garden
 
-Status: **Fully audited.** The reception-room progression, Irvine's starting ammo, Trabia rule window, invisible Haste Draw Point, Deling train, Tomb navigation/Draw Point, Sacred and Minotaur data, rewards, and GF learning order were checked. No unresolved claim remains here.
+Status: **Fully audited.** The current scope covers the Garden reception through the train ride to Deling City. The first Level 6 Boss Card player, Haste and Life Draw Points, Trabia rule work, Irvine's joining items, and train order are placed at their first access point. The Tomb and Brothers route now begin in the following Deling City chapter, after the ID objective.
 
 | Existing claim or omission | Classification | Change | Sources and reasoning |
 |---|---|---|---|
-| The Brothers strategy told players to Float their own party to stop Minotaur's regeneration. | Incorrect | Corrected the two distinct uses: cast Float on Sacred/Minotaur to stop their ground-based regeneration; cast Float on the party to evade Earth-elemental Mad Cow Special. | GF72431's Tomb boss section explicitly distinguishes boss regeneration from the ground-based party attack. |
-| The optional Brothers route awarded the GF but had no achievement checkpoint. | Incomplete | Added a Brothers achievement checkpoint with the official requirement. | Steam list names “Brothers — Unlock Guardian Force Brothers”; Steam guide places it after completion of the Tomb dungeon. |
+| The card section omitted the first Level 6 Boss Card player and gave only a vague Trabia rule reminder. | Incomplete | Added the classroom opponent and the full save/rule-carry/confirmation/reload process, plus the Life Draw Point in the locker room. | GF78107, GF50775, GF51741, and GF72431 place these opportunities after Irvine's party selection. GF72431 warns Remaster players to make Trabia changes in this window. |
+| The optional Tomb and Brothers achievement appeared before the student-ID objective was available. | Out of sequence | Moved the Tomb route, its encounter panel, map, boss images, and achievement checkpoint to Deling City after the guard assigns the ID task. | The approved walkthroughs place the Tomb excursion after the Deling City guard's assignment. The official Steam list requires unlocking Brothers. |
 
 ### Deling City
 
-Status: **Fully audited.** The city route and services, student-ID objective, Location Displayer deadline, Tomb return, Queen of Cards step, hotel magazine, assassination sequence, Rinoa's sewer detour, Iguion/Carbuncle mechanics, sewer route, and Seifer/Edea encounters were checked. No unresolved claim remains here.
+Status: **Fully audited.** The city route and services, student-ID objective, Location Displayer deadline, full optional Tomb route, Queen of Cards step, magazines, assassination sequence, Carbuncle Draw, sewers, and Seifer/Edea encounters were checked. Dynamic enemy values remain in encounter data; the Guide prose carries route and strategy context.
 
 | Existing claim or omission | Classification | Change | Sources and reasoning |
 |---|---|---|---|
-| The Carbuncle setup said Orihalcon teaches Vit+60%. | Incorrect | Corrected the taught ability to **Vit+40%**; retained the accurate statement that this unlocks Vit Bonus immediately. | GF72431's Deling City Carbuncle setup identifies Turtle Shell as Vit+20% and Orihalcon as Vit+40%, with Vit Bonus available once Vit+40% is learned. |
-| The global Handyman entry tied the achievement to Fisherman's Horizon and called that the first full Junk Shop opportunity. | Incorrect | Moved the checkpoint to Deling City's Junk Shop and replaced the invented location requirement with the official requirement: upgrade any weapon. The text describes Deling as an early validated opportunity, not an exclusive one. | Steam list (primary) states only “Upgrade your weapon.” GF51741's Disc 1 Deling route explicitly discusses upgrading weapons at this Junk Shop. |
+| The chapter stopped at the Tomb sword and referred players to a Tomb section in the previous chapter. | Out of sequence and incomplete | Added the Tomb exterior Protect point, random ID reminder, map, Draw Points, both Sacred encounters, sluice/water-wheel route, Brothers, cards, rewards, and achievement checkpoint here, after the assigned ID objective. | GF78107, GF50775, GF51741, GF37211, and GF72431 place this route after Caraway's guard sends the party to retrieve the number. |
+| The Brothers strategy told players to Float their own party to stop Minotaur's regeneration. | Incorrect | Cast Float on Sacred/Minotaur to stop their recovery; cast it on the party to avoid Mad Cow Special. | GF72431's Tomb boss section explicitly distinguishes these effects. |
+| The Queen of Cards sidequest note did not match the Dollet-to-Balamb move after losing Sacred. | Incorrect | The Guide and sidequest placement now ask the player to confirm the Queen goes to Balamb, then recover Sacred from her son in Dollet when desired. | GF50775 and GF51741 give the Balamb destination for this stage; the current Kiros/Sacred card guidance is placed at the relevant Deling window. |
+| The Caraway walking route omitted a useful Draw Point. | Incomplete | Added the Thundara Draw Point along the route to the Presidential Palace. | GF50775 calls out the point during the Caraway route. |
+| The optional Brothers route lacked an achievement checkpoint in its actual chapter. | Incomplete | Added the checkpoint at the Brothers reward in Deling City and aligned the GF availability and sidequest placement with that chapter. | The official Steam list names “Brothers — Unlock Guardian Force Brothers”; the Steam guide places it after the Tomb route. |
+| The Carbuncle setup said Orihalcon teaches Vit+60%. | Incorrect | Corrected the taught ability to **Vit+40%**; this unlocks Vit Bonus immediately. | GF72431 identifies Turtle Shell as Vit+20% and Orihalcon as Vit+40%. |
+| The global Handyman entry tied the achievement to Fisherman's Horizon and later described Deling City as the earliest validated Junk Shop opportunity. | Incorrect | Handyman requires any weapon upgrade. The earliest available Junk Shop is in Balamb; Deling City is a later fallback. | The official Steam list states only “Upgrade your weapon.” GF51741 and GF72431 show Balamb Junk Shop access before the Timber departure. |
 
 ## Disc 2
 

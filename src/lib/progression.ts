@@ -87,9 +87,13 @@ export function magicAvailableByProgression(
 
   for (const chapter of progression.reachedChapters) {
     for (const paragraph of chapter.content.split(/\n\s*\n/)) {
-      if (!/draw\s+point/i.test(paragraph)) continue
-      for (const spell of magic) {
-        if (containsGameName(paragraph, spell.name)) available.add(spell.id)
+      const availableDrawPointSentences = paragraph
+        .split(/(?<=[.!?])\s+|\n+/)
+        .filter(sentence => /draw\s+point/i.test(sentence) && !/\b(?:later|future)\b/i.test(sentence))
+      for (const sentence of availableDrawPointSentences) {
+        for (const spell of magic) {
+          if (containsGameName(sentence, spell.name)) available.add(spell.id)
+        }
       }
     }
 

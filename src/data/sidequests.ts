@@ -55,13 +55,14 @@ export const SIDEQUESTS: Sidequest[] = [
       'Dollet: collect the Hotel issue and the Pub issue when Dollet opens.',
       'Deling City: collect the Hotel-room issue before leaving the city route behind.',
       'Fishermans Horizon: collect the Inn issue and the issue in the rail dead-end house.',
-      'Shumi Village: collect the Village issue during an open-world visit.',
       'Trabia Garden: collect the camouflaged issue in the graveyard screen.',
       'Edeas House: collect the issue on the floor near the doorway during Disc 3.',
+      'Shumi Village: wait until after the Trabia Canyon Laguna sequence, then collect the Village issue from the Artisan\'s House.',
       'White SeeD Ship: after the ship scene, climb the stairs and collect the issue on the left side before the ship becomes inaccessible.',
     ],
     notes: [
       'The Balamb pair is mutually exclusive for collection count. Pick either one and do not worry about the other.',
+      'One reviewed walkthrough warns that collecting the Shumi Village issue before the Trabia Canyon Laguna sequence removes Ward from the battle. The issue remains available afterward, so postpone this one pickup until that sequence is complete.',
       'This is a collection sidequest rather than a combat route, so the walkthrough only reminds you at the relevant towns.',
     ],
     related: ['Checklist'],
@@ -97,13 +98,44 @@ export const SIDEQUESTS: Sidequest[] = [
         ],
       },
       {
+        chapterId: 'd2-exploring-the-world',
+        afterParagraph: 5,
+        label: 'Timber Maniacs: defer Shumi Village issue',
+        summary: 'Visit Shumi Village now, but leave its magazine until after the Trabia Canyon Laguna sequence on Disc 3.',
+        route: [
+          'Use the Ultima Draw Point and complete Shumi Village quest steps if desired.',
+          'Do not take the Timber Maniacs issue from the Artisan\'s House bed yet; one reviewed walkthrough warns it removes Ward from the upcoming Laguna battle.',
+          'Return after the Trabia Canyon sequence to collect the issue safely.',
+        ],
+      },
+      {
+        chapterId: 'd2-trabia-garden',
+        afterParagraph: 2,
+        label: 'Timber Maniacs: Trabia Garden issue',
+        summary: 'Search the Trabia Garden graveyard screen for the camouflaged issue before leaving the area.',
+        route: [
+          'Take the northern-right exit from the fountain to the graveyard.',
+          'Search the back of the screen near the Draw Point and tombstones for the camouflaged issue.',
+        ],
+      },
+      {
+        chapterId: 'd3-trabia-canyon',
+        afterParagraph: 8,
+        label: 'Timber Maniacs: Shumi Village issue safe to collect',
+        summary: 'After the Trabia Canyon Laguna sequence, the Shumi Village issue can be collected without removing Ward from that battle.',
+        route: [
+          'Return to Shumi Village after completing the Trabia Canyon sequence.',
+          'Collect the issue from the Artisan\'s House bed.',
+        ],
+      },
+      {
         chapterId: 'd3-picking-up-the-trail',
         afterParagraph: 3,
-        label: 'Timber Maniacs: White SeeD Ship warning',
-        summary: 'The White SeeD Ship issue is the easiest one to lose forever.',
+        label: 'Timber Maniacs #12: final ship issue',
+        summary: 'Collect the final Timber Maniacs issue here; the Steam achievement requires all twelve, and the magazine becomes unavailable after this ship story window.',
         route: [
           'After the White SeeD Ship scene, climb the stairs before leaving.',
-          'Pick up the issue on the left side while the ship is still accessible.',
+          'Pick up Timber Maniacs #12/12 on the left side of the upper room; this is the final issue for the Steam collection achievement.'
         ],
       },
     ],
@@ -124,6 +156,8 @@ export const SIDEQUESTS: Sidequest[] = [
       'After the SeeD Exam, revisit Balamb Garden and check the Library again before leaving for Timber.',
       'After Balamb Garden becomes mobile, return to the Library with Zell in the active party when Garden access opens.',
       'During the Garden Festival/Fishermans Horizon window, control Irvine and speak to the Library Girl directly.',
+      'After the Balamb occupation is resolved, return to the Library Committee on Garden\'s bridge for Zell Love Scene #7 before leaving for Trabia Garden.',
+      'After the Trabia Garden memory sequence, put Zell in the active party and visit the Library Committee for Zell Love Scene #8.',
       'After the Battle of the Gardens, put Zell in the party and visit the Library Committee Girls.',
       'Travel to Balamb Town, learn that the Library Girl wants to meet Zell, then enter Balamb Hotel.',
       'Stay overnight and check downstairs the next morning to receive Combat King 003 and see the final scene.',
@@ -153,6 +187,27 @@ export const SIDEQUESTS: Sidequest[] = [
         route: [
           'When controlling Irvine, go to Balamb Garden Library.',
           'Speak directly to the Library Girl with pigtails before advancing the festival sequence.',
+        ],
+      },
+      {
+        chapterId: 'd2-return-to-balamb',
+        afterParagraph: 8,
+        label: "Zell's Love Quest: Balamb return scene",
+        summary: 'After liberating Balamb, visit the Library Committee from the Garden bridge for Zell Love Scene #7 before heading to Trabia Garden.',
+        route: [
+          'Return to Balamb Garden after the Hotel battles.',
+          'Visit the Library Committee and view Zell Love Scene #7.',
+        ],
+      },
+      {
+        chapterId: 'd2-trabia-garden',
+        afterParagraph: 6,
+        label: "Zell's Love Quest: Trabia return scene",
+        summary: 'After the Trabia memory sequence, bring Zell to Balamb Garden Library for Scene #8 before returning to Trabia for Selphie’s card.',
+        route: [
+          'Put Zell in the active party after control returns to Balamb Garden.',
+          'Visit the Library Committee and view Zell Love Scene #8.',
+          'Then return to Trabia Garden for Selphie’s card before continuing to the next story stop.',
         ],
       },
       {
@@ -215,7 +270,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd2-return-to-balamb-garden',
-        afterParagraph: 11,
+        afterParagraph: 15,
         label: 'Novice SeeD Candidates: window 3',
         summary: 'After the MD Level sequence and before Fishermans Horizon, the third candidate window is open.',
         route: [
@@ -268,18 +323,19 @@ export const SIDEQUESTS: Sidequest[] = [
     route: [
       'Win MiniMog from the running boy in Balamb Garden, then intentionally lose MiniMog to the Queen in Balamb Town and make sure she moves to Dollet.',
       'After her father paints the new card, win Kiros from the man in black in the Deling City shopping arcade.',
-      'After obtaining Sacred from the Tomb of the Unknown King, lose Sacred to the Queen and move her to Dollet again.',
-      'Win Irvine from Flo at Fishermans Horizon, then recover Sacred from the Queen route when convenient.',
+      'After obtaining Sacred from the Tomb of the Unknown King, lose it to the Queen in Dollet; reload unless she heads to Balamb.',
+      'Win Irvine from Flo at Fishermans Horizon, then win Sacred back from her son in Dollet when convenient.',
       'After obtaining Chicobo from Chocobo Sanctuary, lose Chicobo to the Queen and send her to Dollet.',
       'Win Chubby Chocobo from the student sitting outside Balamb Garden Library, then recover Chicobo from the Queen route.',
       'After obtaining Alexander, lose Alexander to the Queen and send her to Dollet.',
       'Win Doomtrain from the Timber Pub owner, then recover Alexander.',
       'Lose Doomtrain to the Queen and send her to Dollet.',
-      'Win Phoenix from the Presidential Aide in Esthar, then recover Doomtrain before final card cleanup.',
+      'Win Phoenix from the Presidential Aide at Esthar Presidential Palace before the Mobile Type 8 cutoff, then recover Doomtrain before final card cleanup.',
     ],
     notes: [
       'Save before every deliberate loss. Reload if the Queen moves to the wrong region.',
       'Do not refine MiniMog, Sacred, Chicobo, Alexander, or Doomtrain until their Queen steps are finished.',
+      'After winning Phoenix and recovering Doomtrain, choose the Queen’s final region and regional trade rule before the Mobile Type 8 cutoff if using her to influence Disc 4 card play; the best setup depends on the card route you plan to use.',
     ],
     related: ['Cards', 'Checklist'],
     placements: [
@@ -297,7 +353,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd1-deling-city',
-        afterParagraph: 7,
+        afterParagraph: 0,
         label: 'Queen of Cards: Kiros pickup',
         summary: 'If MiniMog was lost to the Queen and she reached Dollet, Kiros is now available in Deling City.',
         route: [
@@ -306,30 +362,30 @@ export const SIDEQUESTS: Sidequest[] = [
         ],
       },
       {
-        chapterId: 'd1-galbadia-garden',
-        afterParagraph: 6,
+        chapterId: 'd1-deling-city',
+        afterParagraph: 20,
         label: 'Queen of Cards: Sacred step',
         summary: 'After completing Brothers, Sacred becomes the next Queen card to lose deliberately.',
         route: [
           'After winning Sacred in the Tomb, save before playing the Queen.',
-          'Lose Sacred to her and confirm she moves to Dollet.',
+          'Lose Sacred to her and confirm she moves to Balamb; reload if she names another town.',
+          "Win Sacred back from her son in the Dollet artist's house if you want to keep the card.",
           'The Irvine Card becomes available at Fishermans Horizon later.',
         ],
       },
       {
         chapterId: 'd2-fishermans-horizon',
-        afterParagraph: 7,
+        afterParagraph: 3,
         label: 'Queen of Cards: Irvine pickup',
         summary: 'If Sacred was lost correctly, Fishermans Horizon now holds Irvine.',
         route: [
           'Challenge Flo in Fishermans Horizon.',
           'Win the Irvine Card.',
-          'Recover Sacred from the Queen route when practical.',
         ],
       },
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 7,
         label: 'Queen of Cards: Chicobo and Chubby Chocobo',
         summary: 'After Chocobo Sanctuary, use Chicobo for the next Queen creation step.',
         route: [
@@ -341,7 +397,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd3-back-on-earth',
-        afterParagraph: 3,
+        afterParagraph: 5,
         label: 'Queen of Cards: Alexander, Doomtrain, Phoenix',
         summary: 'Disc 3 opens the final Queen chain once Alexander and Doomtrain are available.',
         route: [
@@ -349,6 +405,17 @@ export const SIDEQUESTS: Sidequest[] = [
           'Recover Alexander when convenient.',
           'Lose Doomtrain to the Queen and send her to Dollet.',
           'Win Phoenix from the Presidential Aide in Esthar and recover Doomtrain before final cleanup.',
+        ],
+      },
+      {
+        chapterId: 'd4-final-preparations',
+        afterParagraph: 2,
+        label: 'Queen of Cards: Disc 4 recovery',
+        summary: 'At the Escape Pod Crash Site, recover any missing cards created by the Queen before using the CC Group for other rare cards.',
+        route: [
+          'Search around the tip of the southeast Esthar peninsula to reveal the hidden Escape Pod Crash Site.',
+          'Challenge the Queen only if one of her five created cards is still missing: Kiros, Irvine, Chubby Chocobo, Doomtrain, or Phoenix.',
+          'Her region and trade rule cannot be changed in Disc 4; use the Ragnarok CC Group to recover other rare cards if that quest was completed by the end of Disc 3.',
         ],
       },
     ],
@@ -397,7 +464,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 10,
         label: 'Timber Journalist: collect if not done',
         summary: 'Use this open-world window to claim the Pet Nametag if you started the quest on Disc 1.',
         route: [
@@ -450,7 +517,7 @@ export const SIDEQUESTS: Sidequest[] = [
     available: 'Disc 1, during the Deling City student-ID objective',
     deadline: 'Can be delayed, but completing it now gives Brothers and rare cards early.',
     summary: 'Go beyond the required student ID number and clear the full Tomb route for Brothers.',
-    rewards: ['Brothers GF', 'Sacred Card', 'Minotaur Card', 'G-Hi-Potion rewards'],
+    rewards: ['Brothers GF', 'Sacred Card', 'Minotaur Card', '8x G-Hi-Potion', '8x G-Returner'],
     route: [
       'At the Tomb entrance, note the student ID number for the Deling guard.',
       'Navigate to the east statue and fight Sacred. He flees after taking enough damage.',
@@ -458,7 +525,7 @@ export const SIDEQUESTS: Sidequest[] = [
       'Reach the water wheel room and activate the mechanism.',
       'Return to the center chamber.',
       'Fight Sacred and Minotaur together.',
-      'Use Float on the party or bosses to stop Earth-based healing and finish the battle.',
+      'Cast Float on Sacred and Minotaur to stop their regeneration; Float on the party to avoid Mad Cow Special.',
     ],
     notes: [
       'The story only requires the ID number. The GF and cards are the optional sidequest payoff.',
@@ -466,8 +533,8 @@ export const SIDEQUESTS: Sidequest[] = [
     related: ['GFs', 'Cards', 'Bestiary'],
     placements: [
       {
-        chapterId: 'd1-galbadia-garden',
-        afterParagraph: 6,
+        chapterId: 'd1-deling-city',
+        afterParagraph: 8,
         label: 'Brothers: optional full Tomb clear',
         summary: 'The ID number advances the story, but the full Tomb route earns Brothers, Sacred, and Minotaur.',
         route: [
@@ -503,7 +570,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-fishermans-horizon',
-        afterParagraph: 3,
+        afterParagraph: 1,
         label: 'Master Fisherman: start immediately',
         summary: 'Before pushing FH story scenes too far, climb down to meet the Master Fisherman.',
         route: [
@@ -530,7 +597,7 @@ export const SIDEQUESTS: Sidequest[] = [
       'Challenge Joker on the bridge reached by going right from the Training Centers first screen; he appears randomly and awards the GF Report upgrade when defeated.',
       'Challenge Club in the back portion of the 1F circle near the Dormitory exit.',
       'Challenge Diamond, the pair of girls walking near the directory.',
-      'Challenge Spade on the 2F bridge/hallway when available.',
+      'Challenge Spade in Garden\'s 2F Hall during Chapter 12 before leaving for Fisherman\'s Horizon.',
       'Challenge Heart, revealed as Xu, on the bridge.',
       'Speak to Dr. Kadowaki about King, then rest in Squalls dorm until King appears.',
       'Defeat King to complete the chain. If completed before Disc 4, the group later appears on the Ragnarok.',
@@ -542,12 +609,12 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-return-to-balamb-garden',
-        afterParagraph: 21,
+        afterParagraph: 13,
         label: 'CC Group: begin the Garden card club',
         summary: 'Once Balamb Garden is mobile and you have 15 qualifying card wins, the CC Group chain can begin.',
         route: [
           'Challenge Jack in the main hall.',
-          'Continue through Club, Diamond, Spade, Heart, then King; Joker may be defeated any time after challenging Jack but must be beaten before King appears.',
+          'Continue through Club and Diamond, then challenge Spade in Garden\'s 2F Hall before leaving for Fisherman\'s Horizon. Heart follows later on the bridge, then King; Joker may be defeated any time after challenging Jack but must be beaten before King appears.',
           'Wins in the Cafeteria, Library, and 2F Classroom do not count toward the 15-win prerequisite.',
         ],
       },
@@ -559,6 +626,16 @@ export const SIDEQUESTS: Sidequest[] = [
         route: [
           'Defeat any remaining CC Group members in order.',
           'Rest in Squalls dorm after the Kadowaki clue to trigger King.',
+        ],
+      },
+      {
+        chapterId: 'd4-final-preparations',
+        afterParagraph: 1,
+        label: 'CC Group: Disc 4 card recovery',
+        summary: 'If the quest was completed by the end of Disc 3, the group is aboard Ragnarok and can recover rare cards.',
+        route: [
+          'Speak with the Diamond pair aboard Ragnarok; Left Diamond is the most flexible rare-card recovery player.',
+          'The CC Group does not play the unique PuPu Card.',
         ],
       },
     ],
@@ -577,7 +654,7 @@ export const SIDEQUESTS: Sidequest[] = [
       'For Odin, climb the ruins and use the statue mechanisms to collect both eye pieces.',
       'Enter the code at the upper statue, open Odins room, and defeat Odin before the timer expires.',
       'For Tonberry, repeatedly defeat Tonberries in the lower ruins; each gives 1 AP and no EXP.',
-      'Tonberry King appears immediately after the required Tonberry defeat, with the threshold varying from 18 to 24 defeated Tonberries.',
+      'Tonberry King appears after enough Tonberries are defeated. Guides differ on the exact threshold; keep defeating them until the King appears.',
       'If Odin is still undefeated, the 20-minute ruins timer remains active; leaving and re-entering resets the timer without resetting the Tonberry count.',
       'Defeat Tonberry King to obtain Tonberry GF and its guaranteed Royal Crown drop.',
       'Teach Tonberry LV Up, LV Down, Haggle, Sell-High, Familiar, and Call Shop according to your route needs.',
@@ -589,13 +666,13 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 3,
         label: 'Centra Ruins: Odin and Tonberry available',
         summary: 'Mobile Garden can reach Centra now, so both optional Centra Ruins GF routes are available.',
         route: [
           'Enter Centra Ruins when prepared for the timer.',
           'Complete the eye/statue route and defeat Odin if you want him now.',
-          'Defeat 18–24 Tonberries in the lower ruins until Tonberry King appears, then defeat him for Tonberry GF and a Royal Crown.',
+          'Defeat Tonberries in the lower ruins until Tonberry King appears, then defeat him for Tonberry GF and a Royal Crown. The approved guides give different exact thresholds.',
         ],
       },
     ],
@@ -619,13 +696,13 @@ export const SIDEQUESTS: Sidequest[] = [
     ],
     notes: [
       'Status Guard teaches ST-Def-Jx4, making this more than a flavor sidequest.',
-      'Avoid reading the Shumi Timber Maniacs issue early if you are preserving the Ward version of the later Laguna dream.',
+      'Complete the Shumi quest and paid Ultima draws whenever convenient, but leave the village Timber Maniacs issue until after the Trabia Canyon Laguna sequence; a reviewed walkthrough warns that taking it earlier removes Ward from that battle.',
     ],
     related: ['Items', 'Abilities', 'Magic'],
     placements: [
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 4,
+        afterParagraph: 6,
         label: 'Shumi Village: stone quest available',
         summary: 'Mobile Garden can reach Shumi Village now. Start or complete the stone hunt here.',
         route: [
@@ -674,12 +751,13 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 7,
         label: 'Chocobo Forests: start or complete',
         summary: 'World travel now supports the Chocobo Forest route. Finish it now if you want Chicobo for Queen of Cards.',
         route: [
           'Buy a ChocoWhis from ChocoBoy.',
           'Solve any reachable forests by leaving one Chicobo, then calling the mother Chocobo.',
+          'Ride the mother Chocobo to complete the Steam Chocobo achievement; one forest is enough.',
           'Complete all six forests and ride to Chocobo Sanctuary for Chicobo when you are ready.',
         ],
       },
@@ -710,7 +788,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 8,
         label: 'Winhill Vase Quest: available now',
         summary: 'Winhill can be revisited during this open-world window.',
         route: [
@@ -756,7 +834,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd3-esthar',
-        afterParagraph: 8,
+        afterParagraph: 10,
         label: 'Doomtrain: finish ingredients',
         summary: 'Esthar access makes the remaining Doomtrain preparation practical.',
         route: [
@@ -791,7 +869,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd3-back-on-earth',
-        afterParagraph: 4,
+        afterParagraph: 6,
         label: 'Cactuar Island: optional GF available',
         summary: 'Ragnarok makes Cactuar Island reachable.',
         route: [
@@ -828,7 +906,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd3-back-on-earth',
-        afterParagraph: 9,
+        afterParagraph: 10,
         label: 'Deep Sea Research Center: side dungeon available',
         summary: 'Ragnarok opens the hidden research center. Do Bahamut now; decide whether Eden/Ultima Weapon fits your farming plan.',
         route: [
@@ -875,7 +953,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd3-back-on-earth',
-        afterParagraph: 21,
+        afterParagraph: 23,
         label: 'Obel Lake: finish the clue route',
         summary: 'Ragnarok gives clean access to every Obel Lake clue and treasure location.',
         route: [
@@ -922,7 +1000,7 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd3-back-on-earth',
-        afterParagraph: 23,
+        afterParagraph: 24,
         label: 'PuPu and UFO: complete the route',
         summary: 'Ragnarok makes every sighting, the UFO fight, and the PuPu encounter practical.',
         route: [
@@ -957,7 +1035,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd2-exploring-the-world',
-        afterParagraph: 2,
+        afterParagraph: 7,
         label: 'Chocobo World: version note',
         summary: 'Chocobo World is legacy-version content and is not available in Final Fantasy VIII Remastered.',
         route: [
@@ -990,9 +1068,9 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd4-final-preparations',
-        afterParagraph: 1,
+        afterParagraph: 0,
         label: 'Disc 4 Ragnarok: recover airship access',
-        summary: 'Before final cleanup, recover the Ragnarok from the compressed-time world map.',
+        summary: 'Recover the Ragnarok first, before starting Disc 4 card recovery and world cleanup.',
         route: [
           'Exit Ultimecias Castle through the portal route.',
           'Use the portal/world route to reach the Ragnarok.',
@@ -1009,7 +1087,7 @@ export const SIDEQUESTS: Sidequest[] = [
     available: 'Disc 4, after reaching Ultimecias Castle and restoring the needed commands',
     deadline: 'Before entering the final battle if you want Proof of Omega or achievement completion on this save.',
     summary: 'Prepare for the superboss, ring the castle bell, and reach Omega before the timer expires.',
-    rewards: ['Omega Destroyed achievement', 'Proof of Omega', 'Three Stars drop'],
+    rewards: ['Omega Destroyed achievement', 'Tutorial entry: Proof of Omega', 'Three Stars drop'],
     requirements: ['Restored Item, Magic, Draw, Command Ability, and Save access recommended', 'Death protection', 'Megalixirs or invincibility items', 'High HP and Limit Break plan'],
     route: [
       'Restore the commands needed for your strategy inside Ultimecias Castle.',
@@ -1028,7 +1106,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd4-final-preparations',
-        afterParagraph: 9,
+        afterParagraph: 10,
         label: 'Omega Weapon: optional superboss route',
         summary: 'After command seals are handled, prepare and trigger Omega from the castle bell route.',
         route: [
