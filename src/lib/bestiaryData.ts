@@ -3,7 +3,7 @@ import type { Enemy } from '../types'
 type CanonicalValue = {
   text?: string
   lines?: string[]
-  collapsibles?: Array<{ label?: string; text?: string }>
+  collapsibles?: Array<{ label?: string; text?: string; lines?: string[] }>
 }
 
 type CanonicalField = {
@@ -38,6 +38,7 @@ type CanonicalRecord = {
 export type CanonicalBestiaryData = { enemies: CanonicalRecord[] }
 
 const EXPLICIT_ID_MAP: Record<string, string> = {
+  'enemy-blobra': 'blobra',
   'enemy-bgh251f2-1': 'bgh251f2-from-missile-base',
   'enemy-bgh251f2-2': 'bgh251f2-from-fishermans-horizon',
   'enemy-droma': 'droma-assists-trauma',
@@ -68,6 +69,7 @@ const EXPLICIT_ID_MAP: Record<string, string> = {
   'enemy-ultimecia-final': 'ultimecia-final-boss',
   'enemy-biggs-1': 'biggs',
   'enemy-biggs-2': 'biggs',
+  'enemy-red-bat': 'red-bat',
   'enemy-wedge-1': 'wedge',
   'enemy-wedge-2': 'wedge',
 }
@@ -185,6 +187,35 @@ function canonicalStatusNote(record: CanonicalRecord) {
   return relevant.map(entry => `${entry.label}: ${entry.value}`).join(' · ')
 }
 
+function canonicalStatusEffects(record: CanonicalRecord) {
+  return (record.statuses?.entries ?? [])
+    .map(entry => ({ name: cleanText(entry.label), chance: valueText(entry.value) }))
+    .filter(entry => entry.name && entry.chance && !/^none$/i.test(entry.chance))
+}
+
+function canonicalCardResults(record: CanonicalRecord) {
+  const fields = record.cards?.fields ?? []
+  const cardField = fields.find(field => field.key === 'card')
+  const cardLines = cardField?.value?.lines ?? (cardField?.value?.text ? [cardField.value.text] : [])
+  const outcomes = cardLines.flatMap(line => line.split(/(?<=\))(?=[A-Z])/).map(value => value.trim())).filter(Boolean)
+    .map(value => {
+      const match = value.match(/^(.*?)\s*\((\d+(?:\.\d+)?%)\)$/)
+      return match ? { name: match[1].trim(), chance: match[2] } : { name: value }
+    })
+  const dropField = fields.find(field => field.key?.startsWith('card_drop_'))
+  const dropLines = dropField?.value?.lines ?? (dropField?.value?.text ? [dropField.value.text] : [])
+  const dropName = dropLines.join(' ').trim()
+  const dropChance = dropField?.percent == null ? undefined : `${dropField.percent}%`
+  const canTurnIntoCard = !outcomes.some(outcome => /can't turn into a card/i.test(outcome.name))
+  const hasCardDrop = dropName && !/^(?:nothing|none|---)$/i.test(dropName) && dropField?.percent !== 0
+
+  return {
+    common: canTurnIntoCard ? outcomes[0] : undefined,
+    rare: canTurnIntoCard ? outcomes[1] : undefined,
+    drop: hasCardDrop ? { name: dropName, chance: dropChance } : undefined,
+  }
+}
+
 function canonicalCards(record: CanonicalRecord) {
   const fields = record.cards?.fields ?? []
   const win = fieldText(fields, 'card')
@@ -228,6 +259,7 @@ function mergeCanonicalEnemy(enemy: Enemy, record: CanonicalRecord | null): Enem
   const cards = canonicalCards(record)
   const elementals = canonicalElementalData(record, enemy.elementals)
   const statusNote = canonicalStatusNote(record)
+  const statusEffects = canonicalStatusEffects(record)
   const weak = Object.entries(elementals).filter(([, value]) => value && /^x\s*(1[.,]5|[2-9])/i.test(value)).map(([key]) => key).join(', ')
   const resist = Object.entries(elementals).filter(([, value]) => value && (value === 'absorb' || value === 'immune' || /^x\s*0[.,]/i.test(value))).map(([key]) => key).join(', ')
   const canonicalDrawMagic = drawMagicByLevel.flatMap(band => band.spells).filter((spell, index, list) => list.indexOf(spell) === index)
@@ -245,6 +277,7 @@ function mergeCanonicalEnemy(enemy: Enemy, record: CanonicalRecord | null): Enem
     elementalWeaknesses: weak || enemy.elementalWeaknesses,
     elementalResistances: resist || enemy.elementalResistances,
     statusVulnerabilitiesNote: statusNote || enemy.statusVulnerabilitiesNote,
+    statusEffects: statusEffects.length ? statusEffects : enemy.statusEffects,
     whereFound: enemy.whereFound || location || undefined,
     drawMagic: canonicalDrawMagic.length ? canonicalDrawMagic : enemy.drawMagic,
     drawMagicByLevel: drawMagicByLevel.length ? drawMagicByLevel : enemy.drawMagicByLevel,
@@ -252,15 +285,16 @@ function mergeCanonicalEnemy(enemy: Enemy, record: CanonicalRecord | null): Enem
     abilitiesByLevel: abilitiesByLevel.length ? abilitiesByLevel : enemy.abilitiesByLevel,
     statsByLevel: stats.length ? stats : enemy.statsByLevel,
     mug: mugBands[0]?.value ?? enemy.mug,
-    mugByLevel: mugBands.length ? mugBands.map(({ lvMin, lvMax, value }) => ({ lvMin, lvMax, value })) : enemy.mugByLevel,
+    mugByLevel: mugBands.length ? mugBands.map(({ lvMin, lvMax, value, chance }) => ({ lvMin, lvMax, value, chance })) : enemy.mugByLevel,
     mugChance: mugBands[0]?.chance ?? enemy.mugChance,
     drop: dropBands[0]?.value ?? enemy.drop,
-    dropByLevel: dropBands.length ? dropBands.map(({ lvMin, lvMax, value }) => ({ lvMin, lvMax, value })) : enemy.dropByLevel,
+    dropByLevel: dropBands.length ? dropBands.map(({ lvMin, lvMax, value, chance }) => ({ lvMin, lvMax, value, chance })) : enemy.dropByLevel,
     dropChance: dropBands[0]?.chance ?? enemy.dropChance,
     devour: devourBands[0]?.value ?? enemy.devour,
     devourByLevel: devourBands.length ? devourBands.map(({ lvMin, lvMax, value }) => ({ lvMin, lvMax, value })) : enemy.devourByLevel,
     cards: cards.cards ?? enemy.cards,
     cardDrop: cards.cardDrop ?? enemy.cardDrop,
+    cardResults: canonicalCardResults(record),
     scan: scan || enemy.scan,
   }
 }

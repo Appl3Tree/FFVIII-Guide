@@ -9,6 +9,10 @@ export function gfAbilityKey(gfId: string, abilityName: string) {
   return `${gfId}:${abilityName}`
 }
 
+export function enemyDefeatedTrackerId(enemyId: string) {
+  return `enemy-defeated:${enemyId}`
+}
+
 export function clampCharacterLevel(value: number) {
   if (!Number.isFinite(value)) return MIN_CHARACTER_LEVEL
   return Math.min(MAX_CHARACTER_LEVEL, Math.max(MIN_CHARACTER_LEVEL, Math.round(value)))

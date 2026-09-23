@@ -1,9 +1,10 @@
-import { useState, useLayoutEffect, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useLayoutEffect, useRef, useEffect, useId } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   Activity,
   AlertTriangle,
   BookOpenCheck,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -35,7 +36,7 @@ import {
   type ContextualOption,
   type PartyLevelContext,
 } from '../../lib/enemyLevelData'
-import { charactersNeedingSpell, isMagicCompleted, magicByName } from '../../lib/playerState'
+import { enemyDefeatedTrackerId, isMagicCompleted, magicByName } from '../../lib/playerState'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { SequenceSteps } from '../ui/SequenceSteps'
@@ -2026,6 +2027,8 @@ function AreaEncounterCard({
   magic,
   magicCompletedByCharacter,
   onToggleMagic,
+  completedItems,
+  onToggleItem,
 }: {
   area: AreaEncounter
   enemies: Enemy[]
@@ -2035,33 +2038,101 @@ function AreaEncounterCard({
   magic: MagicSpell[]
   magicCompletedByCharacter: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+  completedItems: Record<string, boolean>
+  onToggleItem: (id: string) => void
 }) {
+  const [activeEnemyIndex, setActiveEnemyIndex] = useState(0)
+  const enemyTabRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const enemyTabId = useId().replace(/:/g, '')
+  const reducedMotion = useReducedMotion()
   const enemyMap = new Map(enemies.map(e => [e.id, e]))
-  const [expanded, setExpanded] = useState(false)
+  const activeEnemyIndexSafe = Math.min(activeEnemyIndex, Math.max(area.enemies.length - 1, 0))
+  const activeEncounterEnemy = area.enemies[activeEnemyIndexSafe]
+  const defeatedCount = area.enemies.filter(encounterEnemy => {
+    const enemy = enemyMap.get(encounterEnemy.id)
+    return enemy && completedItems[enemyDefeatedTrackerId(enemy.id)]
+  }).length
+
+  function handleEnemyTabKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+    let nextIndex = index
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % area.enemies.length
+    else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + area.enemies.length) % area.enemies.length
+    else if (event.key === 'Home') nextIndex = 0
+    else if (event.key === 'End') nextIndex = area.enemies.length - 1
+    else return
+    event.preventDefault()
+    event.stopPropagation()
+    setActiveEnemyIndex(nextIndex)
+    enemyTabRefs.current[nextIndex]?.focus()
+  }
 
   return (
-    <div className="rounded-xl border border-violet-800/30 bg-violet-950/20 overflow-hidden">
-      {/* Header */}
-      <button
-        onClick={() => setExpanded(e => !e)}
-        className="w-full min-w-0 flex items-center gap-2 px-4 py-2 bg-violet-900/20 border-b border-violet-800/20 hover:bg-violet-900/30 transition-colors text-left"
-      >
+    <section className="overflow-hidden rounded-xl border border-violet-800/30 bg-violet-950/20">
+      <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 border-b border-violet-800/20 bg-violet-900/20 px-4 py-2">
         <Swords size={11} className="text-violet-400 shrink-0" />
-        <span className="min-w-0 flex-1 text-xs text-violet-300 font-semibold uppercase tracking-wider break-words">{area.area}</span>
-        <span className="text-[10px] text-violet-600">{area.enemies.length} enemies</span>
-        <ChevronDown size={11} className={cn('text-violet-600 transition-transform duration-200 ml-1', expanded && 'rotate-180')} />
-      </button>
+        <h2 className="min-w-0 flex-1 break-words text-xs font-semibold uppercase tracking-wider text-violet-200">{area.area}</h2>
+        <span className="shrink-0 text-[10px] text-violet-300/70">{area.enemies.length} enemies</span>
+        {defeatedCount > 0 && <span className="shrink-0 text-[10px] text-teal-300">{defeatedCount} defeated</span>}
+      </div>
 
-      {/* Enemy rows — always show a compact summary; expand shows full details */}
-      <div className="divide-y divide-violet-900/20">
-        {area.enemies.map((ae, ei) => {
-          const enemy = enemyMap.get(ae.id)
-          return (
+      {area.enemies.length > 1 && (
+        <div
+          role="tablist"
+          aria-label={`${area.area} enemies`}
+          aria-orientation="horizontal"
+          className="grid grid-cols-2 border-b border-violet-900/30 bg-slate-950/20 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+        >
+          {area.enemies.map((ae, index) => {
+            const enemy = enemyMap.get(ae.id)
+            const isDefeated = Boolean(enemy && completedItems[enemyDefeatedTrackerId(enemy.id)])
+            const isActive = activeEnemyIndexSafe === index
+            return (
+              <button
+                key={`${ae.id}-${index}`}
+                ref={element => { enemyTabRefs.current[index] = element }}
+                id={`${enemyTabId}-tab-${index}`}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`${enemyTabId}-panel`}
+                aria-label={`${ae.name}${isDefeated ? ', defeated' : ''}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActiveEnemyIndex(index)}
+                onKeyDown={event => handleEnemyTabKeyDown(event, index)}
+                className={cn(
+                  'flex min-h-10 min-w-0 items-center justify-between gap-1.5 border-b-2 px-2 py-1.5 text-left text-[10px] font-medium leading-tight transition-colors focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-300 sm:px-3 sm:text-[11px]',
+                  isActive
+                    ? 'border-violet-400 bg-violet-900/25 text-violet-100'
+                    : 'border-transparent text-slate-400 hover:bg-slate-900/70 hover:text-slate-100',
+                )}
+                title={ae.name}
+              >
+                <span className={cn('min-w-0 break-words', isDefeated && 'text-slate-500 line-through decoration-teal-500/60')}>{ae.name}</span>
+                {isDefeated && <Check size={12} aria-hidden="true" className="shrink-0 text-teal-300" />}
+                {isActive && <span className="sr-only">Selected</span>}
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      {activeEncounterEnemy && (() => {
+        const enemy = enemyMap.get(activeEncounterEnemy.id)
+        return (
+          <motion.div
+            id={`${enemyTabId}-panel`}
+            role={area.enemies.length > 1 ? 'tabpanel' : undefined}
+            aria-labelledby={area.enemies.length > 1 ? `${enemyTabId}-tab-${activeEnemyIndexSafe}` : undefined}
+            tabIndex={area.enemies.length > 1 ? 0 : undefined}
+            initial={reducedMotion ? false : { opacity: 0, y: 2 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.12, ease: 'easeOut' }}
+            className="min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-300"
+          >
             <EnemyRow
-              key={ei}
-              ae={ae}
+              key={`${activeEncounterEnemy.id}-${activeEnemyIndexSafe}`}
+              ae={activeEncounterEnemy}
               enemy={enemy ?? null}
-              showFull={expanded}
               mugAvailable={area.mugAvailable !== false}
               partyContext={partyContext}
               characters={characters}
@@ -2069,11 +2140,13 @@ function AreaEncounterCard({
               magic={magic}
               magicCompletedByCharacter={magicCompletedByCharacter}
               onToggleMagic={onToggleMagic}
+              completedItems={completedItems}
+              onToggleItem={onToggleItem}
             />
-          )
-        })}
-      </div>
-    </div>
+          </motion.div>
+        )
+      })()}
+    </section>
   )
 }
 
@@ -2122,27 +2195,88 @@ function parseDropRateGroups(value: string): DropRateGroup[] {
   return [{ label: 'Drop', entries: parseDropRateEntries(value) }]
 }
 
-function DropRateList({ group }: { group: DropRateGroup }) {
+function DropRateList({ entries }: { entries: DropRateEntry[] }) {
   return (
-    <div className="flex min-w-0 flex-wrap items-center gap-1">
-      <span className={cn(
-        'mr-0.5 text-[9px] font-semibold uppercase tracking-wide',
-        group.label === 'Rare Item' ? 'text-amber-300/70' : 'text-slate-500',
-      )}>{group.label}</span>
-      {group.entries.map((entry, index) => (
-        <span key={`${entry.item}-${index}`} className="inline-flex max-w-full min-w-0 items-center gap-1 rounded border border-emerald-900/35 bg-emerald-950/15 px-1.5 py-0.5 text-[10px] leading-snug text-emerald-200/85">
-          <span className="break-words [overflow-wrap:anywhere]">{entry.item}</span>
-          {entry.rate && <span className="shrink-0 font-mono text-[9px] text-emerald-400/70">{entry.rate}</span>}
-        </span>
+    <ul className="mt-1 space-y-1">
+      {entries.map((entry, index) => (
+        <li key={`${entry.item}-${index}`} className="flex min-w-0 items-baseline justify-between gap-3 text-[11px] leading-snug">
+          <span className="min-w-0 break-words text-slate-200">{entry.item}</span>
+          {entry.rate && <span className="shrink-0 font-mono tabular-nums text-[10px] text-slate-400">{entry.rate}</span>}
+        </li>
       ))}
-    </div>
+    </ul>
   )
+}
+
+function optionScope(option: ContextualOption) {
+  return option.guaranteed ? null : `Only at Lv ${formatPossibleLevels(option.levels)}`
+}
+
+function optionChances(
+  bands: Array<{ lvMin: number; lvMax: number; value: string | null; chance?: string | null }> | undefined,
+  option: ContextualOption,
+  fallback?: string | null,
+) {
+  const grouped = new Map<string, number[]>()
+  for (const level of option.levels) {
+    const band = bands?.find(candidate => level >= candidate.lvMin && level <= candidate.lvMax && candidate.value === option.value)
+    const chance = band?.chance ?? fallback
+    if (!chance) continue
+    const levels = grouped.get(chance) ?? []
+    levels.push(level)
+    grouped.set(chance, levels)
+  }
+  return [...grouped.entries()].map(([chance, levels]) => ({ chance, levels }))
+}
+
+function affinityGroups(enemy: Enemy | null) {
+  const groups: Record<'Weak to' | 'Resists' | 'Nullifies' | 'Absorbs', string[]> = {
+    'Weak to': [], Resists: [], Nullifies: [], Absorbs: [],
+  }
+  if (!enemy) return groups
+  for (const [element, rawValue] of Object.entries(enemy.elementals ?? {})) {
+    if (!rawValue) continue
+    const value = rawValue.trim().toLowerCase()
+    const name = `${element[0].toUpperCase()}${element.slice(1)}`
+    if (/absorb/.test(value) || value === '-') {
+      groups.Absorbs.push(name)
+      continue
+    }
+    if (/immune|mag[- ]?miss|^no$|^miss$/.test(value)) {
+      groups.Nullifies.push(name)
+      continue
+    }
+    const multiplier = value.match(/x\s*([\d.,]+)/i)?.[1]
+    if (!multiplier) continue
+    const amount = Number(multiplier.replace(',', '.'))
+    if (!Number.isFinite(amount) || amount === 1) continue
+    const shownMultiplier = `×${String(amount).replace('.', '.')}`
+    if (amount > 1) groups['Weak to'].push(`${name} (${shownMultiplier})`)
+    else groups.Resists.push(`${name} (${shownMultiplier})`)
+  }
+  return groups
+}
+
+function statRange(values: number[], format: (value: number) => string = value => String(value)) {
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  return min === max ? format(min) : `${format(min)}–${format(max)}`
+}
+
+function cardFallback(value: string | null | undefined) {
+  if (!value || /^(?:none|---|nothing\b|can't turn into a card)/i.test(value.trim())) return undefined
+  const entries = parseDropRateEntries(value)
+  const first = entries[0]
+  return first ? { name: first.item, chance: first.rate || undefined } : undefined
+}
+
+function characterFirstName(name: string) {
+  return name.trim().split(/\s+/)[0] || name
 }
 
 function EnemyRow({
   ae,
   enemy,
-  showFull,
   mugAvailable,
   partyContext,
   characters,
@@ -2150,10 +2284,11 @@ function EnemyRow({
   magic,
   magicCompletedByCharacter,
   onToggleMagic,
+  completedItems,
+  onToggleItem,
 }: {
   ae: AreaEncounter['enemies'][number]
   enemy: Enemy | null
-  showFull: boolean
   mugAvailable: boolean
   partyContext: PartyLevelContext
   characters: CharacterProfile[]
@@ -2161,10 +2296,15 @@ function EnemyRow({
   magic: MagicSpell[]
   magicCompletedByCharacter: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+  completedItems: Record<string, boolean>
+  onToggleItem: (id: string) => void
 }) {
   const [noteOpen, setNoteOpen] = useState(false)
   const rawNotes = ae.notes ?? ''
-  const activeCharacters = characters.filter(character => activePartyIds.includes(character.id))
+  const activeCharacters = activePartyIds.flatMap(id => {
+    const character = characters.find(candidate => candidate.id === id)
+    return character ? [character] : []
+  })
   const spellsByName = magicByName(magic)
 
   const levelContext = enemy ? resolveEnemyLevelContext(enemy, partyContext, { lvMin: ae.lvMin, lvMax: ae.lvMax }) : null
@@ -2184,178 +2324,309 @@ function EnemyRow({
   })
   const noteLong = notes.length > 110
   const abilityOptions = contextualEnemyAbilities(enemy, levelContext?.levels ?? [])
-  const elementalDetails = enemy
-    ? Object.entries(enemy.elementals ?? {}).filter(([, value]) => value && !/^normal$/i.test(value))
-    : []
+  const affinityData = affinityGroups(enemy)
+  const hasAffinities = Object.values(affinityData).some(values => values.length > 0)
   const currentStats = statsForEnemyLevels(enemy, levelContext?.levels ?? [])
   const currentHpValues = [...new Set(currentStats.map(stat => stat.hp))]
   const hpText = ae.hp !== undefined
     ? ae.hp.toLocaleString()
     : currentHpValues.length > 0
-      ? currentHpValues.map(value => value.toLocaleString()).join(' / ')
-    : enemy
-      ? enemy.hpMin === enemy.hpMax
-        ? enemy.hpMin.toLocaleString()
-        : `${enemy.hpMin.toLocaleString()}-${enemy.hpMax.toLocaleString()}`
-      : undefined
-
-  const optionLabel = (option: ContextualOption) => option.guaranteed ? option.value : `${option.value} · Lv ${formatPossibleLevels(option.levels)}`
+      ? statRange(currentHpValues, value => value.toLocaleString())
+      : enemy
+        ? enemy.hpMin === enemy.hpMax
+          ? enemy.hpMin.toLocaleString()
+          : `${enemy.hpMin.toLocaleString()}–${enemy.hpMax.toLocaleString()}`
+        : undefined
+  const trackerId = enemy?.id ?? ae.id
+  const defeatedId = enemyDefeatedTrackerId(trackerId)
+  const defeated = Boolean(completedItems[defeatedId])
+  const levelLabel = levelContext
+    ? levelContext.levels.length > 1
+      ? `Possible Lv ${formatPossibleLevels(levelContext.levels)}`
+      : `Lv ${formatPossibleLevels(levelContext.levels)}`
+    : null
+  const levelSource = levelContext?.source === 'fixed'
+    ? 'Fixed'
+    : ae.lvMin !== undefined || ae.lvMax !== undefined
+      ? 'Encounter override'
+      : levelContext?.source === 'capped'
+        ? `Party-scaled · capped ${levelContext.levelMin}–${levelContext.levelMax}`
+        : 'Party-scaled'
+  const mugBands = enemy?.mugByLevel
+  const dropBands = enemy?.dropByLevel
+  const cardCommon = enemy?.cardResults?.common ?? cardFallback(enemy?.cards.common)
+  const cardRare = enemy?.cardResults?.rare ?? cardFallback(enemy?.cards.rare)
+  const cardDrop = enemy?.cardResults?.drop ?? cardFallback(enemy?.cardDrop)
+  const cardFacts = [
+    cardCommon && { label: 'Common result', value: `${cardCommon.name}${cardCommon.chance ? ` (${cardCommon.chance})` : ''}` },
+    cardRare && { label: 'Rare result', value: `${cardRare.name}${cardRare.chance ? ` (${cardRare.chance})` : ''}` },
+    cardDrop && { label: 'Post-battle card drop', value: `${cardDrop.name}${cardDrop.chance ? ` (${cardDrop.chance})` : ''}` },
+  ].filter((value): value is { label: string; value: string } => Boolean(value))
+  const devourOptions = contextualValue(enemy?.devourByLevel, enemy?.devour, levelContext?.levels ?? [])
+  const statusEffects = enemy?.statusEffects ?? []
+  const statusImmune = statusEffects.filter(effect => /^(?:0%|immune|no effect)$/i.test(effect.chance.trim()))
+  const statusVulnerable = statusEffects.filter(effect => !/^(?:0%|immune|no effect)$/i.test(effect.chance.trim()))
+  const scanCaption = enemy?.scan && !/^(?:none|---)$/i.test(enemy.scan.trim()) ? enemy.scan.trim() : undefined
+  const hasDetails = currentStats.length > 0 || abilityOptions.length > 0 || statusEffects.length > 0 || Boolean(enemy?.statusVulnerabilitiesNote) || devourOptions.length > 0 || Boolean(enemy?.undead || enemy?.gravityVulnerable)
+  const statRows = currentStats.length > 0 ? [
+    { label: 'HP', values: currentStats.map(stat => stat.hp), format: (value: number) => value.toLocaleString() },
+    { label: 'STR', values: currentStats.map(stat => stat.str) },
+    { label: 'MAG', values: currentStats.map(stat => stat.mag) },
+    { label: 'VIT', values: currentStats.map(stat => stat.vit) },
+    { label: 'SPR', values: currentStats.map(stat => stat.spr) },
+    { label: 'SPD', values: currentStats.map(stat => stat.spd) },
+    { label: 'EVA', values: currentStats.map(stat => stat.eva) },
+    { label: 'EXP', values: currentStats.map(stat => stat.exp) },
+  ].map(row => ({ ...row, value: statRange(row.values, row.format) })) : []
 
   return (
-    <div className="min-w-0 px-4 py-2.5 text-xs space-y-1.5">
-      {/* Name + stats row */}
-      <div className="flex min-w-0 items-center justify-between gap-3 flex-wrap">
-        <div className="flex min-w-0 items-center gap-2 flex-wrap">
-          <span className="text-slate-100 font-semibold break-words">{ae.name}</span>
-          {enemy && levelContext && (
-            <span className="min-w-0 text-slate-600 font-mono text-[10px] break-words">
-              Lv {formatPossibleLevels(levelContext.levels)} · {levelContext.sourceLabel}
-              {hpText !== undefined && <> · {hpText} HP</>}
-            </span>
-          )}
+    <article className={cn('min-w-0 px-3 py-2 sm:px-4 sm:py-3', defeated && 'bg-teal-950/10')}>
+      <div className="flex min-w-0 items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <h3 className={cn('break-words text-sm font-semibold leading-tight', defeated ? 'text-slate-300 line-through decoration-teal-400/50' : 'text-slate-100')}>
+              {ae.name}
+            </h3>
+            {defeated && <span className="text-[10px] font-medium text-teal-300">Defeated</span>}
+          </div>
+          {scanCaption && <p className="mt-0.5 text-[10px] leading-snug text-slate-500"><span className="mr-1 font-semibold uppercase tracking-wide text-slate-400">Scan</span>{scanCaption}</p>}
+          <div className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-0.5 text-[10px] leading-snug">
+            {levelLabel && <span className="text-slate-200">{levelLabel} <span className="text-slate-500">· {levelSource}</span></span>}
+            {hpText !== undefined && <span className="text-slate-300"><span className="text-slate-500">HP</span> <strong className="font-mono text-[11px] font-semibold tabular-nums text-slate-100">{hpText}</strong></span>}
+            {enemy && <span className="text-violet-200"><span className="text-slate-500">AP</span> <strong className="font-mono tabular-nums">{enemy.ap}</strong></span>}
+          </div>
         </div>
-        {/* Elemental weakness badges (shown when expanded) */}
-        {showFull && enemy && (() => {
-          const weaks = Object.entries(enemy.elementals)
-            .filter(([, v]) => v && /^x\s*[2-9]/i.test(v))
-            .map(([k]) => k)
-          return weaks.length > 0 ? (
-            <div className="flex min-w-0 gap-1 flex-wrap">
-              {weaks.map(w => (
-                <span key={w} className="px-1.5 py-0.5 rounded text-[10px] bg-red-950/40 border border-red-700/40 text-red-300 font-medium capitalize">
-                  {w}
-                </span>
-              ))}
-            </div>
-          ) : null
-        })()}
+        <button
+          type="button"
+          role="checkbox"
+          aria-checked={defeated}
+          aria-label={`${defeated ? 'Unmark' : 'Mark'} ${ae.name} ${defeated ? 'as not defeated' : 'defeated'}`}
+          onClick={() => onToggleItem(defeatedId)}
+          className={cn(
+            'inline-flex min-h-8 shrink-0 items-center justify-center gap-1.5 rounded-md border px-2 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+            defeated
+              ? 'border-teal-700/60 bg-teal-950/40 text-teal-200 hover:bg-teal-900/50'
+              : 'border-slate-700 bg-slate-900/40 text-slate-300 hover:border-teal-700/70 hover:text-teal-200',
+          )}
+        >
+          {defeated && <Check size={12} aria-hidden="true" />}
+          {defeated ? 'Defeated' : 'Mark defeated'}
+        </button>
       </div>
 
-      {/* Draw / Mug pills */}
-      {(drawOptions.length > 0 || mugOptions.length > 0 || dropOptions.length > 0) && (
-        <div className="flex min-w-0 items-start gap-x-3 gap-y-1 flex-wrap">
+      {hasAffinities && (
+        <div className="mt-1.5 flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-0.5 border-l-2 border-rose-500/50 pl-2 text-[10px] leading-snug">
+          {Object.entries(affinityData).filter(([, values]) => values.length > 0).map(([label, values]) => (
+            <span key={label} className="min-w-0 break-words">
+              <strong className="font-medium text-slate-300">{label}:</strong> <span className="text-slate-400">{values.join(', ')}</span>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {(drawOptions.length > 0 || mugOptions.length > 0 || dropOptions.length > 0 || cardFacts.length > 0) && (
+        <div className="mt-2 grid min-w-0 gap-x-5 gap-y-3 border-t border-slate-800/70 pt-2 sm:grid-cols-2">
           {drawOptions.length > 0 && (
-            <div className="flex min-w-0 items-center gap-1 flex-wrap">
-              <span className="text-violet-400 font-medium text-[10px] uppercase tracking-wide shrink-0">Draw</span>
-              <div className="flex min-w-0 gap-1 flex-wrap">
-                {(showFull ? drawOptions : drawOptions.slice(0, 4)).map(option => (
-                  <span key={option.value} className="min-w-0">
-                    <SpellPill name={option.value} variant="draw" />
-                    {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
-                    {(() => {
-                      const needers = charactersNeedingSpell(option.value, activeCharacters, magic, { magicCompletedByCharacter })
-                      const spell = spellsByName.get(option.value.toLowerCase().replace(/[^a-z0-9]+/g, ''))
-                      return needers.length > 0 ? (
-                        <span className="ml-1 inline-flex items-center gap-1 text-[9px] text-teal-300/80">
-                          <span>needed by</span>
-                          {needers.map(character => (
-                            <label key={character.id} className="inline-flex cursor-pointer items-center gap-0.5 rounded border border-teal-800/50 px-1 py-0.5 hover:bg-teal-950/50">
-                              <input
-                                type="checkbox"
-                                checked={Boolean(spell && isMagicCompleted({ magicCompletedByCharacter }, character.id, spell.id))}
-                                disabled={!spell || !onToggleMagic}
-                                onChange={() => spell && onToggleMagic?.(character.id, spell.id)}
-                                className="accent-teal-400"
-                              />
-                              {character.name.split(' ')[0]}
-                            </label>
-                          ))}
-                        </span>
-                      ) : null
-                    })()}
-                  </span>
-                ))}
-                {!showFull && drawOptions.length > 4 && (
-                  <span className="text-violet-600 text-[10px] self-center">+{drawOptions.length - 4}</span>
-                )}
-              </div>
-            </div>
-          )}
-          {mugOptions.length > 0 && (
-            <div className="flex min-w-0 items-center gap-1 flex-wrap">
-              <span className="text-amber-400 font-medium text-[10px] uppercase tracking-wide shrink-0">Mug</span>
-              {mugOptions.map(option => (
-                <span key={option.value} title={optionLabel(option)}>
-                  <SpellPill name={option.value} variant="mug" />
-                  {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
-                </span>
-              ))}
-            </div>
-          )}
-          {dropOptions.length > 0 && (
-            <div className="flex min-w-0 basis-full items-start gap-1.5 flex-wrap">
-              <span className="pt-0.5 text-slate-500 font-medium text-[10px] uppercase tracking-wide shrink-0">Drop</span>
-              <div className="min-w-0 flex-1 space-y-1">
-                {dropOptions.map(option => {
-                  const groups = parseDropRateGroups(option.value)
+            <section aria-label="Draw magic" className="min-w-0">
+              <h4 className="mb-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-violet-200">Draw</h4>
+              {activeCharacters.length > 0 && <p className="mb-1 text-[9px] leading-snug text-slate-500">Mark stock complete for active party members.</p>}
+              <ul className="grid min-w-0 grid-cols-1 gap-x-4 sm:grid-cols-2">
+                {drawOptions.map(option => {
+                  const spell = spellsByName.get(option.value.toLowerCase().replace(/[^a-z0-9]+/g, ''))
                   return (
-                    <div key={option.value} className="min-w-0 space-y-1">
-                      {groups.map((group, index) => group.label === 'Rare Item' ? (
-                        <details key={`${option.value}-${group.label}-${index}`} className="min-w-0">
-                          <summary className="w-fit cursor-pointer list-none text-[10px] text-amber-300/70 marker:hidden">
-                            Rare Item · {group.entries.length} {group.entries.length === 1 ? 'result' : 'results'}
-                          </summary>
-                          <div className="mt-1 pl-2">
-                            <DropRateList group={group} />
-                          </div>
-                        </details>
-                      ) : <DropRateList key={`${option.value}-${group.label}-${index}`} group={group} />)}
-                      {!option.guaranteed && <span className="text-[9px] text-amber-300/80">Possible at Lv {formatPossibleLevels(option.levels)}</span>}
+                    <li key={option.value} className="flex min-w-0 items-center gap-2 border-b border-slate-800/50 py-1">
+                      <span className="min-w-0 flex-1 break-words text-[10px] font-medium text-slate-100">{option.value}</span>
+                      {optionScope(option) && <span className="shrink-0 text-[9px] text-amber-200">{optionScope(option)}</span>}
+                      {activeCharacters.length > 0 && (
+                        <div className="ml-auto flex shrink-0 items-center gap-1" aria-label={`${option.value} magic stock by active party member`}>
+                          {activeCharacters.map(character => {
+                            const stocked = Boolean(spell && isMagicCompleted({ magicCompletedByCharacter }, character.id, spell.id))
+                            return (
+                              <button
+                                key={character.id}
+                                type="button"
+                                role="checkbox"
+                                aria-checked={stocked}
+                                aria-label={`${character.name}: ${option.value} ${stocked ? 'marked complete' : 'not marked complete'}`}
+                                title={`${character.name} · ${option.value}`}
+                                disabled={!spell || !onToggleMagic}
+                                onClick={() => spell && onToggleMagic?.(character.id, spell.id, !stocked)}
+                                className={cn(
+                                  'flex h-8 min-w-8 items-center justify-center rounded border px-2 text-[10px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-50',
+                                  stocked
+                                    ? 'border-teal-600/60 bg-teal-950/50 text-teal-200'
+                                    : 'border-slate-700 bg-slate-900/60 text-slate-400 hover:border-teal-700/70 hover:text-teal-200',
+                                )}
+                              >
+                                {stocked ? <Check size={13} aria-hidden="true" /> : characterFirstName(character.name)}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
+          )}
+
+          {mugOptions.length > 0 && (
+            <section aria-label="Mug results" className="min-w-0">
+              <h4 className="mb-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-amber-200">Mug</h4>
+              <div className="grid min-w-0 gap-x-4 sm:grid-cols-2">
+                {mugOptions.map(option => {
+                  const tables = parseDropRateEntries(option.value)
+                  const chanceGroups = optionChances(mugBands, option, enemy?.mugChance)
+                  return (
+                    <div key={option.value} className="min-w-0 border-t border-slate-800/50 py-1 first:border-t-0">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                        {optionScope(option) && <span className="text-[9px] text-amber-200">{optionScope(option)}</span>}
+                        {chanceGroups.length > 0 && <span className="text-[9px] text-slate-500">Success {chanceGroups.map(group => `${group.chance}${group.levels.length === 1 && option.levels.length > 1 ? ` at Lv ${group.levels[0]}` : ''}`).join(' · ')}</span>}
+                      </div>
+                      <DropRateList entries={tables} />
                     </div>
                   )
                 })}
               </div>
-            </div>
+            </section>
+          )}
+
+          {dropOptions.length > 0 && (
+            <section aria-label="Drop results" className="min-w-0">
+              <h4 className="mb-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-cyan-200">Drops</h4>
+              <div className="grid min-w-0 gap-x-4 sm:grid-cols-2">
+                {dropOptions.map(option => {
+                  const tables = parseDropRateGroups(option.value)
+                  const normal = tables.filter(group => group.label !== 'Rare Item')
+                  const rare = tables.filter(group => group.label === 'Rare Item')
+                  const chanceGroups = optionChances(dropBands, option, enemy?.dropChance)
+                  return (
+                    <div key={option.value} className="min-w-0 border-t border-slate-800/50 py-1 first:border-t-0">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                        {optionScope(option) && <span className="text-[9px] text-amber-200">{optionScope(option)}</span>}
+                        {chanceGroups.length > 0 && <span className="text-[9px] text-slate-500">Drop chance {chanceGroups.map(group => `${group.chance}${group.levels.length === 1 && option.levels.length > 1 ? ` at Lv ${group.levels[0]}` : ''}`).join(' · ')}</span>}
+                      </div>
+                      {normal.map((group, index) => (
+                        <div key={`${group.label}-${index}`}>
+                          {normal.length > 1 && <p className="mt-1 text-[9px] font-medium text-slate-500">Normal</p>}
+                          <DropRateList entries={group.entries} />
+                        </div>
+                      ))}
+                      {rare.length > 0 && (
+                        <details className="mt-1 border-t border-slate-800/70 pt-1">
+                          <summary className="w-fit min-h-7 cursor-pointer select-none text-[10px] font-medium text-amber-200 underline decoration-amber-700/70 underline-offset-2 marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
+                            Rare Item ability table
+                          </summary>
+                          <p className="mt-1 text-[9px] leading-relaxed text-slate-500">Alternate results while the Rare Item ability is equipped.</p>
+                          {rare.map((group, index) => <DropRateList key={`${group.label}-${index}`} entries={group.entries} />)}
+                        </details>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
+          {cardFacts.length > 0 && (
+            <section aria-label="Card information" className="min-w-0">
+              <h4 className="mb-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-indigo-200">Cards</h4>
+              <ul className="grid min-w-0 gap-x-4 gap-y-0.5 text-[10px] sm:grid-cols-2">
+                {cardFacts.map(fact => (
+                  <li key={fact.label} className="min-w-0 break-words text-slate-300">
+                    <span className="text-slate-500">{fact.label}:</span> {fact.value}
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
         </div>
       )}
 
-      {showFull && enemy && (elementalDetails.length > 0 || enemy.elementalWeaknesses || enemy.elementalResistances || enemy.statusVulnerabilitiesNote) && (
-        <div className="grid gap-1 text-[11px] leading-relaxed">
-          {elementalDetails.length > 0 && <div><span className="text-cyan-300">Elements:</span> <span className="text-slate-400">{elementalDetails.map(([element, value]) => `${element}: ${value}`).join(' · ')}</span></div>}
-          {enemy.elementalWeaknesses && <div><span className="text-red-300">Weak:</span> <span className="text-slate-400">{enemy.elementalWeaknesses}</span></div>}
-          {enemy.elementalResistances && <div><span className="text-blue-300">Resist:</span> <span className="text-slate-400">{enemy.elementalResistances}</span></div>}
-          {enemy.statusVulnerabilitiesNote && <div><span className="text-slate-500">Status:</span> <span className="text-slate-400">{enemy.statusVulnerabilitiesNote}</span></div>}
-        </div>
+      {hasDetails && (
+        <details className="mt-2 border-t border-slate-800/70 pt-1">
+          <summary className="w-fit min-h-8 cursor-pointer select-none text-[10px] font-medium text-slate-300 underline decoration-slate-600 underline-offset-2 marker:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
+            Combat details, stats & status
+          </summary>
+          <div className="grid min-w-0 gap-x-5 gap-y-3 py-2 sm:grid-cols-2">
+                {statRows.length > 0 && (
+                  <section className="min-w-0 sm:col-span-2">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wide text-cyan-200">Stats & EXP</h4>
+                      {currentStats.length > 1 && <span className="text-[9px] text-slate-500">Ranges across possible Lv {formatPossibleLevels(currentStats.map(stat => stat.level))}</span>}
+                    </div>
+                    <dl className="mt-1 grid grid-cols-2 gap-x-4 gap-y-0.5 sm:grid-cols-4">
+                      {statRows.map(row => (
+                        <div key={row.label} className="flex min-w-0 items-baseline justify-between gap-2 border-b border-slate-800/50 py-0.5 text-[10px]">
+                          <dt className="shrink-0 text-slate-500">{row.label}</dt>
+                          <dd className="min-w-0 break-words text-right font-mono tabular-nums text-slate-200">{row.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                )}
+                {abilityOptions.length > 0 && (
+                  <section className="min-w-0">
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wide text-amber-200">Abilities & attacks</h4>
+                    <ul className="mt-1 space-y-0.5 text-[10px] text-slate-300">
+                      {abilityOptions.map(option => (
+                        <li key={option.value} className="break-words">{option.value}{optionScope(option) && <span className="ml-1 text-[9px] text-amber-200">({optionScope(option)})</span>}</li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+                {statusEffects.length > 0 ? (
+                  <section className="min-w-0">
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wide text-rose-200">Status effects</h4>
+                    {statusVulnerable.length > 0 && <p className="mt-1 break-words text-[10px] leading-relaxed text-slate-300"><span className="text-slate-500">Can affect:</span> {statusVulnerable.map(effect => `${effect.name} ${effect.chance}`).join(' · ')}</p>}
+                    {statusImmune.length > 0 && <p className="mt-1 break-words text-[10px] leading-relaxed text-slate-300"><span className="text-slate-500">Unaffected:</span> {statusImmune.map(effect => effect.name).join(', ')}</p>}
+                  </section>
+                ) : enemy?.statusVulnerabilitiesNote ? (
+                  <section className="min-w-0">
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wide text-rose-200">Status effects</h4>
+                    <p className="mt-1 break-words text-[10px] leading-relaxed text-slate-400">{enemy.statusVulnerabilitiesNote}</p>
+                  </section>
+                ) : null}
+                {devourOptions.length > 0 && (
+                  <section className="min-w-0">
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wide text-emerald-200">Devour</h4>
+                    <ul className="mt-1 space-y-0.5 text-[10px] text-slate-300">
+                      {devourOptions.map(option => <li key={option.value} className="break-words">{option.value}{optionScope(option) && <span className="ml-1 text-[9px] text-amber-200">({optionScope(option)})</span>}</li>)}
+                    </ul>
+                  </section>
+                )}
+                {(enemy?.undead || enemy?.gravityVulnerable) && (
+                  <section className="min-w-0">
+                    <h4 className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Other traits</h4>
+                    <p className="mt-1 break-words text-[10px] leading-relaxed text-slate-300">
+                      {[enemy.undead && 'Undead', enemy.gravityVulnerable && 'Vulnerable to Gravity'].filter(Boolean).join(' · ')}
+                    </p>
+                  </section>
+                )}
+          </div>
+        </details>
       )}
 
-      {showFull && abilityOptions.length > 0 && (
-        <div className="rounded-md border border-slate-800/70 bg-slate-950/20 px-2 py-1.5 text-[11px]">
-          <span className="mr-2 text-amber-300/80">Abilities</span>
-          <span className="text-slate-400">
-            {abilityOptions.map(option => `${option.value}${option.guaranteed ? '' : ` (possible Lv ${formatPossibleLevels(option.levels)})`}`).join(' · ')}
-          </span>
-        </div>
-      )}
-
-      {showFull && currentStats.length > 0 && (
-        <div className="rounded-md border border-slate-800/70 bg-slate-950/20 px-2 py-1.5 text-[11px]">
-          <span className="mr-2 text-cyan-300/80">Stats</span>
-          <span className="text-slate-400">
-            {currentStats.map(stat => `Lv ${stat.level}: HP ${stat.hp.toLocaleString()} · STR ${stat.str} · MAG ${stat.mag} · VIT ${stat.vit} · SPR ${stat.spr} · SPD ${stat.spd} · EVA ${stat.eva}`).join(' / ')}
-          </span>
-        </div>
-      )}
-
-      {/* Notes */}
       {notes && (
-        <div className="min-w-0 rounded-r-md border-l-2 border-cyan-800/50 bg-slate-950/20 py-1 pl-2.5 pr-2 text-xs leading-relaxed text-slate-400 break-words [overflow-wrap:anywhere]">
+        <div className="mt-1.5 min-w-0 border-l-2 border-cyan-800/50 py-1 pl-2 text-[11px] leading-relaxed text-slate-400 [overflow-wrap:anywhere]">
           <div className="mb-0.5 flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-wide text-cyan-300/70">
             <Info size={10} /> Field note
           </div>
           <p className={cn(!noteOpen && noteLong && 'line-clamp-2')}>{renderInline(notes)}</p>
           {noteLong && (
             <button
+              type="button"
               onClick={() => setNoteOpen(value => !value)}
               aria-expanded={noteOpen}
-              className="mt-0.5 text-[10px] text-slate-400 underline underline-offset-2 hover:text-slate-200"
+              className="mt-0.5 min-h-7 text-[10px] text-slate-400 underline underline-offset-2 hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
             >
               {noteOpen ? 'Show less' : 'Show full note'}
             </button>
           )}
         </div>
       )}
-    </div>
+    </article>
   )
 }
 
@@ -2781,6 +3052,8 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
                       magic={magic}
                       magicCompletedByCharacter={magicCompletedByCharacter}
                       onToggleMagic={onToggleMagic}
+                      completedItems={completedItems}
+                      onToggleItem={onToggleItem}
                     />
                   : shouldRenderAsRouteStep(paras, idx, chapter.id)
                     ? <RouteStep text={para} />

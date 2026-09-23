@@ -213,6 +213,12 @@ export interface Enemy {
   elementalWeaknesses?: string
   elementalResistances?: string
   statusVulnerabilitiesNote?: string
+  statusEffects?: Array<{ name: string; chance: string }>
+  cardResults?: {
+    common?: { name: string; chance?: string }
+    rare?: { name: string; chance?: string }
+    drop?: { name: string; chance?: string }
+  }
   whereFound?: string
   gravityVulnerable?: boolean
   undead?: boolean
@@ -232,13 +238,13 @@ export interface Enemy {
     exp: number
   }>
   mug: string | null
-  mugByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null }>
+  mugByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null; chance?: string | null }>
   mugChance?: string | null
   drop: string | null
-  dropByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null }>
+  dropByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null; chance?: string | null }>
   dropChance?: string | null
   devour?: string | null
-  devourByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null }>
+  devourByLevel?: Array<{ lvMin: number; lvMax: number; value: string | null; chance?: string | null }>
   cardDrop: string | null
   scan: string
 }
