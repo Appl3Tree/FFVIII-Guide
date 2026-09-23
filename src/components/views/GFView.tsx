@@ -5,6 +5,7 @@ import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
+import { SequenceSteps } from '../ui/SequenceSteps'
 import { isGFAbilityLearned, recommendedGFAbilities } from '../../lib/playerState'
 import type { GuardianForce, TrackerState } from '../../types'
 
@@ -69,14 +70,7 @@ export function GFView({ gfs, completedItems, onToggleItem, learnedGFAbilities, 
                   {learningPreview.length > 0 && (
                     <div className="mt-1 flex flex-wrap items-center gap-1">
                       <span className="text-[10px] uppercase tracking-wide text-slate-600">Learn</span>
-                      {learningPreview.map((item, idx) => (
-                        <span
-                          key={`${gf.id}-${item.name}-${idx}`}
-                          className="inline-flex items-center rounded border border-violet-700/25 bg-violet-950/20 px-1.5 py-0.5 text-[10px] leading-tight text-violet-200"
-                        >
-                          {idx + 1}. {item.name}
-                        </span>
-                      ))}
+                      <SequenceSteps items={learningPreview.map(item => item.name)} className="gap-x-0.5 gap-y-1" />
                       <span className="text-[10px] text-emerald-300/80">{learnedCount}/{recommended.length}</span>
                     </div>
                   )}
@@ -108,16 +102,7 @@ export function GFView({ gfs, completedItems, onToggleItem, learnedGFAbilities, 
                       {gf.learningOrder && gf.learningOrder.length > 0 && (
                         <div className="text-xs">
                           <p className="text-slate-600 mb-1.5">Suggested learning order</p>
-                          <div className="flex flex-wrap gap-1">
-                            {gf.learningOrder.map((item, idx) => (
-                              <span
-                                key={`${item}-${idx}`}
-                                className="inline-flex items-center rounded-md border border-violet-700/30 bg-violet-950/20 px-2 py-0.5 text-[10px] text-violet-200"
-                              >
-                                {idx + 1}. {item}
-                              </span>
-                            ))}
-                          </div>
+                          <SequenceSteps items={gf.learningOrder} className="gap-y-2" />
                         </div>
                       )}
                       {gf.abilities.length > 0 && (

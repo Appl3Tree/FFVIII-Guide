@@ -130,7 +130,7 @@
       "title": "Preparing for the Exam",
       "disc": 1,
       "index": 1,
-      "content": "After the opening cinematic, Squall wakes in the Garden infirmary. Dr. Kadowaki asks a question - answer freely, because the choice only changes dialogue. Name Squall when prompted, watch the classroom scenes, then take control at Squall's desk.\n\nSquall begins at **Lv 7** with the Revolver gunblade. Starting inventory: **5,000 Gil** · **6× Potion** · **4× Phoenix Down** · **2× Remedy** · **5× Tent**.\n\n{{CALLOUT:perfect|Perfect Game Alert #1}} Decide before moving whether this save is aiming for a perfect-game file. FFVIII tracks character KOs and escaped battles; a perfect file keeps every character at **0 KOs** and finishes with exactly **one escaped battle**, because a later battle forces an escape. Keep levels low when practical until stronger level-management tools arrive, but do not paralyze the route - learning early GF abilities matters more than avoiding every point of EXP. Missable-item alerts also apply to perfect files.\n\nOnce back in the classroom, **examine the desk in front of Squall** and choose \"Turn on the power and...\", then open **Tutorial**. This awards **Quezacotl** (GF 1/16) and **Shiva** (GF 2/16). Leave the tutorial/computer, junction one of them to Squall, and equip **Draw**, **GF**, and **Item** so Draw Points are usable during the first Garden circuit. Immediately set GF learning: **Quezacotl -> Card** first, and **Shiva -> I Mag-RF** first. The default learning order wastes early AP.\n\nSpeak with Quistis to advance, then walk down the second-floor hallway. A late student bumps into Squall; agreeing to the tour is useful for orientation and has no penalty beyond tiny later dialogue changes. In the elevator hallway, **talk to the student near the elevator** to receive the starter card set: **Geezard**, **Funguar**, **Red Bat**, **Gayla**, **Gesper**, **Fastitacalon-F**, and **Caterchipillar**. Take the elevator down to 1F.\n\n{{CALLOUT:achievement|Card Player}} Steam achievement **Card Player** requires one Triple Triad match; a win is not required. After receiving the starter deck, use the field card prompt to challenge any Garden NPC who accepts games. The Trepe Groupies in the Cafeteria or 2F Classroom are convenient first opponents, and this can be completed before leaving the Garden.\n\n{{CALLOUT:point|Balamb Garden orientation}} Balamb Garden is arranged like a wheel: the **Lobby Hall** circles the elevator, and spokes lead to the **Cafeteria** (northwest), **Dormitory** (north), **Parking Lot** (northeast), **Training Center** (east), **Library** (southeast), **Front Gate** (south), **Infirmary** (southwest), and **Quad** (west). The directory near the entrance can warp Squall directly to a facility once the option is available.\n\n{{CALLOUT:relationship|Zell Love Quest #1}} On this first Garden circuit, visit the **Library** and speak to the **Library Girl with the pigtail**. The scene is understated, but it affects the ending path of Zell's Library sidequest. Draw **Esuna** from the Draw Point just inside the Library, then examine the second bookshelf, nearest the aisle, to collect **Occult Fan I** (1/4).\n\nSave near the directory, then head to the **Front Gate**. Use the **Cure Draw Point** on the left side of the outer gate area; this draw counts toward **Magic Miner**, which requires 100 draws from field Draw Points. Continue south to Quistis, who gives the junction tutorial and joins the party. Junction **Quezacotl** to Squall and **Shiva** to Quistis, then equip both characters with **Draw**, **GF**, and **Item** commands. The Cafeteria and card work are better handled after Ifrit, when the Ifrit Card and the All trade rule make the games much easier.\n\n{{ENCOUNTERS:0}}\n\nBefore the Fire Cavern, save on the world map. The stone road is encounter-free, but the nearby forests can produce a **T-Rexaur**. If one appears, normal files can escape; perfect-game files should reset from the save or try to survive with GF summons. Draw small stocks of early magic from Bite Bugs, Glacial Eyes, and Caterchipillars if you want better junction filler, then head east to the Fire Cavern. Use Squall's gunblade trigger action on attack impact for the 50% damage bonus; the exact input depends on platform.\n\n{{ENCOUNTERS:2}}\n\nEnter the Fire Cavern. Quistis explains magic junctioning and gunblade settings on the approach. Choose the **10-minute** limit; it is enough, and finishing close to zero improves the later Judgment score. All regular Fire Cavern enemies are fixed **Lv 5**, regardless of party level. Use physical attacks for Buel and Red Bat, consider Shiva only for multiple Bombs, and do not spend timer time drawing. Ignore the Fire draw point on the way in - the timer disappears after Ifrit, and the backtrack is the better time to draw.\n\n**Boss: Ifrit** (Lv 6) — HP: 1,068 | AP: 20 | EXP: 0\n- Draw: Fire, Cure, Scan\n- Mug: Nothing (0% overall chance)\n- Drop: 3x G-Returner (69.5%); 4x G-Returner (19.9%); 5x G-Returner (5.9%); 6x G-Returner (4.7%)\n- Card drop: Ifrit Card (100%)\n- Gravity: Vulnerable\n- Weakness: Ice\n- Absorb: Fire\n- Status weak: The End\n\nStrategy: Ifrit is fixed at Lv 6 and does not scale with the party. He casts Fire on one character or uses Jump Punch for roughly 100 damage. Have Quistis summon **Shiva** while Squall attacks physically; use Limit Breaks if they appear. If either character falls below 100 HP, draw **Cure** from Ifrit and cast it immediately. Ifrit also carries **Scan** if you want the spell recorded early. **G-Returner revives a KO'd GF**, so the drop is useful even though this fight is simple. Do not reset for a larger G-Returner drop - the minimum three is already enough, and the Ifrit Card is guaranteed.\n\n{{CALLOUT:mechanics|SeeD Rank timer tip}} When Ifrit's naming screen appears, aim to leave the cavern with the timer as close to zero as possible. On original PSX, idling at the naming screen can let the hidden timer reach zero safely. On Steam/Remaster, track the time yourself and leave the naming screen between **0:00 and 0:03**; the original idle trick does not behave the same way.\n\nAfter Ifrit joins, junction him to Squall and put your best Strength-junction magic on Squall. If earlier abilities are learned, set the next targets now: **Quezacotl -> Card Mod** after Card, **Shiva -> Str-J** after I Mag-RF, and **Ifrit -> F Mag-RF**. On the way out, draw from the Fire draw point and from any enemies you feel like stocking, because the timer is gone. Return to Balamb Garden; Quistis gives the GF ability/HP tutorial and leaves the party.\n\n{{ENCOUNTERS:1}}\n\n{{CALLOUT:card|Pre-exam card setup - Queen of Cards and trade rules}} Before serious card farming, detour to **Balamb Town** after Ifrit. On this first visit, collect the Balamb **Timber Maniacs** issue from the upstairs guest room at the Hotel before boarding for Dollet; this is its earliest opportunity. The later hotel and station copies are alternatives, so only take one. Then find the Queen of Cards by the train station. Two useful trade-rule routes appear in the references. **All** lets the winner take the entire opposing hand and is the fastest option for building cards; challenge the Queen and quit until she offers All, then stop challenging her. You do not need to play her for this route. One guide favors **Diff** instead: it awards multiple cards according to the score gap and can be a less volatile farming rule. To spread Diff, win one game against the Queen, then check the rule with a local player such as the train conductor. Both are viable choices, so pick the trade rule that suits the amount of card farming you want to do. If All later slips to One, play and quit local games to cycle the regional trade rule back while the Queen is still in Balamb; recovery becomes less reliable after she moves. The Balamb item shop has only standard supplies.\n\n{{CALLOUT:mechanics|Balamb Beach AP farming}} The beach south of Balamb Town is the best early AP farm because **Fastitocalon-F** commonly appear in pairs for **3 AP each** (6 AP per pair) and drop **Fish Fins**. Junction Thunder to Elem-Atk if available. If keeping EXP low matters, use Quezacotl's **Card** command to finish enemies without EXP, though this slows the grind. Aim to learn the elemental refinement abilities and especially **Card Mod**; do not sit here solely for **Mid Mag-RF** or **Ammo-RF**.\n\n{{CALLOUT:mechanics|GF learning order through the exam}} **Quezacotl**: Card -> Card Mod -> T Mag-RF -> Mid Mag-RF -> Boost -> Vit-J -> Elem-Def-J -> Elem-Defx2 -> remaining junctions -> everything else. **Shiva**: I Mag-RF -> Str-J -> Boost -> Elem-Atk-J -> Spr+20% to unlock Elem-Def-J -> Elem-Def-J -> Elem-Defx2 -> Vit-J -> everything else. **Ifrit**: F Mag-RF -> Ammo-RF once Ifrit reaches Lv 10 -> Boost -> Str+% abilities to unlock Str Bonus -> Str Bonus -> junctions -> everything else.\n\nFish Fins refine via **I Mag-RF** into **20× Water** each. Do not waste turns trying to draw Water from Fastitocalon-F here - at this level they do not carry it. Water is excellent early junction filler, especially before stronger card-mod magic is ready.\n\n{{CALLOUT:card|Rare cards available now}} With the Ifrit Card and the All trade rule, build a real deck. Win the **Quistis Card** from the Trepe Groupies in the 2F classroom or Cafeteria; this should be the first rare-card target because it is powerful in play. Win the **MiniMog Card** from the boy running laps around the lower-level Garden hallway. MiniMog is weak as a playing card, but do **not** mod it - it is needed for a later Queen of Cards step. Do not mod the **Ifrit Card** either; it is both a strong playing card and required for a later rare-card trade.\n\n{{CALLOUT:achievement|Loser — optional}} Steam achievement **Loser** is awarded for losing a rare card in Triple Triad. One achievement route intentionally surrenders the newly earned **Ifrit Card** to a Trepe Groupie during an early match, which also earns Card Player. That gives away a strong card needed for later card goals; do this only if the achievement is worth that trade to you. If you lose a rare card to an ordinary NPC, that same player keeps it until you win it back, so challenge that player again to recover it. The card-transfer rules have exceptions: Queen of Cards quest losses move to her son when the replacement rare card is created; the first time Ifrit is lost to General Caraway it transfers to Martine; and the Disc 4 CC Group can redistribute rare cards you do not currently own. You can also wait and earn Loser later by losing another eligible rare card.\n\n{{CALLOUT:refinement|Early Card Mod priorities}} Keep a playable hand and do not mod every useful card. These are the strongest early card-mod targets if you choose to power up before the exam: **Gesper Card -> Black Hole -> Degenerator**; **4× Malboro Card -> Malboro Tentacle -> Bad Breath**; **10× Ruby Dragon Card -> Inferno Fang -> Fire Breath** or **20× Flare** via F Mag-RF; **10× Behemoth Card -> Barrier -> Mighty Guard**; **SAM08G Card -> Running Fire -> Gatling Gun**; **Fastitocalon Card -> Water Crystal -> Aqua Breath** or **50× Water**; **5× Fastitacalon-F Card -> Water Crystal -> 50× Water**; **Creeps Card -> Coral Fragment -> Electrocute** or **20× Thundara**; **Gayla Card -> Mystery Fluid -> Acid**; **Tri-Face Card -> Curse Spike -> L?Death**; **Caterchipillar Card -> Spider Web -> Ultra Waves**. **Elastoid Card -> Steel Pipe** is a useful side pickup: Steel Pipes teach **SumMag+10%** and unlock **SumMag+20%** on a GF, and spare Steel Pipes have later weapon and GF-quest uses. Do not grind Elastoid Cards at the expense of the exam route, but keep and mod any extras that fall into your hand. Degenerator is the standout because it ejects almost every regular non-boss enemy for the whole game.\n\n{{CALLOUT:refinement|Early magic refinement targets}} The best Strength spike is **Abyss Worm Card -> Windmill -> 20× Tornado** with T Mag-RF. Other useful options: **Snow Lion Card -> North Wind -> 20× Blizzaga**; **Blitz Card -> Dynamo Stone -> 20× Thundaga**; **3× Hexadragon Card -> Red Fang -> 20× Firaga**; **Thrustaevis Card -> Shear Feather -> 20× Aero**; **Bomb Card -> Bomb Fragment -> 20× Fira**; **Glacial Eye Card -> Arctic Wind -> 20× Blizzara**; **Fastitacalon Card** or **5× Fastitacalon-F Card -> Water Crystal -> 50× Water** for early Water junction stock. If Mid Mag-RF is learned, it can upgrade low-level Fire/Blizzard/Thunder/Cure stocks, but Card Mod routes are usually more efficient.\n\n{{CALLOUT:card|Who to play for common cards}} Level 1 cards: all Garden players except the boy sitting in the Library and Trepe Groupie #1. Level 2: all Garden players except random hallway students, Trepe Groupie #2, the girl and black student in the Library hallway, and the girl in the 2F hallway. Level 3: most Garden players; **Trepe Groupie #2** is the easiest Level 3 source. Level 4: Trepe Groupie #3, Cafeteria Lady, all Library-area students except the **Girl in Pigtails behind the desk**, Dormitory hallway girls, and the girl in the 2F hallway; the random student in the hallway toward the Library is a strong Level 4 farming target. Level 5: all Trepe Groupies, the Gatekeeper, Cafeteria Lady, male student in blue in the Library, and the girl in the Library reading room; **Trepe Groupie #1** is the best Level 5 target. The girl in the Library reading room can play Levels 1-5 except **PuPu**, which no one plays normally. No currently accessible Garden player uses Level 6 or Level 7 cards.\n\n{{CALLOUT:sidequest|Novice SeeD Candidates quest}} This five-window sidequest rewards scenes rather than items. Speak to the three students at the Balamb Garden Cafeteria table until their dialogue repeats. Do this now, before the SeeD Exam. The later windows are: after the exam but before leaving for Timber; after visiting Balamb Garden's MD Level but before Fisherman's Horizon; any time on Disc 2 after visiting Fisherman's Horizon; and on Disc 3 before the Trabia Canyon sequence. Complete all five windows and return after Trabia Canyon to see them as full SeeDs; otherwise, they disappear for the rest of the game.\n\nIn the Cafeteria, talk to the **Cafeteria Lady** until she stops giving new dialogue; this minor dialogue chain appears to close later. Then return to the Library.\n\n{{CALLOUT:relationship|Zell Love Quest #2}} Speak to the **Conceited SeeD** in the Library. He can fail to appear; if he is missing, do not reset the route just for him, because later opportunities exist.\n\n{{CALLOUT:card|CC Group prerequisite — wins that count later}} The CC Group quest cannot begin until Disc 2 or 3, but you can work toward its prerequisite now. You need at least **15 Triple Triad wins in Balamb Garden**; games in the Cafeteria, Library, and 2F Classroom do **not** count. When the quest becomes available, Jack appears in the main hall. Joker is encountered later on the Training Center bridge, not in a classroom.\n\n{{CALLOUT:perfect|Perfect Game Alert #2}} Before moving on, perfect-game files should get **100× Tornado** (or **100× Flare**, if you are willing to grind the cards) and junction it to Squall's **Strength**. Other magic stocks are flexible here; this Strength benchmark is the important preparation for an upcoming score-sensitive task.",
+      "content": "After the opening cinematic, Squall wakes in the Garden infirmary. Dr. Kadowaki asks a question - answer freely, because the choice only changes dialogue. Name Squall when prompted, watch the classroom scenes, then take control at Squall's desk.\n\nSquall begins at **Lv 7** with the Revolver gunblade. Starting inventory: **5,000 Gil** · **6× Potion** · **4× Phoenix Down** · **2× Remedy** · **5× Tent**.\n\n{{CALLOUT:perfect|Perfect Game Alert #1}} Decide before moving whether this save is aiming for a perfect-game file. FFVIII tracks character KOs and escaped battles; a perfect file keeps every character at **0 KOs** and finishes with exactly **one escaped battle**, because a later battle forces an escape. Keep levels low when practical until stronger level-management tools arrive, but do not paralyze the route - learning early GF abilities matters more than avoiding every point of EXP. Missable-item alerts also apply to perfect files.\n\nOnce back in the classroom, **examine the desk in front of Squall** and choose \"Turn on the power and...\", then open **Tutorial**. This awards **Quezacotl** (GF 1/16) and **Shiva** (GF 2/16). Leave the tutorial/computer, junction one of them to Squall, and equip **Draw**, **GF**, and **Item** so Draw Points are usable during the first Garden circuit. Set the initial GF priorities now: **Quezacotl -> Card** and **Shiva -> I Mag-RF**. The default learning order wastes early AP.\n\nSpeak with Quistis to advance, then walk down the second-floor hallway. A late student bumps into Squall; agreeing to the tour is useful for orientation and has no penalty beyond tiny later dialogue changes. In the elevator hallway, **talk to the student near the elevator** to receive the starter card set: **Geezard**, **Funguar**, **Red Bat**, **Gayla**, **Gesper**, **Fastitacalon-F**, and **Caterchipillar**. Take the elevator down to 1F.\n\n{{CALLOUT:achievement|Card Player}} Steam achievement **Card Player** requires one Triple Triad match; a win is not required. After receiving the starter deck, use the field card prompt to challenge any Garden NPC who accepts games. The Trepe Groupies in the Cafeteria or 2F Classroom are convenient first opponents, and this can be completed before leaving the Garden.\n\n{{CALLOUT:point|Balamb Garden orientation}} Balamb Garden is arranged like a wheel: the **Lobby Hall** circles the elevator, and spokes lead to the **Cafeteria** (northwest), **Dormitory** (north), **Parking Lot** (northeast), **Training Center** (east), **Library** (southeast), **Front Gate** (south), **Infirmary** (southwest), and **Quad** (west). The directory near the entrance can warp Squall directly to a facility once the option is available.\n\n{{CALLOUT:relationship|Zell Love Quest #1}} On this first Garden circuit, visit the **Library** and speak to the **Library Girl with the pigtail**. The scene is understated, but it affects the ending path of Zell's Library sidequest. Draw **Esuna** from the Draw Point just inside the Library, then examine the second bookshelf, nearest the aisle, to collect **Occult Fan I** (1/4).\n\nSave near the directory, then head to the **Front Gate**. Use the **Cure Draw Point** on the left side of the outer gate area; this draw counts toward **Magic Miner**, which requires 100 draws from field Draw Points. Continue south to Quistis, who gives the junction tutorial and joins the party. Junction **Quezacotl** to Squall and **Shiva** to Quistis, then equip both characters with **Draw**, **GF**, and **Item** commands. The Cafeteria and card work are better handled after Ifrit, when the Ifrit Card and the All trade rule make the games much easier.\n\n{{ENCOUNTERS:0}}\n\nBefore the Fire Cavern, save on the world map. The stone road is encounter-free, but the nearby forests can produce a **T-Rexaur**. If one appears, normal files can escape; perfect-game files should reset from the save or try to survive with GF summons. Draw small stocks of early magic from Bite Bugs, Glacial Eyes, and Caterchipillars if you want better junction filler, then head east to the Fire Cavern. Use Squall's gunblade trigger action on attack impact for the 50% damage bonus; the exact input depends on platform.\n\n{{ENCOUNTERS:2}}\n\nEnter the Fire Cavern. Quistis explains magic junctioning and gunblade settings on the approach. Choose the **10-minute** limit; it is enough, and finishing close to zero improves the later Judgment score. All regular Fire Cavern enemies are fixed **Lv 5**, regardless of party level. Use physical attacks for Buel and Red Bat, consider Shiva only for multiple Bombs, and do not spend timer time drawing. Ignore the Fire draw point on the way in - the timer disappears after Ifrit, and the backtrack is the better time to draw.\n\n**Boss: Ifrit** (Lv 6) — HP: 1,068 | AP: 20 | EXP: 0\n- Draw: Fire, Cure, Scan\n- Mug: Nothing (0% overall chance)\n- Drop: 3x G-Returner (69.5%); 4x G-Returner (19.9%); 5x G-Returner (5.9%); 6x G-Returner (4.7%)\n- Card drop: Ifrit Card (100%)\n- Gravity: Vulnerable\n- Weakness: Ice\n- Absorb: Fire\n- Status weak: The End\n\nStrategy: Ifrit is fixed at Lv 6 and does not scale with the party. He casts Fire on one character or uses Jump Punch for roughly 100 damage. Have Quistis summon **Shiva** while Squall attacks physically; use Limit Breaks if they appear. If either character falls below 100 HP, draw **Cure** from Ifrit and cast it immediately. Ifrit also carries **Scan** if you want the spell recorded early. **G-Returner revives a KO'd GF**, so the drop is useful even though this fight is simple. Do not reset for a larger G-Returner drop - the minimum three is already enough, and the Ifrit Card is guaranteed.\n\n{{CALLOUT:mechanics|SeeD Rank timer tip}} When Ifrit's naming screen appears, aim to leave the cavern with the timer as close to zero as possible. On original PSX, idling at the naming screen can let the hidden timer reach zero safely. On Steam/Remaster, track the time yourself and leave the naming screen between **0:00 and 0:03**; the original idle trick does not behave the same way.\n\nAfter Ifrit joins, junction him to Squall and put your best Strength-junction magic on Squall. If earlier abilities are learned, set the next targets now: **Quezacotl -> Card Mod** after Card, **Shiva -> Str-J** after I Mag-RF, and **Ifrit -> F Mag-RF**. On the way out, draw from the Fire draw point and from any enemies you feel like stocking, because the timer is gone. Return to Balamb Garden; Quistis gives the GF ability/HP tutorial and leaves the party.\n\n{{ENCOUNTERS:1}}\n\n{{CALLOUT:card|Pre-exam card setup - Queen of Cards and trade rules}} Before serious card farming, detour to **Balamb Town** after Ifrit. On this first visit, collect the Balamb **Timber Maniacs** issue from the upstairs guest room at the Hotel before boarding for Dollet; this is its earliest opportunity. The later hotel and station copies are alternatives, so only take one. Then find the Queen of Cards by the train station. Two useful trade-rule routes appear in the references. **All** lets the winner take the entire opposing hand and is the fastest option for building cards; challenge the Queen and quit until she offers All, then stop challenging her. You do not need to play her for this route. One guide favors **Diff** instead: it awards multiple cards according to the score gap and can be a less volatile farming rule. To spread Diff, win one game against the Queen, then check the rule with a local player such as the train conductor. Both are viable choices, so pick the trade rule that suits the amount of card farming you want to do. If All later slips to One, play and quit local games to cycle the regional trade rule back while the Queen is still in Balamb; recovery becomes less reliable after she moves. The Balamb item shop has only standard supplies.\n\n{{CALLOUT:mechanics|Balamb Beach AP farming}} The beach south of Balamb Town is the best early AP farm because **Fastitocalon-F** commonly appear in pairs for **3 AP each** (6 AP per pair) and drop **Fish Fins**. Junction Thunder to Elem-Atk if available. If keeping EXP low matters, use Quezacotl's **Card** command to finish enemies without EXP, though this slows the grind. Aim to learn the elemental refinement abilities and especially **Card Mod**; do not sit here solely for **Mid Mag-RF** or **Ammo-RF**.\n\n{{CALLOUT:mechanics|GF learning order through the exam}} **Quezacotl**: Card -> Card Mod -> T Mag-RF -> Mid Mag-RF -> Boost -> Vit-J -> Elem-Def-J -> Elem-Defx2 -> remaining junctions -> everything else. **Shiva**: I Mag-RF -> Str-J -> Boost -> Elem-Atk-J -> Spr+20% to unlock Elem-Def-J -> Elem-Def-J -> Elem-Defx2 -> Vit-J -> everything else. **Ifrit**: F Mag-RF -> Ammo-RF once Ifrit reaches Lv 10 -> Boost -> Str+% abilities to unlock Str Bonus -> Str Bonus -> junctions -> everything else.\n\nFish Fins refine via **I Mag-RF** into **20× Water** each. Do not waste turns trying to draw Water from Fastitocalon-F here - at this level they do not carry it. Water is excellent early junction filler, especially before stronger card-mod magic is ready.\n\n{{CALLOUT:card|Rare cards available now}} With the Ifrit Card and the All trade rule, build a real deck. Win the **Quistis Card** from the Trepe Groupies in the 2F classroom or Cafeteria; this should be the first rare-card target because it is powerful in play. Win the **MiniMog Card** from the boy running laps around the lower-level Garden hallway. MiniMog is weak as a playing card, but do **not** mod it - it is needed for a later Queen of Cards step. Do not mod the **Ifrit Card** either; it is both a strong playing card and required for a later rare-card trade.\n\n{{CALLOUT:achievement|Loser — optional}} Steam achievement **Loser** is awarded for losing a rare card in Triple Triad. One achievement route intentionally surrenders the newly earned **Ifrit Card** to a Trepe Groupie during an early match, which also earns Card Player. That gives away a strong card needed for later card goals; do this only if the achievement is worth that trade to you. If you lose a rare card to an ordinary NPC, that same player keeps it until you win it back, so challenge that player again to recover it. The card-transfer rules have exceptions: Queen of Cards quest losses move to her son when the replacement rare card is created; the first time Ifrit is lost to General Caraway it transfers to Martine; and the Disc 4 CC Group can redistribute rare cards you do not currently own. You can also wait and earn Loser later by losing another eligible rare card.\n\n{{CALLOUT:refinement|Early Card Mod priorities}} Keep a playable hand and do not mod every useful card. These are the strongest early card-mod targets if you choose to power up before the exam: **Gesper Card -> Black Hole -> Degenerator**; **4× Malboro Card -> Malboro Tentacle -> Bad Breath**; **10× Ruby Dragon Card -> Inferno Fang -> Fire Breath** or **20× Flare** via F Mag-RF; **10× Behemoth Card -> Barrier -> Mighty Guard**; **SAM08G Card -> Running Fire -> Gatling Gun**; **Fastitocalon Card -> Water Crystal -> Aqua Breath** or **50× Water**; **5× Fastitacalon-F Card -> Water Crystal -> 50× Water**; **Creeps Card -> Coral Fragment -> Electrocute** or **20× Thundara**; **Gayla Card -> Mystery Fluid -> Acid**; **Tri-Face Card -> Curse Spike -> L?Death**; **Caterchipillar Card -> Spider Web -> Ultra Waves**. **Elastoid Card -> Steel Pipe** is a useful side pickup: Steel Pipes teach **SumMag+10%** and unlock **SumMag+20%** on a GF, and spare Steel Pipes have later weapon and GF-quest uses. Do not grind Elastoid Cards at the expense of the exam route, but keep and mod any extras that fall into your hand. Degenerator is the standout because it ejects almost every regular non-boss enemy for the whole game.\n\n{{CALLOUT:refinement|Early magic refinement targets}} The best Strength spike is **Abyss Worm Card -> Windmill -> 20× Tornado** with T Mag-RF. Other useful options: **Snow Lion Card -> North Wind -> 20× Blizzaga**; **Blitz Card -> Dynamo Stone -> 20× Thundaga**; **3× Hexadragon Card -> Red Fang -> 20× Firaga**; **Thrustaevis Card -> Shear Feather -> 20× Aero**; **Bomb Card -> Bomb Fragment -> 20× Fira**; **Glacial Eye Card -> Arctic Wind -> 20× Blizzara**. For the Fastitocalon-card Water Crystal routes, see **Early Card Mod priorities** above. If Mid Mag-RF is learned, it can upgrade low-level Fire/Blizzard/Thunder/Cure stocks, but Card Mod routes are usually more efficient.\n\n{{CALLOUT:card|Who to play for common cards}} Level 1 cards: all Garden players except the boy sitting in the Library and Trepe Groupie #1. Level 2: all Garden players except random hallway students, Trepe Groupie #2, the girl and black student in the Library hallway, and the girl in the 2F hallway. Level 3: most Garden players; **Trepe Groupie #2** is the easiest Level 3 source. Level 4: Trepe Groupie #3, Cafeteria Lady, all Library-area students except the **Girl in Pigtails behind the desk**, Dormitory hallway girls, and the girl in the 2F hallway; the random student in the hallway toward the Library is a strong Level 4 farming target. Level 5: all Trepe Groupies, the Gatekeeper, Cafeteria Lady, male student in blue in the Library, and the girl in the Library reading room; **Trepe Groupie #1** is the best Level 5 target. The girl in the Library reading room can play Levels 1-5 except **PuPu**, which no one plays normally. No currently accessible Garden player uses Level 6 or Level 7 cards.\n\n{{CALLOUT:sidequest|Novice SeeD Candidates quest}} This five-window sidequest rewards scenes rather than items. Speak to the three students at the Balamb Garden Cafeteria table until their dialogue repeats. Do this now, before the SeeD Exam. The later windows are: after the exam but before leaving for Timber; after visiting Balamb Garden's MD Level but before Fisherman's Horizon; any time on Disc 2 after visiting Fisherman's Horizon; and on Disc 3 before the Trabia Canyon sequence. Complete all five windows and return after Trabia Canyon to see them as full SeeDs; otherwise, they disappear for the rest of the game.\n\nIn the Cafeteria, talk to the **Cafeteria Lady** until she stops giving new dialogue; this minor dialogue chain appears to close later. Then return to the Library.\n\n{{CALLOUT:relationship|Zell Love Quest #2}} Speak to the **Conceited SeeD** in the Library. He can fail to appear; if he is missing, do not reset the route just for him, because later opportunities exist.\n\n{{CALLOUT:card|CC Group prerequisite — wins that count later}} The CC Group quest cannot begin until Disc 2 or 3, but you can work toward its prerequisite now. You need at least **15 Triple Triad wins in Balamb Garden**; games in the Cafeteria, Library, and 2F Classroom do **not** count. When the quest becomes available, Jack appears in the main hall. Joker is encountered later on the Training Center bridge, not in a classroom.\n\n{{CALLOUT:perfect|Perfect Game Alert #2}} Before moving on, perfect-game files should get **100× Tornado** (or **100× Flare**, if you are willing to grind the cards) and junction it to Squall's **Strength**. Other magic stocks are flexible here; this Strength benchmark is the important preparation for an upcoming score-sensitive task.",
       "checkpoints": [
         {
           "type": "achievement",
@@ -203,28 +203,24 @@
           "enemies": [
             {
               "id": "enemy-bite-bug",
-              "name": "Bite Bug",
-              "notes": "Draws Fire, Scan, Fira (Fira at Lv20+)"
+              "name": "Bite Bug"
             },
             {
               "id": "enemy-glacial-eye",
-              "name": "Glacial Eye",
-              "notes": "Draws Blizzard, Cure, Blizzara/Cura at Lv20+; mug Arctic Wind"
+              "name": "Glacial Eye"
             },
             {
               "id": "enemy-caterchipillar",
-              "name": "Caterchipillar",
-              "notes": "Draws Thunder/Cure; Slow, Stop, Thundaga, Curaga at Lv20+; mug Spider Web"
+              "name": "Caterchipillar"
             },
             {
               "id": "enemy-grat",
-              "name": "Grat",
-              "notes": "Draws Sleep, Silence, Berserk, Confuse; mug Silence Powder"
+              "name": "Grat"
             },
             {
               "id": "enemy-t-rexaur",
               "name": "T-Rexaur",
-              "notes": "Draws Fire/Thunder up to Quake/Firaga; mug Dino Bone; Lv20-30 for Dragon Fang weapon material"
+              "notes": "Dragon Fangs are useful weapon-upgrade materials."
             }
           ]
         },
@@ -233,8 +229,7 @@
           "enemies": [
             {
               "id": "enemy-fastitocalon-f",
-              "name": "Fastitocalon-F",
-              "notes": "Draws Blizzard + Sleep at Lv1-19, Blizzara + Sleep at Lv20-29, Water at Lv30+; 6 AP guaranteed per fight - best early AP farm; mug Fish Fin"
+              "name": "Fastitocalon-F"
             }
           ]
         },
@@ -245,7 +240,6 @@
             {
               "id": "enemy-bomb",
               "name": "Bomb",
-              "notes": "Fixed Lv5 in Fire Cavern; only low-level Bomb draws are available in this exam route.",
               "lvMin": 5,
               "lvMax": 5,
               "hp": 288
@@ -253,7 +247,6 @@
             {
               "id": "enemy-buel",
               "name": "Buel",
-              "notes": "Fixed Lv5 in Fire Cavern; only low-level Buel draws are available in this exam route.",
               "lvMin": 5,
               "lvMax": 5,
               "hp": 43
@@ -261,7 +254,6 @@
             {
               "id": "enemy-red-bat",
               "name": "Red Bat",
-              "notes": "Fixed Lv5 in Fire Cavern; only low-level Red Bat draws are available in this exam route.",
               "lvMin": 5,
               "lvMax": 5,
               "hp": 23
@@ -309,29 +301,25 @@
               "id": "enemy-g-soldier",
               "name": "G-Soldier",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Fixed soldier waves during the town advance. Low-level draws are Fire, Thunder, and Blizzard; higher spell tiers only appear if the party is heavily overleveled."
+              "lvMax": 19
             },
             {
               "id": "enemy-elite-soldier",
               "name": "Elite Soldier",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Random communication-road enemy. Low-level draws are Fire, Thunder, Blizzard, and Scan."
+              "lvMax": 19
             },
             {
               "id": "enemy-geezard",
               "name": "Geezard",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Random communication-road enemy. Low-level draws are Thunder and Cure; Healing Water can drop, but Mug is unavailable during the exam."
+              "lvMax": 19
             },
             {
               "id": "enemy-anacondaur",
               "name": "Anacondaur",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Fixed ambush after the bridge. Low-level draws are Fire and Cure; Bio is only available from Lv 30+ Anacondaur, so do not expect it during a normal exam route. Weak to Ice; avoid letting Seifer take the final blow for a perfect record."
+              "lvMax": 19
             }
           ]
         }
@@ -386,42 +374,37 @@
               "name": "Grat",
               "lvMin": 1,
               "lvMax": 19,
-              "notes": "Draw status magic here before ST Mag-RF is available. Sleep is the key ST-Atk junction for safer T-Rexaur handling."
+              "notes": "Before ST Mag-RF is available, fill status-magic stocks here; Sleep helps keep T-Rexaurs under control."
             },
             {
               "id": "enemy-t-rexaur",
               "name": "T-Rexaur",
               "lvMin": 1,
-              "lvMax": 100,
-              "notes": "This is a normal scaling T-Rexaur encounter, not a fixed-level boss. Sleep works, but physical hits wake it; run or use Quistis Degenerator if available."
+              "lvMax": 100
             },
             {
               "id": "enemy-bite-bug",
               "name": "Bite Bug",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Appears in the Garden grounds around this story window; low threat and useful mainly as a light AP/source encounter."
+              "lvMax": 19
             },
             {
               "id": "enemy-caterchipillar",
               "name": "Caterchipillar",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Garden-area encounter listed for the post-exam window; watch for status nuisance rather than damage."
+              "lvMax": 19
             },
             {
               "id": "enemy-fastitocalon-f",
               "name": "Fastitocalon-F",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Beach encounter near Balamb. Better AP grinding opportunities are coming, so do not stall the post-exam route here."
+              "lvMax": 19
             },
             {
               "id": "enemy-glacial-eye",
               "name": "Glacial Eye",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Balamb-area encounter during the return-to-Garden window."
+              "lvMax": 19
             }
           ]
         }
@@ -458,36 +441,31 @@
               "id": "enemy-bite-bug",
               "name": "Bite Bug",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Balamb Garden/area enemy listed for the mission-prep window."
+              "lvMax": 19
             },
             {
               "id": "enemy-caterchipillar",
               "name": "Caterchipillar",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Balamb Garden/area enemy listed for the mission-prep window."
+              "lvMax": 19
             },
             {
               "id": "enemy-fastitocalon-f",
               "name": "Fastitocalon-F",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Beach AP source for Siren/Diablos prep; stop when the key GF abilities are learned."
+              "lvMax": 19
             },
             {
               "id": "enemy-glacial-eye",
               "name": "Glacial Eye",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Balamb area enemy available before boarding the Timber train."
+              "lvMax": 19
             },
             {
               "id": "enemy-t-rexaur",
               "name": "T-Rexaur",
               "lvMin": 1,
-              "lvMax": 100,
-              "notes": "Normal scaling Training Center encounter; Sleep or Degenerator are safer than direct fighting."
+              "lvMax": 100
             }
           ]
         },
@@ -498,15 +476,13 @@
               "id": "enemy-funguar",
               "name": "Funguar",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Draw status magic here if card refinement did not already fill stocks."
+              "lvMax": 19
             },
             {
               "id": "enemy-geezard",
               "name": "Geezard",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Low-threat forest encounter during Laguna/Kiros/Ward sequence."
+              "lvMax": 19
             }
           ]
         },
@@ -517,15 +493,13 @@
               "id": "enemy-elite-soldier",
               "name": "Elite Soldier",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Optional guard-rescue fight south of the station."
+              "lvMax": 19
             },
             {
               "id": "enemy-g-soldier",
               "name": "G-Soldier",
               "lvMin": 1,
-              "lvMax": 19,
-              "notes": "Pub-screen soldiers; defeating them awards the Buel Card."
+              "lvMax": 19
             }
           ]
         }
@@ -553,32 +527,28 @@
             {
               "id": "enemy-adamantoise",
               "name": "Adamantoise",
-              "notes": "Beach encounter. Mug Whisper for Quistis White Wind; high defenses and Darkness pressure make fights slow."
+              "notes": "Whisper can be refined into White Wind for Quistis; high defenses and Darkness can make this a slow fight."
             },
             {
               "id": "enemy-anacondaur",
-              "name": "Anacondaur",
-              "notes": "Forests/cliff bases. Dragon Skin drops are the weapon-planning prize, but are unreliable before Lv 30+."
+              "name": "Anacondaur"
             },
             {
               "id": "enemy-fastitocalon-f",
-              "name": "Fastitocalon-F",
-              "notes": "Beach encounter and familiar AP/card/refine target from the Balamb coast."
+              "name": "Fastitocalon-F"
             },
             {
               "id": "enemy-funguar",
-              "name": "Funguar",
-              "notes": "Dollet-area encounter listed in the source for this optional route."
+              "name": "Funguar"
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "Dollet-area encounter and low-level card/reward source."
+              "name": "Geezard"
             },
             {
               "id": "enemy-wendigo",
               "name": "Wendigo",
-              "notes": "Dollet-area encounter; Steel Pipe routes matter later for Doomtrain/Aura Stone planning."
+              "notes": "Steel Pipes feed later Doomtrain and Aura Stone refinement routes."
             }
           ]
         },
@@ -587,13 +557,11 @@
           "enemies": [
             {
               "id": "enemy-ochu",
-              "name": "Ochu",
-              "notes": "Roshfall Forest; optional source for Quistis weapon materials."
+              "name": "Ochu"
             },
             {
               "id": "enemy-wendigo",
-              "name": "Wendigo",
-              "notes": "Nearby Timber roads/forests; Mug Steel Pipes for later refinement."
+              "name": "Wendigo"
             }
           ]
         }
@@ -612,23 +580,19 @@
           "enemies": [
             {
               "id": "enemy-elastoid",
-              "name": "Elastoid",
-              "notes": "Draw Dispel at all levels, Stop at Lv20+, and Meltdown at Lv30+; Lv30+ Mug Laser Cannon for Homing Laser or Pulse Ammo."
+              "name": "Elastoid"
             },
             {
               "id": "enemy-esthar-soldier",
-              "name": "Esthar Soldier",
-              "notes": "Forced and random soldier encounters during the excavation sequence."
+              "name": "Esthar Soldier"
             },
             {
               "id": "enemy-esthar-soldier-cyborg",
-              "name": "Esthar Soldier [Cyborg]",
-              "notes": "Strong soldier variant; weak to Lightning and involved in the forced exit fights."
+              "name": "Esthar Soldier [Cyborg]"
             },
             {
               "id": "enemy-gesper",
-              "name": "Gesper",
-              "notes": "Can use unblockable Degenerator to eject a character from battle; defeat it quickly if avoiding removals."
+              "name": "Gesper"
             }
           ]
         },
@@ -637,53 +601,43 @@
           "enemies": [
             {
               "id": "enemy-belhelmel",
-              "name": "Belhelmel",
-              "notes": "World-map canyon encounter before Galbadia Garden."
+              "name": "Belhelmel"
             },
             {
               "id": "enemy-blood-soul",
-              "name": "Blood Soul",
-              "notes": "World-map canyon encounter before Galbadia Garden."
+              "name": "Blood Soul"
             },
             {
               "id": "enemy-cockatrice",
-              "name": "Cockatrice",
-              "notes": "World-map canyon encounter before Galbadia Garden."
+              "name": "Cockatrice"
             },
             {
               "id": "enemy-fastitocalon-f",
-              "name": "Fastitocalon-F",
-              "notes": "World-map canyon/beach-adjacent encounter."
+              "name": "Fastitocalon-F"
             },
             {
               "id": "enemy-funguar",
-              "name": "Funguar",
-              "notes": "World-map canyon encounter."
+              "name": "Funguar"
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "World-map canyon encounter."
+              "name": "Geezard"
             },
             {
               "id": "enemy-grendel",
-              "name": "Grendel",
-              "notes": "Farm at cliff walls for Dragon Fang drops; do not Mug if Dragon Fang is the goal."
+              "name": "Grendel"
             },
             {
               "id": "enemy-ochu",
-              "name": "Ochu",
-              "notes": "World-map canyon/forest encounter."
+              "name": "Ochu"
             },
             {
               "id": "enemy-thrustaevis",
-              "name": "Thrustaevis",
-              "notes": "World-map canyon encounter."
+              "name": "Thrustaevis"
             },
             {
               "id": "enemy-wendigo",
-              "name": "Wendigo",
-              "notes": "World-map canyon encounter."
+              "name": "Wendigo"
             }
           ]
         }
@@ -742,78 +696,65 @@
           "enemies": [
             {
               "id": "enemy-abyss-worm",
-              "name": "Abyss Worm",
-              "notes": "World-map/tomb-route encounter while traveling to the ID sword."
+              "name": "Abyss Worm"
             },
             {
               "id": "enemy-armadodo",
-              "name": "Armadodo",
-              "notes": "Can supply Turtle Shell for Carbuncle Vit+20% teaching."
+              "name": "Armadodo"
             },
             {
               "id": "enemy-belhelmel",
-              "name": "Belhelmel",
-              "notes": "Route encounter."
+              "name": "Belhelmel"
             },
             {
               "id": "enemy-blobra",
               "name": "Blobra",
-              "notes": "Random elemental weakness; Scan or rotate elements."
+              "notes": "Scan or test an element before committing to a junction; Blobra’s weakness varies."
             },
             {
               "id": "enemy-blood-soul",
-              "name": "Blood Soul",
-              "notes": "Route encounter with Float/Silence/Dispel access."
+              "name": "Blood Soul"
             },
             {
               "id": "enemy-buel",
-              "name": "Buel",
-              "notes": "Route encounter."
+              "name": "Buel"
             },
             {
               "id": "enemy-chimera",
-              "name": "Chimera",
-              "notes": "Route encounter; dangerous if underprepared."
+              "name": "Chimera"
             },
             {
               "id": "enemy-fastitocalon",
-              "name": "Fastitocalon",
-              "notes": "Route encounter."
+              "name": "Fastitocalon"
             },
             {
               "id": "enemy-fastitocalon-f",
-              "name": "Fastitocalon-F",
-              "notes": "Route encounter."
+              "name": "Fastitocalon-F"
             },
             {
               "id": "enemy-forbidden",
               "name": "Forbidden",
-              "notes": "Undead route encounter."
+              "notes": "Undead enemies take damage from healing effects and can be defeated with Life."
             },
             {
               "id": "enemy-funguar",
-              "name": "Funguar",
-              "notes": "Route encounter."
+              "name": "Funguar"
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "Route encounter."
+              "name": "Geezard"
             },
             {
               "id": "enemy-ochu",
-              "name": "Ochu",
-              "notes": "Route encounter; carries status magic."
+              "name": "Ochu"
             },
             {
               "id": "enemy-thrustaevis",
-              "name": "Thrustaevis",
-              "notes": "Route encounter."
+              "name": "Thrustaevis"
             },
             {
               "id": "enemy-wendigo",
-              "name": "Wendigo",
-              "notes": "Route encounter."
+              "name": "Wendigo"
             }
           ]
         },
@@ -823,27 +764,24 @@
             {
               "id": "enemy-creeps",
               "name": "Creeps",
-              "notes": "Sewer encounter; Life is useful for Spr-J."
+              "notes": "Life is useful to stock for Spr-J before leaving the sewers."
             },
             {
               "id": "enemy-grand-mantis",
-              "name": "Grand Mantis",
-              "notes": "Sewer encounter."
+              "name": "Grand Mantis"
             },
             {
               "id": "enemy-red-bat",
-              "name": "Red Bat",
-              "notes": "Sewer encounter; Drain access."
+              "name": "Red Bat"
             },
             {
               "id": "enemy-iguion",
               "name": "Iguion",
-              "notes": "Boss pair; draw Carbuncle before defeating."
+              "notes": "Carbuncle is missable from this pair; secure the GF before the battle ends."
             },
             {
               "id": "enemy-seifer-1",
-              "name": "Seifer",
-              "notes": "Solo Squall boss before Edea."
+              "name": "Seifer"
             },
             {
               "id": "enemy-edea-1",
@@ -857,23 +795,19 @@
           "enemies": [
             {
               "id": "enemy-armadodo",
-              "name": "Armadodo",
-              "notes": "Tomb interior encounter; can supply Turtle Shell materials."
+              "name": "Armadodo"
             },
             {
               "id": "enemy-blobra",
-              "name": "Blobra",
-              "notes": "Tomb interior encounter; check its elemental weakness before attacking."
+              "name": "Blobra"
             },
             {
               "id": "enemy-buel",
-              "name": "Buel",
-              "notes": "Tomb interior encounter."
+              "name": "Buel"
             },
             {
               "id": "enemy-forbidden",
-              "name": "Forbidden",
-              "notes": "Undead Tomb encounter; Life effects and recovery damage are effective."
+              "name": "Forbidden"
             },
             {
               "id": "enemy-sacred",
@@ -882,8 +816,7 @@
             },
             {
               "id": "enemy-minotaur",
-              "name": "Minotaur",
-              "notes": "Final Tomb boss with Sacred; victory awards Brothers and the Minotaur Card."
+              "name": "Minotaur"
             }
           ]
         }
@@ -910,13 +843,11 @@
           "enemies": [
             {
               "id": "enemy-bite-bug",
-              "name": "Bite Bug",
-              "notes": "Patrol enemy; weak to Ice and Wind, not Fire."
+              "name": "Bite Bug"
             },
             {
               "id": "enemy-caterchipillar",
-              "name": "Caterchipillar",
-              "notes": "Patrol enemy; can provide Thunder/Cure-family magic depending on level."
+              "name": "Caterchipillar"
             }
           ]
         }
@@ -950,56 +881,48 @@
           "enemies": [
             {
               "id": "enemy-belhelmel",
-              "name": "Belhelmel",
-              "notes": "Prison random encounter."
+              "name": "Belhelmel"
             },
             {
               "id": "enemy-elite-soldier",
               "name": "Elite Soldier",
-              "notes": "Fixed final prison escape group; D-District Prison level cap Lv70.",
               "lvMax": 70
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "Prison random encounter."
+              "name": "Geezard"
             },
             {
               "id": "enemy-gim47n",
-              "name": "GIM47N",
-              "notes": "Prison robot encounter."
+              "name": "GIM47N"
             },
             {
               "id": "enemy-gim52a",
               "name": "GIM52A",
-              "notes": "Fixed final prison escape group; level cap Lv70. Mug Missile for Quistis Micro Missiles.",
+              "notes": "Missiles refine into Micro Missiles for Quistis.",
               "lvMax": 70
             },
             {
               "id": "enemy-guard",
               "name": "Guard",
-              "notes": "Zell solo opening fight and pursuit guards."
+              "notes": "Zell opens the sequence alone; pursuit guards appear if the alarm is raised."
             },
             {
               "id": "enemy-thrustaevis",
-              "name": "Thrustaevis",
-              "notes": "Prison random encounter."
+              "name": "Thrustaevis"
             },
             {
               "id": "enemy-wendigo",
-              "name": "Wendigo",
-              "notes": "Prison random encounter."
+              "name": "Wendigo"
             },
             {
               "id": "enemy-biggs-2",
               "name": "Biggs (2nd)",
-              "notes": "Second prison boss battle; encounter level cap Lv22.",
               "lvMax": 22
             },
             {
               "id": "enemy-wedge-2",
               "name": "Wedge (2nd)",
-              "notes": "Second prison boss battle; encounter level cap Lv22.",
               "lvMax": 22
             }
           ]
@@ -1057,38 +980,32 @@
           "enemies": [
             {
               "id": "enemy-belhelmel",
-              "name": "Belhelmel",
-              "notes": "Avoidable random encounter if the disguise route is broken."
+              "name": "Belhelmel"
             },
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Avoidable random encounter if the disguise route is broken."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Avoidable random encounter if the disguise route is broken."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "Avoidable random encounter if the disguise route is broken."
+              "name": "Geezard"
             },
             {
               "id": "enemy-sam08g",
-              "name": "SAM08G",
-              "notes": "Avoidable random encounter; can provide Running Fire, but the rank-safe route skips it."
+              "name": "SAM08G"
             },
             {
               "id": "enemy-thrustaevis",
-              "name": "Thrustaevis",
-              "notes": "Avoidable random encounter if the disguise route is broken."
+              "name": "Thrustaevis"
             },
             {
               "id": "enemy-base-soldier",
               "name": "Base Soldier",
-              "notes": "An avoidable single-Soldier fight if you choose a fight response; a pair appears in the later mandatory security battle."
+              "notes": "A fight response triggers one optional Soldier; the later security battle has a pair."
             }
           ]
         },
@@ -1097,13 +1014,11 @@
           "enemies": [
             {
               "id": "enemy-base-leader",
-              "name": "Base Leader",
-              "notes": "Mandatory; Silence is effective. Draw Reflect if needed; Mug for Tent or Cottage."
+              "name": "Base Leader"
             },
             {
               "id": "enemy-base-soldier",
-              "name": "Base Soldier",
-              "notes": "Two enemies; Mug has a rare 8x Hi-Potion result."
+              "name": "Base Soldier"
             }
           ]
         },
@@ -1112,18 +1027,15 @@
           "enemies": [
             {
               "id": "enemy-bgh251f2-1",
-              "name": "BGH251F2 (Missile Base)",
-              "notes": "Fixed Lv1-22 machine; AP is listed as 0 here, though some guides assign 10 AP to BGH or the full escape sequence. No Mug or direct drop."
+              "name": "BGH251F2 (Missile Base)"
             },
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Second forced round after BGH251F2; defeat before completing the escape."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Two enemies in the second forced round after BGH251F2."
+              "name": "G-Soldier"
             }
           ]
         }
@@ -1181,42 +1093,41 @@
             {
               "id": "enemy-bomb",
               "name": "Bomb",
-              "notes": "Appears in Cafeteria and possibly Quad; Lv 30+ has Firaga and Meltdown."
+              "notes": "Can appear in the Cafeteria and possibly the Quad."
             },
             {
               "id": "enemy-bite-bug",
-              "name": "Bite Bug",
-              "notes": "Garden Crisis enemy table entry."
+              "name": "Bite Bug"
             },
             {
               "id": "enemy-caterchipillar",
               "name": "Caterchipillar",
-              "notes": "Opening fight and possible Infirmary/Dormitory fight."
+              "notes": "Appears in the opening fight and possibly later in the Infirmary or Dormitory."
             },
             {
               "id": "enemy-glacial-eye",
               "name": "Glacial Eye",
-              "notes": "Possible Quad fight."
+              "notes": "May appear in the Quad fight."
             },
             {
               "id": "enemy-granaldo",
               "name": "Granaldo",
-              "notes": "Possible Infirmary fight; high levels have strong status magic."
+              "notes": "May appear in the Infirmary fight."
             },
             {
               "id": "enemy-grat",
               "name": "Grat",
-              "notes": "Library fight."
+              "notes": "Appears in the Library fight."
             },
             {
               "id": "enemy-grendel",
               "name": "Grendel",
-              "notes": "Parking Lot fight."
+              "notes": "Appears in the Parking Lot fight."
             },
             {
               "id": "enemy-t-rexaur",
               "name": "T-Rexaur",
-              "notes": "Training Center fight."
+              "notes": "Appears in the Training Center fight."
             }
           ]
         },
@@ -1225,33 +1136,27 @@
           "enemies": [
             {
               "id": "enemy-blobra",
-              "name": "Blobra",
-              "notes": "MD Level random encounter."
+              "name": "Blobra"
             },
             {
               "id": "enemy-blood-soul",
-              "name": "Blood Soul",
-              "notes": "MD Level random encounter; undead."
+              "name": "Blood Soul"
             },
             {
               "id": "enemy-buel",
-              "name": "Buel",
-              "notes": "MD Level random encounter; Fire junction is less useful here."
+              "name": "Buel"
             },
             {
               "id": "enemy-geezard",
-              "name": "Geezard",
-              "notes": "MD Level random encounter."
+              "name": "Geezard"
             },
             {
               "id": "enemy-tri-face",
-              "name": "Tri-Face",
-              "notes": "MD Level random encounter; source of Curse Spikes and high-level Pain/Flare draws."
+              "name": "Tri-Face"
             },
             {
               "id": "enemy-oilboyle",
               "name": "Oilboyle",
-              "notes": "Fixed MD Level boss pair; capped at Lv26 and yields no EXP. Fire works; Water is nullified.",
               "lvMin": 1,
               "lvMax": 26
             }
@@ -1262,23 +1167,19 @@
           "enemies": [
             {
               "id": "enemy-norg-pod",
-              "name": "NORG Pod",
-              "notes": "Open the pod to expose NORG."
+              "name": "NORG Pod"
             },
             {
               "id": "enemy-left-orb",
-              "name": "Left Orb",
-              "notes": "Mug for Mag Up; all elements nullified."
+              "name": "Left Orb"
             },
             {
               "id": "enemy-right-orb",
-              "name": "Right Orb",
-              "notes": "Mug for Spr Up; all elements nullified."
+              "name": "Right Orb"
             },
             {
               "id": "enemy-norg",
-              "name": "NORG",
-              "notes": "Draw Leviathan; mug Circlet."
+              "name": "NORG"
             }
           ]
         }
@@ -1312,28 +1213,24 @@
           "enemies": [
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Forced station fight before BGH251F2."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Two appear with the Elite Soldier."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-gim47n",
-              "name": "GIM47N",
-              "notes": "Bridge/track encounter table."
+              "name": "GIM47N"
             },
             {
               "id": "enemy-sam08g",
-              "name": "SAM08G",
-              "notes": "Bridge/track encounter table."
+              "name": "SAM08G"
             },
             {
               "id": "enemy-bgh251f2-2",
               "name": "BGH251F2 (FH)",
-              "notes": "Mug Adamantine; otherwise drops Running Fire or Missile."
+              "notes": "A successful Mug prevents the normal post-battle drop, so choose based on which reward route you need."
             }
           ]
         }
@@ -1466,23 +1363,20 @@
           "enemies": [
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Two support Raijin in the first hotel fight."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-raijin-1",
-              "name": "Raijin (Balamb solo)",
-              "notes": "Mug 2x Str Up; drops Str Up."
+              "name": "Raijin (Balamb solo)"
             },
             {
               "id": "enemy-raijin-2",
-              "name": "Raijin (Balamb with Fujin)",
-              "notes": "Same Balamb data as solo Raijin; Combat King 002 is guaranteed after the encounter."
+              "name": "Raijin (Balamb with Fujin)"
             },
             {
               "id": "enemy-fujin",
               "name": "Fujin (Balamb)",
-              "notes": "Draw Pandemona; Mug Megalixir or Hero; drops Megalixir. Combat King 002 is guaranteed after the encounter."
+              "notes": "Pandemona is missable from Fujin; claim the GF before ending the fight."
             }
           ]
         }
@@ -1584,23 +1478,19 @@
           "enemies": [
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Garden defense encounter table."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Garden defense encounter table."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-paratrooper",
-              "name": "Paratrooper",
-              "notes": "Classroom assault and rope duel enemy."
+              "name": "Paratrooper"
             },
             {
               "id": "enemy-sam08g",
-              "name": "SAM08G",
-              "notes": "Garden defense encounter table."
+              "name": "SAM08G"
             }
           ]
         },
@@ -1609,73 +1499,59 @@
           "enemies": [
             {
               "id": "enemy-blitz",
-              "name": "Blitz",
-              "notes": "Galbadia Garden encounter table."
+              "name": "Blitz"
             },
             {
               "id": "enemy-creeps",
-              "name": "Creeps",
-              "notes": "Galbadia Garden encounter table."
+              "name": "Creeps"
             },
             {
               "id": "enemy-death-claw",
-              "name": "Death Claw",
-              "notes": "Galbadia Garden encounter table."
+              "name": "Death Claw"
             },
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Galbadia Garden encounter table."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Galbadia Garden encounter table."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-gim52a",
-              "name": "GIM52A",
-              "notes": "Galbadia Garden encounter table."
+              "name": "GIM52A"
             },
             {
               "id": "enemy-jelleye",
-              "name": "Jelleye",
-              "notes": "Galbadia Garden encounter table."
+              "name": "Jelleye"
             },
             {
               "id": "enemy-sam08g",
-              "name": "SAM08G",
-              "notes": "Galbadia Garden encounter table."
+              "name": "SAM08G"
             },
             {
               "id": "enemy-slapper",
-              "name": "Slapper",
-              "notes": "Unique hockey-rink enemy."
+              "name": "Slapper"
             },
             {
               "id": "enemy-tri-face",
-              "name": "Tri-Face",
-              "notes": "Main hall farming target for Pain, Flare, and Curse Spikes."
+              "name": "Tri-Face"
             },
             {
               "id": "enemy-cerberus",
-              "name": "Cerberus",
-              "notes": "Optional GF boss in the main hall."
+              "name": "Cerberus"
             },
             {
               "id": "enemy-seifer-2",
-              "name": "Seifer (Second Battle)",
-              "notes": "Second Seifer battle in the Galbadia Garden sequence, before the final fight with Edea."
+              "name": "Seifer (Second Battle)"
             },
             {
               "id": "enemy-seifer-3",
-              "name": "Seifer (with Edea)",
-              "notes": "Mug/drop Hero or rare Holy War."
+              "name": "Seifer (with Edea)"
             },
             {
               "id": "enemy-edea-2",
-              "name": "Edea (Galbadia Garden)",
-              "notes": "Draw Alexander; mug Royal Crown; drops Force Armlet."
+              "name": "Edea (Galbadia Garden)"
             }
           ]
         }
@@ -1730,13 +1606,11 @@
           "enemies": [
             {
               "id": "enemy-grat",
-              "name": "Grat",
-              "notes": "Training Center encounter while collecting Weapons Mon Jul."
+              "name": "Grat"
             },
             {
               "id": "enemy-t-rexaur",
-              "name": "T-Rexaur",
-              "notes": "Training Center encounter while collecting Weapons Mon Jul."
+              "name": "T-Rexaur"
             }
           ]
         }
@@ -1763,18 +1637,15 @@
           "enemies": [
             {
               "id": "enemy-bite-bug",
-              "name": "Bite Bug",
-              "notes": "Optional mountainside encounter before the fixed Ruby Dragon."
+              "name": "Bite Bug"
             },
             {
               "id": "enemy-mesmerize",
-              "name": "Mesmerize",
-              "notes": "Optional mountainside encounter before the fixed Ruby Dragon."
+              "name": "Mesmerize"
             },
             {
               "id": "enemy-ruby-dragon",
-              "name": "Ruby Dragon",
-              "notes": "Fixed encounter; Lv 45+ carries Flare and Meteor."
+              "name": "Ruby Dragon"
             }
           ]
         }
@@ -1853,38 +1724,31 @@
           "enemies": [
             {
               "id": "enemy-cactuar",
-              "name": "Cactuar",
-              "notes": "20 AP; farm until Alexander learns Med LV Up."
+              "name": "Cactuar"
             },
             {
               "id": "enemy-caterchipillar",
-              "name": "Caterchipillar",
-              "notes": "Preparation region encounter."
+              "name": "Caterchipillar"
             },
             {
               "id": "enemy-cockatrice",
-              "name": "Cockatrice",
-              "notes": "Preparation region encounter."
+              "name": "Cockatrice"
             },
             {
               "id": "enemy-forbidden",
-              "name": "Forbidden",
-              "notes": "Preparation region encounter."
+              "name": "Forbidden"
             },
             {
               "id": "enemy-hexadragon",
-              "name": "Hexadragon",
-              "notes": "Preparation region encounter."
+              "name": "Hexadragon"
             },
             {
               "id": "enemy-malboro",
-              "name": "Malboro",
-              "notes": "Drops/Mug Malboro Tentacle; use Degenerator if farming in Grandidi Forest."
+              "name": "Malboro"
             },
             {
               "id": "enemy-mesmerize",
-              "name": "Mesmerize",
-              "notes": "Preparation region encounter."
+              "name": "Mesmerize"
             }
           ]
         },
@@ -1893,23 +1757,19 @@
           "enemies": [
             {
               "id": "enemy-lefty",
-              "name": "Lefty",
-              "notes": "Great Salt Lake encounter."
+              "name": "Lefty"
             },
             {
               "id": "enemy-righty",
-              "name": "Righty",
-              "notes": "Great Salt Lake encounter."
+              "name": "Righty"
             },
             {
               "id": "enemy-vysage",
-              "name": "Vysage",
-              "notes": "Great Salt Lake encounter."
+              "name": "Vysage"
             },
             {
               "id": "enemy-abadon",
-              "name": "Abadon",
-              "notes": "Undead boss; mug Power Wrist; drops 10x Flare Stone."
+              "name": "Abadon"
             }
           ]
         }
@@ -1943,23 +1803,19 @@
           "enemies": [
             {
               "id": "enemy-gesper",
-              "name": "Gesper",
-              "notes": "First forced lab fight."
+              "name": "Gesper"
             },
             {
               "id": "enemy-esthar-soldier",
-              "name": "Esthar Soldier",
-              "notes": "Forced lab fights."
+              "name": "Esthar Soldier"
             },
             {
               "id": "enemy-esthar-soldier-cyborg",
-              "name": "Esthar Soldier [Cyborg]",
-              "notes": "Forced lab fights."
+              "name": "Esthar Soldier [Cyborg]"
             },
             {
               "id": "enemy-elastoid",
-              "name": "Elastoid",
-              "notes": "Lv 30+ draw Meltdown and mug Laser Cannon."
+              "name": "Elastoid"
             }
           ]
         }
@@ -2022,38 +1878,32 @@
           "enemies": [
             {
               "id": "enemy-bite-bug",
-              "name": "Bite Bug",
-              "notes": "City area and northern cliffs."
+              "name": "Bite Bug"
             },
             {
               "id": "enemy-caterchipillar",
-              "name": "Caterchipillar",
-              "notes": "Northern cliffs."
+              "name": "Caterchipillar"
             },
             {
               "id": "enemy-gayla",
-              "name": "Gayla",
-              "notes": "City area and northern cliffs."
+              "name": "Gayla"
             },
             {
               "id": "enemy-glacial-eye",
-              "name": "Glacial Eye",
-              "notes": "City area and northern cliffs."
+              "name": "Glacial Eye"
             },
             {
               "id": "enemy-hexadragon",
-              "name": "Hexadragon",
-              "notes": "Northern cliffs."
+              "name": "Hexadragon"
             },
             {
               "id": "enemy-malboro",
               "name": "Malboro",
-              "notes": "Rare plains encounter; ingredient source for Doomtrain."
+              "notes": "Rare plains encounter; fight only if you still need the Doomtrain ingredient."
             },
             {
               "id": "enemy-mesmerize",
-              "name": "Mesmerize",
-              "notes": "Great plains encounter."
+              "name": "Mesmerize"
             }
           ]
         }
@@ -2067,71 +1917,67 @@
       "content": "Return to Esthar and make sure the active party is junctioned before starting the operation. From the city entrance, go left until you reach the **Save Point**, save, then return to **Odine's Lab**. Ride the platform, enter the lab, and ask any background questions you want before the timer starts.\n\n{{CALLOUT:map|Timed Contact Points}} The mission timer starts when you leave **Odine's Lab**. The three yellow spots are contact windows: **Spot #1** is **15:00-12:00**, **Spot #2** is **10:00-5:00**, and **Spot #3** is **3:00-0:00**. Random battles begin around the city, so **Enc-None** makes the timed run safer. Aim for Spot #1; the first contact is visible at 15:00, and you have five minutes from the 20:00 start to reach it.\n\n{{CALLOUT:missable|Combat King 004}} On the timed route from the Lab, go bottom-right, left twice, up, then right twice to reach the mapped Combat King screen. If you spoke to this soldier before Lunar Gate, talk to him now for **Combat King 004**, then go right once to Spot #1. The prerequisite conversation is what enables this free handoff; if you skipped it, the Esthar Book Store is a later fallback when **Familiar** is available.\n\nReach **Yellow Spot #1** if at all possible. If you arrive before 15:00, wait at the contact point. Missing it does not end the mission: Spots #2 and #3 are still boarding chances, but you are evicted before collecting most Lunatic Pandora treasures. If the timer reaches zero before you board, the immediate visit ends; when the Disc 1 setup flags are in place, return for these Lunatic Pandora treasures during the later Ragnarok assault.\n\n{{ENCOUNTERS:0}}\n\n{{CALLOUT:story|Lunatic Pandora Arrival}} When the Lunatic Pandora appears, approach it and defeat the **G-Soldier** and **Elite Soldier** before that spot's cutoff: 12:00 at Spot #1, 5:00 at Spot #2, or 0:00 at Spot #3. If the battle is still active when the timer passes the cutoff, you miss that contact and must catch the next one. Boarding at Spot #1 gives access to the full treasure route.\n\n{{ENCOUNTERS:1}}\n\n{{CALLOUT:point|Lunatic Pandora enemy levels}} Inside Lunatic Pandora, non-Galbadia war-asset encounters are fixed at **Level 1**. Removing Enc-None is worthwhile if you want AP, drops, or Mugs with almost no EXP pressure. Galbadian war assets use their normal level behavior; check their encounter entries for level-specific Draw/Mug/Drop results.\n\nAfter boarding at the first contact point, draw **Meteor** from the **Meteor Draw Point** immediately to the right. Go upstairs into the three-elevator chamber and draw **Curaga** from its **Curaga Draw Point** before exploring. **Elevator #1** leads toward the exit, **Elevator #2** is a dead end, and **Elevator #3** leads to the treasure route; take #3 first.\n\nAt the bottom, go right, descend the stairs, then climb down the ladder and draw **Confuse** from the **Confuse Draw Point**. If Laguna found the **first-intersection Old Key** in the earlier Centra excavation sequence, the nearby right-hand door is open; enter for **LuvLuv G**. If Laguna pushed the tunnel boulder into the wall, cross it to continue left.\n\n{{CALLOUT:treasure|Disc 1 prerequisite treasures}} The panel rewards depend on Laguna's excavation actions in Disc 1. The **middle hatch lever** reveals the **Silence Draw Point**; the **left hatch lever plus the red switch** opens the **Phoenix Pinion** route; and the **right hatch lever plus the blue switch** reveals the **Power Generator**, which teaches Quistis **Ray-Bomb**. The **Old Key near the Confuse Draw Point and barrels** opens the later door to the one-time Ultima point. Setting both detonator switches clears the boulder route to Combat King 005, and pushing the tunnel-wall rock reveals the later Spd-J Scroll. If you skipped an action, its reward cannot be collected on this visit.\n\nOn the next screen, collect **Combat King 005** from the ground by the right wall if Laguna completed the red-and-blue detonator sequence. If that setup was missed, buy the magazine later from the Esthar Book Store when **Familiar** is available. The far door opens only if Laguna picked up the **other Old Key**, near the Confuse point and barrels; behind it is a one-time **Ultima Draw Point**. It does not replenish, so either draw now or leave it until your strongest Magic stat is in place. Return to the elevator room when finished.\n\nClimb back up and take **Elevator #1**. In the cave outside, use the **Holy Draw Point** before continuing. Near the elevator screen's exit, inspect the left-wall cavity opened by Laguna's tunnel-wall rock for the **Spd-J Scroll**. Continue upward until the scene ends the exploration. The Meteor, Curaga, Confuse, Silence, Ultima, and Holy Draw Points all contribute to the cumulative Steam **Magic Miner** achievement.",
       "checkpoints": [
         {
-                "id": "miss-combat-king-004-siege",
-                "type": "task",
-                "label": "Combat King 004",
-                "description": "Optional free handoff during the timed city route if you spoke to the soldier before Lunar Gate; otherwise buy Combat King 004 later at the Esthar Book Store when Familiar is available.",
-                "index": 2
+          "id": "miss-combat-king-004-siege",
+          "type": "task",
+          "label": "Combat King 004",
+          "description": "Optional free handoff during the timed city route if you spoke to the soldier before Lunar Gate; otherwise buy Combat King 004 later at the Esthar Book Store when Familiar is available.",
+          "index": 2
         },
         {
-                "id": "miss-lunatic-pandora-first-contact",
-                "type": "missable",
-                "label": "First contact boarding",
-                "description": "Board at Yellow Spot #1 for the early full treasure route. If this timed contact is missed, its setup-conditional treasures can be revisited during the later Ragnarok assault.",
-                "index": 3
+          "id": "miss-lunatic-pandora-first-contact",
+          "type": "missable",
+          "label": "First contact boarding",
+          "description": "Board at Yellow Spot #1 for the early full treasure route. If this timed contact is missed, its setup-conditional treasures can be revisited during the later Ragnarok assault.",
+          "index": 3
         },
         {
-                "id": "miss-luvluv-g-pandora",
-                "type": "missable",
-                "label": "LuvLuv G",
-                "description": "Requires Laguna to find the Old Key at the first intersection; use it on the nearby right-hand door after Elevator 3.",
-                "index": 9
+          "id": "miss-luvluv-g-pandora",
+          "type": "missable",
+          "label": "LuvLuv G",
+          "description": "Requires Laguna to find the Old Key at the first intersection; use it on the nearby right-hand door after Elevator 3.",
+          "index": 9
         },
         {
-                "id": "miss-power-generator-pandora",
-                "type": "missable",
-                "label": "Power Generator",
-                "description": "Requires Laguna to operate the right excavation panel and its blue switch during the Disc 1 visit.",
-                "index": 10
+          "id": "miss-power-generator-pandora",
+          "type": "missable",
+          "label": "Power Generator",
+          "description": "Requires Laguna to operate the right excavation panel and its blue switch during the Disc 1 visit.",
+          "index": 10
         },
         {
-                "id": "miss-combat-king-005-pandora",
-                "type": "task",
-                "label": "Combat King 005",
-                "description": "Requires Laguna to set both detonator switches for the ground pickup; otherwise buy Combat King 005 later at the Esthar Book Store with Familiar.",
-                "index": 11
+          "id": "miss-combat-king-005-pandora",
+          "type": "task",
+          "label": "Combat King 005",
+          "description": "Requires Laguna to set both detonator switches for the ground pickup; otherwise buy Combat King 005 later at the Esthar Book Store with Familiar.",
+          "index": 11
         },
         {
-                "id": "miss-spd-j-scroll-pandora",
-                "type": "missable",
-                "label": "Spd-J Scroll",
-                "description": "Requires Laguna to push the tunnel-wall rock; search the left-wall cavity on the Elevator 1 route.",
-                "index": 12
+          "id": "miss-spd-j-scroll-pandora",
+          "type": "missable",
+          "label": "Spd-J Scroll",
+          "description": "Requires Laguna to push the tunnel-wall rock; search the left-wall cavity on the Elevator 1 route.",
+          "index": 12
         }
-],
+      ],
       "encounters": [
         {
           "area": "Timed Esthar city route",
           "enemies": [
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Can appear in city battles during the timed mission; one joins the forced boarding battle."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Can appear in city battles during the timed mission; one joins the forced boarding battle."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-gim52a",
-              "name": "Gim52a",
-              "notes": "Galbadian war asset encounter during the timed city route."
+              "name": "Gim52a"
             },
             {
               "id": "enemy-sam08g",
-              "name": "Sam08g",
-              "notes": "Galbadian war asset encounter during the timed city route."
+              "name": "Sam08g"
             }
           ]
         },
@@ -2141,58 +1987,49 @@
             {
               "id": "enemy-behemoth",
               "name": "Behemoth",
-              "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; low EXP relative to useful AP/drops."
+              "level": "1"
             },
             {
               "id": "enemy-elite-soldier",
-              "name": "Elite Soldier",
-              "notes": "Galbadian soldier encounter; use the Bestiary level bands for exact drops/draws."
+              "name": "Elite Soldier"
             },
             {
               "id": "enemy-elnoyle",
               "name": "Elnoyle",
-              "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; low-level bands apply."
+              "level": "1"
             },
             {
               "id": "enemy-g-soldier",
-              "name": "G-Soldier",
-              "notes": "Galbadian soldier encounter; use the Bestiary level bands for exact drops/draws."
+              "name": "G-Soldier"
             },
             {
               "id": "enemy-gim52a",
-              "name": "Gim52a",
-              "notes": "Galbadian war asset encounter; use the Bestiary level bands for exact drops/draws."
+              "name": "Gim52a"
             },
             {
               "id": "enemy-imp",
               "name": "Imp",
               "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; useful low-risk AP/drops."
+              "notes": "A low-risk AP fight if you want to learn abilities while keeping levels down."
             },
             {
               "id": "enemy-iron-giant",
               "name": "Iron Giant",
-              "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; low-level bands apply."
+              "level": "1"
             },
             {
               "id": "enemy-sam08g",
-              "name": "Sam08g",
-              "notes": "Galbadian war asset encounter; use the Bestiary level bands for exact drops/draws."
+              "name": "Sam08g"
             },
             {
               "id": "enemy-torama",
               "name": "Torama",
-              "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; low-level bands apply."
+              "level": "1"
             },
             {
               "id": "enemy-turtapod",
               "name": "Turtapod",
-              "level": "1",
-              "notes": "Fixed Lv 1 inside Lunatic Pandora; low-level bands apply."
+              "level": "1"
             }
           ]
         }
@@ -2330,8 +2167,7 @@
           "enemies": [
             {
               "id": "enemy-jumbo-cactuar",
-              "name": "Jumbo Cactuar",
-              "notes": "Remove Mug; Water on Elem-Atk and Limit Breaks are the clean plan."
+              "name": "Jumbo Cactuar"
             }
           ]
         },
@@ -2340,13 +2176,11 @@
           "enemies": [
             {
               "id": "enemy-ruby-dragon",
-              "name": "Ruby Dragon",
-              "notes": "Two forced prompt battles before Bahamut; the second is a back attack."
+              "name": "Ruby Dragon"
             },
             {
               "id": "enemy-bahamut",
-              "name": "Bahamut",
-              "notes": "Answer the hidden bottom option on the third prompt."
+              "name": "Bahamut"
             }
           ]
         },
@@ -2356,7 +2190,7 @@
             {
               "id": "enemy-ultima-weapon",
               "name": "Ultima Weapon",
-              "notes": "Draw Eden before defeating it; leave alive if preserving fixed Tri-Face farming."
+              "notes": "Eden is missable here; draw it before defeating Ultima Weapon."
             }
           ]
         }
@@ -2405,62 +2239,52 @@
             {
               "id": "enemy-behemoth",
               "name": "Behemoth",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-elite-soldier",
               "name": "Elite Soldier",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-elnoyle",
               "name": "Elnoyle",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-g-soldier",
               "name": "G-Soldier",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-gim52a",
               "name": "Gim52a",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-imp",
               "name": "Imp",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-iron-giant",
               "name": "Iron Giant",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-sam08g",
               "name": "Sam08g",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-torama",
               "name": "Torama",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             },
             {
               "id": "enemy-turtapod",
               "name": "Turtapod",
-              "level": "1",
-              "notes": "Non-boss interior encounter fixed at Lv 1."
+              "level": "1"
             }
           ]
         }
@@ -2494,13 +2318,11 @@
           "enemies": [
             {
               "id": "enemy-adel",
-              "name": "Adel",
-              "notes": "Rinoa is attached; use single-target offense only."
+              "name": "Adel"
             },
             {
               "id": "enemy-rinoa",
-              "name": "Rinoa",
-              "notes": "Adel drains her each turn; Draw Regen and keep her alive. Optional 8x Megalixir Mug."
+              "name": "Rinoa"
             }
           ]
         }
@@ -2534,18 +2356,16 @@
           "enemies": [
             {
               "id": "enemy-sorceress-a",
-              "name": "\"Sorceress\" A",
-              "notes": "First six enemies. Cast one spell each in order: Fire, Thunder, Fira, Blizzara, Thundara, Aero. Drops Flare/Holy/Meteor/Ultima Stones."
+              "name": "\"Sorceress\" A"
             },
             {
               "id": "enemy-sorceress-b",
-              "name": "\"Sorceress\" B",
-              "notes": "#7-#10. Uses Double + Thundaga, Quake + Meltdown, Meteor every turn, and Double + Flare patterns."
+              "name": "\"Sorceress\" B"
             },
             {
               "id": "enemy-sorceress-c",
               "name": "\"Sorceress\" C",
-              "notes": "Final enemy. Counts down to Ultima and counters damage with Creepy Touch."
+              "notes": "The final enemy counts down to Ultima and counters damage with Creepy Touch."
             }
           ]
         }
@@ -2556,7 +2376,7 @@
       "title": "Ultimecia's Castle",
       "disc": 4,
       "index": 3,
-      "content": "Before entering, save outside, stock recovery items, and check junctions for all six characters. The castle seals **Item, Magic, GF, Draw, Command Ability, Limit Break, Resurrection, and Save**, restoring one function after each guardian. **Attack, Junctions, Character Abilities, and Party Abilities** remain usable, and GFs can continue learning. Split into two functional parties: Green Party Switch Points let you change teams, and the Floodgate Key route and Omega setup require both.\n\n{{ENCOUNTERS:0}}\n\n{{CALLOUT:enemy|Castle random encounters}} Most **regular enemies** can appear somewhere in the castle, and their **levels will be completely random** instead of following the party average. Use the encounter list as a local checklist, but farm specific enemies elsewhere when possible.\n\n{{CALLOUT:enemy|First guardian — Sphinxaur/Sphinxara}}\n\n**Boss: Sphinxaur** (Lv 1-50) — HP: 10,000 | AP: 0\n- Draw: Lv 1-19: Fire, Thunder, Cure | Lv 20-29: Fira, Thundara, Cura | Lv 30-50: Firaga, Thundaga, Curaga\n- Mug: Elixir (25%)\n- Drop: Nothing\n- Weakness: Holy\n\n**Boss: Sphinxara** (Lv 1-50 in some tables; up to Lv100 in others) — HP: 10,000 | AP: 30\n- Draw: Lv 1-19: Fire, Thunder, Blizzard, Cure | Lv 20-29: Fira, Thundara, Blizzara, Cura | Lv 30-50: Firaga, Thundaga, Blizzaga, Curaga\n- Mug: Nothing (0%)\n- Drop: Megalixir (100%)\n- Weakness: Holy\n\nStrategy: With most abilities sealed, attack directly. **Mug Elixir** from Sphinxaur. Sphinxara uses Doom, Slow, Sleep, and Zombie, and summons Jelleye → Forbidden → Tri-Face in sequence. Zombie status makes Doom miss; if Sphinxara casts Zombie on a character already under Doom, the countdown is removed. Finish quickly with physical attacks. Holy junctioned to Elemental Attack deals double damage (Sphinxaur/Sphinxara have Holy ×2 weakness). After this fight, **unlock Draw** — this is the priority since it allows drawing Eden from Tiamat and recovering any missed GFs. Most castle bosses hold missed GFs on their Draw lists; this is the **last shot at drawing** Siren, Leviathan, Pandemona, Carbuncle, Cerberus, Alexander, and Eden if they were missed earlier.\n\nProceed through the door behind Sphinxaur. The chandelier drops — inspect the floor hatch and descend. Junction **Thundaga to Elem-Def-J** for all three party members before going down.\n\n**Boss: Tri-Point** (Lv 1-51) — HP: 2,400-22,400 | AP: 30\n- Draw: Haste, Tornado, Blind, Siren\n- Weakness: Fire ×4, Ice ×4\n\nStrategy: Tri-Point counterattacks with **Mega Spark** (ignores Spr) whenever it is hit with the wrong element. With Thunder class magic on El.Def-J, Mega Spark heals the party. Tri-Point alternates between Fire and Ice weaknesses — attacking with the current weakness does NOT trigger a counter, and shifts the weakness to the other element. Exploit this: alternate members with Fire and Ice on El.Att-J. When Tri-Point uses **Scan** on a party member, cast **Protect** on that character or defeat Tri-Point before it acts again. Its next attack is Onrush, which ignores Vit and can deal up to 9,999 damage depending on Tri-Point's level. Draw **Siren** here if it was missed. Tri-Point drops a **Rocket Engine**, which teaches a GF **Spd+40%**. **Unlock Magic** after this fight.\n\nWith **Draw** and **Magic** restored, return to the main hall, go left down the hallway, then right to enter the Art Gallery. Examine all paintings. The clock reads VIII, VI, and IIII — find those numerals in the paintings and enter **VIVIDARIUM** · **INTERVIGILIUM** · **VIATOR** into the large left painting. Trauma appears from behind.\n\n**Boss: Trauma** (Lv 1-56) — HP: 5,555-34,114 | AP: 30\n- Draw: Meltdown, Leviathan\n- Weakness: Wind ×2\n\n**Boss: Droma** (Lv 1-56) — HP: 1,010-3,128 | AP: 30\n- Draw: Esuna, Dispel\n- Mug: 2x Meteor Stone (25%)\n- Drop: Nothing\n\nStrategy: Open with **Meltdown** on Trauma — draw it directly from Trauma for a free cast. Trauma creates two Dromas at the start. Keep the Dromas alive — if both Dromas are killed, Trauma uses the devastating **Mega Pulse Cannon** (ignores Spr and Shell), then creates two new ones. Trauma will eventually Drain its own Dromas to recover HP. Simply keep attacking Trauma; let it consume the Dromas itself. Draw **Leviathan** if missed. **Mug 2× Meteor Stone** from each Droma. Trauma drops an **Elem Atk**, which teaches El.Att-J to a GF.\n\nUnlock **Item** if it is still sealed; otherwise unlock Limit Break. From the Art Gallery, go north twice and down the stairs. Take the upper-left exit, grab the key in the prison cell, then fight Red Giant.\n\n**Boss: Red Giant** (Lv 1-52) — HP: 30,000 | AP: 30\n- Draw: Demi, Pandemona\n\nStrategy: Red Giant has **no elemental weaknesses** (all elements ×1) — its defenses come from extremely high Vitality (255) and Spirit (255), not elemental resistance. Cast **Meltdown** immediately — Red Giant has fixed HP at 30,000 regardless of level. Cast Blind to reduce its physical attacks (80% Darkness success rate). **Gravity and Demi work against Red Giant** despite its imposing appearance — draw and cast Demi from Red Giant itself to deal 25% current HP per cast, making it a useful self-damaging strategy early in the fight when raw damage is limited. When its HP falls below 9,000 it loses its sword and switches to unarmed punches. Draw **Pandemona** if missed. Red Giant drops **Diamond Armor**, which teaches GFHP+40%.\n\nAfter Red Giant, unlock **Limit Break** if it is still sealed; otherwise unlock GF. Return to the Main Hall. Switch to the secondary party and move them left through the hall to the chandelier room — lower the lever. Switch back to the primary party and go upstairs through the doors, over the chandelier, to the balcony.\n\n**Boss: Krysta** (Lv 1-55) — HP: 5,200-16,000 | AP: 30\n- Draw: Holy, Carbuncle\n\nStrategy: Krysta has extremely high Vitality, so Meltdown helps physical damage but is not required. Additionally, Krysta has **zero Spirit**, so magic damage lands without Spirit reduction. Krysta nullifies **Ice**, while Gravity attacks are effective. Krysta counters any attack with a (Counter rocket). Stay at high HP before the final blow — when Krysta is defeated, it uses **Ultima** as a desperate last strike. Draw **Carbuncle** if missed. Krysta drops **Elem Guard** items (teach El.Def-Jx4 to a GF — very valuable).\n\nAfter Krysta, unlock **GF** if it is still sealed; otherwise unlock Command Ability. Navigate through the Chapel (restoring Mug, Defend, and Draw is now the priority). Head upstairs, across the bridge — **walk, do not run** across this bridge or the Armory Key may be knocked into the water below. If it falls, take the ladder on the right and retrieve it from the lower path. Use the Armory Key to unlock the door before the Flood Gate room. Fight Gargantua.\n\n**Boss: Gargantua** (Lv 1-54) — HP: 10,100-15,400 | AP: 30\n- Draw: Bio, Quake, Reflect, Cerberus\n- Drop: Magic Armlet (100%)\n\nStrategy: Starts as Vysage, Lefty, and Righty — defeat them to trigger the true Gargantua. Every non-fatal damaging hit can trigger **Counter Twist**, so avoid a prolonged direct-damage exchange. Gargantua's **Evil-Eye** inflicts Slow and Curse on a single target — keep Esuna or Remedy+ on hand; protect directly against **Curse and Slow** on St.Def-J. Quake targets all party members (Earth on El.Def-J to absorb). Inflict **Zombie**, then use Revive, Recover, or an X-Potion to finish it without a damaging counter; KO status is another lower-accuracy option. Draw **Cerberus** if missed (Cerberus can also be drawn from Gargantua). Also draw **Reflect** from Gargantua — this is one of the few available sources of Reflect magic at this point in the game. Gargantua always drops a **Magic Armlet**, which teaches Spr+60% to a GF.\n\nAfter Gargantua, unlock **Command Ability** if it is still sealed; otherwise unlock Resurrection. Head to the fountain area below and check the **left side of the fountain** for the **Treasure Vault Key**. Go back to the Main Hall, upstairs, west, down the stairs, and find the difficult-to-see door on the left. Open the puzzle — the goal is to have all four vault boxes open simultaneously. Leave and re-enter to reset the puzzle, then touch boxes **2, 3, 1, 4** in that order.\n\n**Boss: Catoblepas** (Lv 1-57) — HP: 10,500-38,500 | AP: 30\n- Draw: Meteor, Alexander\n- Weakness: Earth ×2, Water ×2\n\nStrategy: Catoblepas is weak to **Earth (×2) and Water (×2)** — junction Quake or Water to El.Att-J. **Catoblepas absorbs Lightning** — it is healed by any Thunder-class magic, so remove Lightning from El.Att-J entirely for this fight. Catoblepas has low Vitality and low Spirit — both physical and magical damage land cleanly. Apply Blind to greatly reduce its claw and Deadly Horn physical attacks (60% Darkness success rate). Keep Thunder class magic on El.Def-J to handle Thundaga. Catoblepas uses **Thunder Summon** (area Thunder attack that ignores Spr) after it has used Thundaga three times — the damage is mitigated by junctioning **Thundaga** to El.Def-J. Before landing the killing blow, ensure Shell is active on all party members — Catoblepas uses **Meteor** as a final desperate strike. Draw **Alexander** if missed. Catoblepas always drops **Status Atk** items (teach St.Att-J to a GF). If you already own the Catoblepas Card (the boss does not drop it), Card Mod turns it into **1× Rename Card**. Rename Cards are the only in-game way to change a GF's name. **Unlock Resurrection** after this fight.\n\n{{CALLOUT:point|Rosetta Stone}} After defeating Catoblepas, unlock **Resurrection** if it is still sealed. At the Elevator Room, put one team on the left lift, switch parties, and ride the matching lift to raise them into the Storage Room for the **Floodgate Key**. A supported split is Quistis/Selphie/Irvine on the left and Squall/Zell/Rinoa on the right; Quistis/Selphie/Zell vs. Squall/Irvine/Rinoa and Selphie/Quistis/Rinoa vs. Squall/Zell/Irvine also work. Return to the Flood Gate near the Red Giant/Armory route, unlock the chained lever with the key, and drain the water. In the Chapel, **press all eight controller buttons simultaneously** and hold until the chord ends. Release them together so the note cuts off cleanly. Return south to the courtyard, then go northeast through the lowered spikes and east along the waterways to the **Rosetta Stone** chest. The south route from the waterway opens a shortcut to the prison cell.\n\nContinue to the clock tower. **Move-Find reveals a hidden Save Point** in the tower. Then climb the stairs, cross the bridge, and wait until the swinging bell moves left, then press the action button to ride it to the right side. Fight Tiamat on the balcony.\n\n**Boss: Tiamat** (Lv 1-58) — HP: 21,200-89,600 | AP: 30\n- Draw: Flare, Eden\n\nStrategy: Tiamat spends several turns counting down before unleashing **Dark Flare**, a party-wide **Fire-elemental** attack that ignores Spirit. Junction enough Fire protection to nullify or absorb it; Firaga alone supplies 150% Fire resistance. Do not junction Fire, Thunder, or Wind class magic to El.Att-J — Tiamat resists both Fire and Thunder (×0.5 each) and is fully immune to Wind. **Draw GF Eden from Tiamat if it was not obtained from Ultima Weapon** — this is the absolute last opportunity in the game. Drawing Eden here triggers **Achievement: Eden** upon obtaining the GF. Cast Meltdown and use Aura + Renzokuken to end the fight quickly. Tiamat always drops **Status Guard** items (teach St.Def-Jx4 to a GF). If **Save** is still sealed, unlock it here; on the standard route this is the final seal. If it is already open, restore any other remaining function.\n\n{{CALLOUT:enemy|Omega Weapon}} Optional trigger: stage the prepared battle team at the courtyard/fountain Party Switch Point, then take the other team to the room just before the Art Gallery and pull the bell cord. The timer lasts about **60 seconds**. Use the nearby green switch point to change back to the waiting team, then run north through the courtyard into the Chapel and touch Omega's smoke before time expires. If the timer runs out, ring the bell again.\n\n**Boss: Omega Weapon** (published table: Lv 1-100) — HP: 111,105-1,161,000 | AP: 250\n- Draw: Flare, Holy, Meteor, Ultima\n\nStrategy (Omega Weapon): Give **Defend** to everyone who has it (normally two characters), give all three **Item**, and reach exactly **9,999 HP**; use HP+80% if needed. Leave Elem-Atk empty, junction **Death** to St.Def-J, and prioritize Auto-Haste, Auto-Protect, Auto-Shell, then Str+60%. Ensure someone can cast Meltdown and stock Megalixirs plus Phoenix Downs or Life/Full-Life/Revive.\n\nOmega absorbs all elements, cannot be Slowed or Blinded, and has no Mug result. Draw: **Flare, Holy, Meteor, Ultima** (all levels).\n\n{{CALLOUT:hint|Omega's fixed attack pattern}} Random physical swipes can occur between these steps:\n1. **Lv5 Death** → Death on St.Def-J ignores this; cast Meltdown on Omega\n2. **Meteor** → use Megalixir to restore full HP on all members\n3. **Megido Flame** (fixed 9,998 to all — requires exactly 9,999 HP or someone dies) → all members at 1 HP; unleash the strongest Limit Breaks available. Squall's Renzokuken, Irvine's Armor Shot, and Quistis's Shockwave Pulsar are options if those characters are in the party\n4. **Gravija** (75% current HP — at 1 HP deals zero damage) → Squall Renzokuken; two others use Defend\n5. **Terra Break** (12 physical hits distributed randomly) → have Defend users guard; revive anyone KO'd and restore the party before Ultima\n6. **Ultima** → use the strongest available Limit Breaks; higher Spirit and Shell help reduce the damage\n7. **Light Pillar** (9,999 to one character — unavoidable unless Invincible) → Revive the KO'd member; use Megalixir\n8. **Repeat from Meteor**\n\nOmega has over a million HP at Lv100, so expect a long fight. **Version note:** the PlayStation version is fixed at Lv100; the older PC version scales with party level (±20%). The Steam/Remastered level rule is not confirmed here, so treat 1,161,000 HP as the published Lv100 maximum rather than a guaranteed value in every release. Junction Death to St.Def-J to block its opening Lv5 Death.\n\n{{CALLOUT:hint|Alternate Invincible strategy}} Use a **Holy War** for whole-party Invincible or a Hero for one character, then reapply it if the status expires. The Gilgamesh Card refines into **10 Holy Wars**; the Laguna Card refines into **100 Heroes**. If Aura is scarce, a Power Wrist or Hypno Crown refines into **10 Aura Stones**, and each Aura Stone refines into **1 Aura**.\n\nDrop: **Three Stars** — teaches any GF the **Expend×3-1** ability (while under Triple status, each spell cast draws from only 1 stock instead of 3; from a 100-stock supply that means 100 casts instead of 33, tripling magic endurance). Extra Three Stars beyond the three needed can also be refined into **100× Triple each** via Time Mag-RF. **Achievement: Omega Destroyed** — awarded upon defeating Omega Weapon.\n\nFrom the Chapel, ascend the clock tower, cross the clock hands, and reach the final Save Point. If **Save** is restored, save here; it is the last safe save before the final chamber. If Save is still sealed, use a Tent here if Item is open, then return to the castle entrance and save outside before entering the point of no return. Finish junctioning all six characters in Final Preparations.",
+      "content": "Before entering, save outside, stock recovery items, and check junctions for all six characters. The castle seals **Item, Magic, GF, Draw, Command Ability, Limit Break, Resurrection, and Save**, restoring one function after each guardian. **Attack, Junctions, Character Abilities, and Party Abilities** remain usable, and GFs can continue learning. Split into two functional parties: Green Party Switch Points let you change teams, and the Floodgate Key route and Omega setup require both.\n\n{{ENCOUNTERS:0}}\n\n{{CALLOUT:enemy|Castle random encounters}} Most **regular enemies** can appear somewhere in the castle, and their **levels will be completely random** instead of following the party average. Use the encounter list as a local checklist, but farm specific enemies elsewhere when possible.\n\n{{CALLOUT:enemy|First guardian — Sphinxaur/Sphinxara}}\n\n**Boss: Sphinxaur** (Lv 1-50) — HP: 10,000 | AP: 0\n- Draw: Lv 1-19: Fire, Thunder, Cure | Lv 20-29: Fira, Thundara, Cura | Lv 30-50: Firaga, Thundaga, Curaga\n- Mug: Elixir (25%)\n- Drop: Nothing\n- Weakness: Holy\n\n**Boss: Sphinxara** (Lv 1-50 in some tables; up to Lv100 in others) — HP: 10,000 | AP: 30\n- Draw: Lv 1-19: Fire, Thunder, Blizzard, Cure | Lv 20-29: Fira, Thundara, Blizzara, Cura | Lv 30-50: Firaga, Thundaga, Blizzaga, Curaga\n- Mug: Nothing (0%)\n- Drop: Megalixir (100%)\n- Weakness: Holy\n\nStrategy: With most abilities sealed, attack directly. **Mug Elixir** from Sphinxaur. Sphinxara uses Doom, Slow, Sleep, and Zombie, and summons Jelleye → Forbidden → Tri-Face in sequence. Zombie status makes Doom miss; if Sphinxara casts Zombie on a character already under Doom, the countdown is removed. Finish quickly with physical attacks. Holy junctioned to Elemental Attack deals double damage (Sphinxaur/Sphinxara have Holy ×2 weakness). After this fight, **unlock Draw** — this is the priority since it allows drawing Eden from Tiamat and recovering any missed GFs. Most castle bosses hold missed GFs on their Draw lists; this is the **last shot at drawing** Siren, Leviathan, Pandemona, Carbuncle, Cerberus, Alexander, and Eden if they were missed earlier.\n\nProceed through the door behind Sphinxaur. The chandelier drops — inspect the floor hatch and descend. Junction **Thundaga to Elem-Def-J** for all three party members before going down.\n\n**Boss: Tri-Point** (Lv 1-51) — HP: 2,400-22,400 | AP: 30\n- Draw: Haste, Tornado, Blind, Siren\n- Weakness: Fire ×4, Ice ×4\n\nStrategy: Tri-Point counterattacks with **Mega Spark** (ignores Spr) whenever it is hit with the wrong element. With Thunder class magic on El.Def-J, Mega Spark heals the party. Tri-Point alternates between Fire and Ice weaknesses — attacking with the current weakness does NOT trigger a counter, and shifts the weakness to the other element. Exploit this: alternate members with Fire and Ice on El.Att-J. When Tri-Point uses **Scan** on a party member, cast **Protect** on that character or defeat Tri-Point before it acts again. Its next attack is Onrush, which ignores Vit and can deal up to 9,999 damage depending on Tri-Point's level. Draw **Siren** here if it was missed. Tri-Point drops a **Rocket Engine**, which teaches a GF **Spd+40%**. **Unlock Magic** after this fight.\n\nWith **Draw** and **Magic** restored, return to the main hall, go left down the hallway, then right to enter the Art Gallery. Examine all paintings. The clock reads VIII, VI, and IIII — find those numerals in the paintings and enter **VIVIDARIUM** · **INTERVIGILIUM** · **VIATOR** into the large left painting. Trauma appears from behind.\n\n**Boss: Trauma** (Lv 1-56) — HP: 5,555-34,114 | AP: 30\n- Draw: Meltdown, Leviathan\n- Weakness: Wind ×2\n\n**Boss: Droma** (Lv 1-56) — HP: 1,010-3,128 | AP: 30\n- Draw: Esuna, Dispel\n- Mug: 2x Meteor Stone (25%)\n- Drop: Nothing\n\nStrategy: Open with **Meltdown** on Trauma — draw it directly from Trauma for a free cast. Trauma creates two Dromas at the start. Keep the Dromas alive — if both Dromas are killed, Trauma uses the devastating **Mega Pulse Cannon** (ignores Spr and Shell), then creates two new ones. Trauma will eventually Drain its own Dromas to recover HP. Simply keep attacking Trauma; let it consume the Dromas itself. Draw **Leviathan** if missed. **Mug 2× Meteor Stone** from each Droma. Trauma drops an **Elem Atk**, which teaches El.Att-J to a GF.\n\nUnlock **Item** if it is still sealed; otherwise unlock Limit Break. From the Art Gallery, go north twice and down the stairs. Take the upper-left exit, grab the key in the prison cell, then fight Red Giant.\n\n**Boss: Red Giant** (Lv 1-52) — HP: 30,000 | AP: 30\n- Draw: Demi, Pandemona\n\nStrategy: Red Giant has **no elemental weaknesses** (all elements ×1) — its defenses come from extremely high Vitality (255) and Spirit (255), not elemental resistance. Cast **Meltdown** immediately — Red Giant has fixed HP at 30,000 regardless of level. Cast Blind to reduce its physical attacks (80% Darkness success rate). **Gravity and Demi work against Red Giant** despite its imposing appearance — draw and cast Demi from Red Giant itself to deal 25% current HP per cast, making it a useful self-damaging strategy early in the fight when raw damage is limited. When its HP falls below 9,000 it loses its sword and switches to unarmed punches. Draw **Pandemona** if missed. Red Giant drops **Diamond Armor**, which teaches GFHP+40%.\n\nAfter Red Giant, unlock **Limit Break** if it is still sealed; otherwise unlock GF. Return to the Main Hall. Switch to the secondary party and move them left through the hall to the chandelier room — lower the lever. Switch back to the primary party and go upstairs through the doors, over the chandelier, to the balcony.\n\n**Boss: Krysta** (Lv 1-55) — HP: 5,200-16,000 | AP: 30\n- Draw: Holy, Carbuncle\n\nStrategy: Krysta has extremely high Vitality, so Meltdown helps physical damage but is not required. Additionally, Krysta has **zero Spirit**, so magic damage lands without Spirit reduction. Krysta nullifies **Ice**, while Gravity attacks are effective. Krysta counters any attack with a (Counter rocket). Stay at high HP before the final blow — when Krysta is defeated, it uses **Ultima** as a desperate last strike. Draw **Carbuncle** if missed. Krysta drops **Elem Guard** items (teach El.Def-Jx4 to a GF — very valuable).\n\nAfter Krysta, unlock **GF** if it is still sealed; otherwise unlock Command Ability. Navigate through the Chapel (restoring Mug, Defend, and Draw is now the priority). Head upstairs, across the bridge — **walk, do not run** across this bridge or the Armory Key may be knocked into the water below. If it falls, take the ladder on the right and retrieve it from the lower path. Use the Armory Key to unlock the door before the Flood Gate room. Fight Gargantua.\n\n**Boss: Gargantua** (Lv 1-54) — HP: 10,100-15,400 | AP: 30\n- Draw: Bio, Quake, Reflect, Cerberus\n- Drop: Magic Armlet (100%)\n\nStrategy: Starts as Vysage, Lefty, and Righty — defeat them to trigger the true Gargantua. Every non-fatal damaging hit can trigger **Counter Twist**, so avoid a prolonged direct-damage exchange. Gargantua's **Evil-Eye** inflicts Slow and Curse on a single target — keep Esuna or Remedy+ on hand; protect directly against **Curse and Slow** on St.Def-J. Quake targets all party members (Earth on El.Def-J to absorb). Inflict **Zombie**, then use Revive, Recover, or an X-Potion to finish it without a damaging counter; KO status is another lower-accuracy option. Draw **Cerberus** if missed (Cerberus can also be drawn from Gargantua). Also draw **Reflect** from Gargantua — this is one of the few available sources of Reflect magic at this point in the game. Gargantua always drops a **Magic Armlet**, which teaches Spr+60% to a GF.\n\nAfter Gargantua, unlock **Command Ability** if it is still sealed; otherwise unlock Resurrection. Head to the fountain area below and check the **left side of the fountain** for the **Treasure Vault Key**. Go back to the Main Hall, upstairs, west, down the stairs, and find the difficult-to-see door on the left. Open the puzzle — the goal is to have all four vault boxes open simultaneously. Leave and re-enter to reset the puzzle, then touch boxes **2, 3, 1, 4** in that order.\n\n**Boss: Catoblepas** (Lv 1-57) — HP: 10,500-38,500 | AP: 30\n- Draw: Meteor, Alexander\n- Weakness: Earth ×2, Water ×2\n\nStrategy: Catoblepas is weak to **Earth (×2) and Water (×2)** — junction Quake or Water to El.Att-J. **Catoblepas absorbs Lightning** — it is healed by any Thunder-class magic, so remove Lightning from El.Att-J entirely for this fight. Catoblepas has low Vitality and low Spirit — both physical and magical damage land cleanly. Apply Blind to greatly reduce its claw and Deadly Horn physical attacks (60% Darkness success rate). Keep Thunder class magic on El.Def-J to handle Thundaga. Catoblepas uses **Thunder Summon** (area Thunder attack that ignores Spr) after it has used Thundaga three times — the damage is mitigated by junctioning **Thundaga** to El.Def-J. Before landing the killing blow, ensure Shell is active on all party members — Catoblepas uses **Meteor** as a final desperate strike. Draw **Alexander** if missed. Catoblepas always drops **Status Atk** items (teach St.Att-J to a GF). If you already own the Catoblepas Card (the boss does not drop it), Card Mod turns it into **1× Rename Card**. Rename Cards are the only in-game way to change a GF's name. **Unlock Resurrection** after this fight.\n\n{{CALLOUT:point|Rosetta Stone}} After defeating Catoblepas, unlock **Resurrection** if it is still sealed. At the Elevator Room, put one team on the left lift, switch parties, and ride the matching lift to raise them into the Storage Room for the **Floodgate Key**. A supported split is Quistis/Selphie/Irvine on the left and Squall/Zell/Rinoa on the right; Quistis/Selphie/Zell vs. Squall/Irvine/Rinoa and Selphie/Quistis/Rinoa vs. Squall/Zell/Irvine also work. Return to the Flood Gate near the Red Giant/Armory route, unlock the chained lever with the key, and drain the water. In the Chapel, **press all eight controller buttons simultaneously** and hold until the chord ends. Release them together so the note cuts off cleanly. Return south to the courtyard, then go northeast through the lowered spikes and east along the waterways to the **Rosetta Stone** chest. The south route from the waterway opens a shortcut to the prison cell.\n\nContinue to the clock tower. **Move-Find reveals a hidden Save Point** in the tower. Then climb the stairs, cross the bridge, and wait until the swinging bell moves left, then press the action button to ride it to the right side. Fight Tiamat on the balcony.\n\n**Boss: Tiamat** (Lv 1-58) — HP: 21,200-89,600 | AP: 30\n- Draw: Flare, Eden\n\nStrategy: Tiamat spends several turns counting down before unleashing **Dark Flare**, a party-wide **Fire-elemental** attack that ignores Spirit. Junction enough Fire protection to nullify or absorb it; Firaga alone supplies 150% Fire resistance. Do not junction Fire, Thunder, or Wind class magic to El.Att-J — Tiamat resists both Fire and Thunder (×0.5 each) and is fully immune to Wind. **Draw GF Eden from Tiamat if it was not obtained from Ultima Weapon** — this is the absolute last opportunity in the game. Drawing Eden here triggers **Achievement: Eden** upon obtaining the GF. Cast Meltdown and use Aura + Renzokuken to end the fight quickly. Tiamat always drops **Status Guard** items (teach St.Def-Jx4 to a GF). If **Save** is still sealed, unlock it here; on the standard route this is the final seal. If it is already open, restore any other remaining function.\n\n{{CALLOUT:enemy|Omega Weapon}} Optional trigger: stage the prepared battle team at the courtyard/fountain Party Switch Point, then take the other team to the room just before the Art Gallery and pull the bell cord. The timer lasts about **60 seconds**. Use the nearby green switch point to change back to the waiting team, then run north through the courtyard into the Chapel and touch Omega's smoke before time expires. If the timer runs out, ring the bell again.\n\n**Boss: Omega Weapon** (published table: Lv 1-100) — HP: 111,105-1,161,000 | AP: 250\n- Draw: Flare, Holy, Meteor, Ultima\n\nStrategy (Omega Weapon): Give **Defend** to everyone who has it (normally two characters), give all three **Item**, and reach exactly **9,999 HP**; use HP+80% if needed. Leave Elem-Atk empty, junction **Death** to St.Def-J, and prioritize Auto-Haste, Auto-Protect, Auto-Shell, then Str+60%. Ensure someone can cast Meltdown and stock Megalixirs plus Phoenix Downs or Life/Full-Life/Revive.\n\nOmega absorbs all elements, cannot be Slowed or Blinded, and has no Mug result.\n\n{{CALLOUT:hint|Omega's fixed attack pattern}} Random physical swipes can occur between these steps:\n1. **Lv5 Death** → Death on St.Def-J ignores this; cast Meltdown on Omega\n2. **Meteor** → use Megalixir to restore full HP on all members\n3. **Megido Flame** (fixed 9,998 to all — requires exactly 9,999 HP or someone dies) → all members at 1 HP; unleash the strongest Limit Breaks available. Squall's Renzokuken, Irvine's Armor Shot, and Quistis's Shockwave Pulsar are options if those characters are in the party\n4. **Gravija** (75% current HP — at 1 HP deals zero damage) → Squall Renzokuken; two others use Defend\n5. **Terra Break** (12 physical hits distributed randomly) → have Defend users guard; revive anyone KO'd and restore the party before Ultima\n6. **Ultima** → use the strongest available Limit Breaks; higher Spirit and Shell help reduce the damage\n7. **Light Pillar** (9,999 to one character — unavoidable unless Invincible) → Revive the KO'd member; use Megalixir\n8. **Repeat from Meteor**\n\nOmega has over a million HP at Lv100, so expect a long fight. **Version note:** the PlayStation version is fixed at Lv100; the older PC version scales with party level (±20%). The Steam/Remastered level rule is not confirmed here, so treat 1,161,000 HP as the published Lv100 maximum rather than a guaranteed value in every release. Junction Death to St.Def-J to block its opening Lv5 Death.\n\n{{CALLOUT:hint|Alternate Invincible strategy}} Use a **Holy War** for whole-party Invincible or a Hero for one character, then reapply it if the status expires. The Gilgamesh Card refines into **10 Holy Wars**; the Laguna Card refines into **100 Heroes**. If Aura is scarce, a Power Wrist or Hypno Crown refines into **10 Aura Stones**, and each Aura Stone refines into **1 Aura**.\n\nDrop: **Three Stars** — teaches any GF the **Expend×3-1** ability (while under Triple status, each spell cast draws from only 1 stock instead of 3; from a 100-stock supply that means 100 casts instead of 33, tripling magic endurance). Extra Three Stars beyond the three needed can also be refined into **100× Triple each** via Time Mag-RF. **Achievement: Omega Destroyed** — awarded upon defeating Omega Weapon.\n\nFrom the Chapel, ascend the clock tower, cross the clock hands, and reach the final Save Point. If **Save** is restored, save here; it is the last safe save before the final chamber. If Save is still sealed, use a Tent here if Item is open, then return to the castle entrance and save outside before entering the point of no return. Finish junctioning all six characters in Final Preparations.",
       "checkpoints": [
         {
           "id": "ach-omega-destroyed",
@@ -2586,78 +2406,72 @@
           "enemies": [
             {
               "id": "enemy-forbidden",
-              "name": "Forbidden",
-              "notes": "Draws Death, Zombie, Stop, Blind; mug Dead Spirit"
+              "name": "Forbidden"
             },
             {
               "id": "enemy-armadodo",
               "name": "Armadodo",
-              "notes": "Draws Protect, Shell, Quake; mug Turtle Shell; **Roll Attack** 100% Critical; can fall over after physical hit (Vit/Spr × 50% for 4 turns) then rise again - exploit the fallen phase with magic"
+              "notes": "**Roll Attack** is always critical. A physical hit can make Armadodo fall over, halving its Vit/Spr for four turns; exploit that phase with magic."
             },
             {
               "id": "enemy-imp",
-              "name": "Imp",
-              "notes": "Draws Blind, Silence, Break, Confuse; mug Poison Powder"
+              "name": "Imp"
             },
             {
               "id": "enemy-behemoth",
-              "name": "Behemoth",
-              "notes": "Draws Flare, Tornado, Regen; mug Barrier"
+              "name": "Behemoth"
             },
             {
               "id": "enemy-tri-face",
               "name": "Tri-Face",
-              "notes": "Draws Pain, Flare, Slow; mug Curse Spike - continue farming"
+              "notes": "Continue farming only if you still need Curse Spikes for refinement."
             },
             {
               "id": "enemy-jelleye",
-              "name": "Jelleye",
-              "notes": "Draws all elemental tiers (Fire/Ice/Thunder/Wind up to -ga); mug Healing Water"
+              "name": "Jelleye"
             },
             {
               "id": "enemy-iron-giant",
-              "name": "Iron Giant",
-              "notes": "Draws Haste, Quake, Shell, Reflect; mug Star Fragment"
+              "name": "Iron Giant"
             },
             {
               "id": "enemy-red-bat",
-              "name": "Red Bat",
-              "notes": "Draws Drain; mug Vampire Fang"
+              "name": "Red Bat"
             },
             {
               "id": "enemy-hexadragon",
               "name": "Hexadragon",
-              "notes": "Grand Hall & Storage Room areas; draws Firaga/Dispel/Shell/Protect (Lv30+); absorbs Fire & Poison; weak to Water; mug Red Fang (8x at Lv30+)"
+              "notes": "Found in the Grand Hall and Storage Room areas."
             },
             {
               "id": "enemy-malboro",
               "name": "Malboro",
-              "notes": "Wine Cellar area (7.5% chance); draws Bio/Demi/Quake (Lv30+); Bad Breath inflicts all statuses at once - have status protection ready; mug Malboro Tentacle"
+              "notes": "Rare Wine Cellar encounter (7.5%); Bad Breath can inflict all statuses at once, so protect the party’s status defenses."
             },
             {
               "id": "enemy-tonberry",
               "name": "Tonberry",
-              "notes": "Passageway area (Screen 17); draws Death; mug & drop Chef's Knife (Tonberry compatibility item for Tonberry GF)"
+              "notes": "Found in Passageway (Screen 17); Chef’s Knife is used for Tonberry GF compatibility."
             },
             {
               "id": "enemy-elnoyle",
               "name": "Elnoyle",
-              "notes": "Prison Cell & Chapel areas; draws Pain/Double (all levels), Holy (Lv40+); mug Moon Stone; **drops Energy Crystal at Lv30+** - at Lv40+ all drop slots are Energy Crystal, making this the best Pulse Ammo source in Disc 4 (Leviathan's Ammo-RF: 2 Energy Crystal → 1 Pulse Ammo)"
+              "notes": "Found in Prison Cell and Chapel; Energy Crystals from Elnoyle can be refined into Pulse Ammo."
             },
             {
               "id": "enemy-adamantoise",
               "name": "Adamantoise",
-              "notes": "Fountain Square area; draws Blizzaga/Shell/Protect/Reflect (Lv30+); mug Orihalcon (Lv30+); weak to Thunder & Earth; **drops Adamantine at Lv30+** (all 4 drop slots) - needed for Lion Heart and Ehrgeiz"
+              "notes": "Found in Fountain Square; Adamantine is useful for Lion Heart and Ehrgeiz upgrades."
             },
             {
               "id": "enemy-grand-mantis",
               "name": "Grand Mantis",
-              "notes": "Multiple areas (Screens 16, 17, 25); draws Water/Esuna/Life (Life at Lv30+); weak to Ice & Thunder; mug Sharp Spike (8x at Lv30+) - efficient source for Save the Queen and Cardinal crafting"
+              "notes": "Found in Screens 16, 17, and 25; Sharp Spikes are useful for crafting Save the Queen and Cardinal."
             },
             {
               "id": "enemy-blobra",
               "name": "Blobra",
-              "notes": "Main Hall & Passageway areas; draws Shell (all levels), Reflect/Blind/Confuse (Lv30+); has random elemental weakness each encounter (up to × 7) - Scan or rotate elements to exploit it; mug Rune Armlet (5.8%+4.7% chance at Lv30+); 4 × Blobra Cards → Card Mod → 1 × Rune Armlet (teaches GF Spr+20%); **Sticky Icky** attack inflicts Slow - junction Slow resistance to St.Def-J"
+              "notes": "Found in Main Hall and Passageway. Blobra Cards refine into Rune Armlets for GF Spr+20%; Sticky Icky inflicts Slow, so consider Slow protection."
             }
           ]
         }
@@ -2668,7 +2482,7 @@
       "title": "Final Preparations",
       "disc": 4,
       "index": 4,
-      "content": "{{CALLOUT:point|Recovering Ragnarok}} Start the Disc 4 cleanup loop by leaving Ultimecia Castle through the portals one screen south of the entrance Save Point and taking the **middle portal**. On the large island north of Centra, go around the mountain range to the northeast and reach the **Forest of Solitude**. Solve its Chocobo puzzle if needed and ride out of the forest. Cross the southwestern shallows to the Centra coast near Edea’s House, then travel east to **Kashkabald Desert** to find Ragnarok. Use the nearby portal to add a convenient return route beside the castle portal chain.\n\n{{CALLOUT:card|Ragnarok card and shop stop}} Board the ship and speak with **Man from Garden/Joker**. He is present whether or not the CC Group quest was completed; he runs a basic Item Shop and Junk Shop, and carries the **Leviathan Card** only if you never won it earlier. If you defeated the full CC Group by the end of Disc 3, the other members are aboard and can help recover refined rare cards. The Diamond pair are the most useful recovery players, with Left Diamond the best opponent for rare-card farming. The CC Group never plays the unique **PuPu Card**.\n\n{{CALLOUT:card|Queen of Cards at the Crash Site}} The Queen is at the hidden Escape Pod Crash Site on the southeast side of the Esthar continent. Search around the tip of the peninsula with the action button until the pod appears. If any of her creation cards are still missing—**Kiros, Irvine, Chubby Chocobo, Doomtrain, or Phoenix**—challenge her; those cards appear randomly in her hand. She can also play common cards, but other rare cards are not part of her Disc 4 pool. Her region and trade rule stay as they were at the end of Disc 3 and cannot be changed now. Use the CC Group aboard Ragnarok to recover other rare cards if that quest was completed.\n\n{{CALLOUT:route|Disc 4 cleanup access}} Towns and most field areas are sealed, but these locations remain accessible: **Fire Cavern, Tomb of the Unknown King, Centra Ruins, Chocobo Forests, Deep Sea Research Center, Trabia Canyon, Crash Site, and Tears’ Point**. Encounters in the open areas use the same state as at the end of Disc 3. The Ragnarok provides the remaining world-map travel; use it to reach the Crash Site and cleanup branches before returning to the castle.\n\n{{CALLOUT:perfect|Odin timing}} If you deliberately postponed recruiting Odin so he would not be replaced by Gilgamesh during the Disc 3 Seifer fight, Centra Ruins is available now. For a perfect-file item sweep, finish all desired Mug farming first: Odin can randomly defeat an enemy before you steal from it. Recruit him after that if you still want the Odin GF on this file.\n\n{{CALLOUT:point|Islands Closest to Hell and Heaven}} For EXP and late Draw Point cleanup, the **Island Closest to Hell** is immediately west of the Galbadia continent; the **Island Closest to Heaven** is the largest island northeast of Grandidi Forest. Both use fixed **Level 100** encounters. Equip Siren’s **Move-Find** to reveal the hidden field Draw Points, which include high-level magic such as Ultima, Triple, Meteor, Full-Life, and Flare. Drawing from them also contributes to Steam’s **Magic Miner** achievement. The optional ultimate monster is fought inside Ultimecia Castle; see the Castle chapter for its strategy.\n\n{{CALLOUT:perfect|Final-file checks}} Before committing to the ending, confirm that the CC Group was completed by the end of Disc 3 if you need its Ragnarok card players, and that every Esthar shop you need is already listed through Call Shop. Keep **Ultima Weapon alive** if you still need its fixed Deep Sea Research Center encounters for Tri-Face and Luck Up farming. Siren must be Level 100 to refine Dark Matter. For item routes and abilities, use the canonical Cards, GFs, Abilities, Refine, and Items tabs. If you want to fight Omega Weapon again after defeating it, do not save afterward.\n\n{{CALLOUT:refinement|Refinement Moment #14}} Eden’s GFAbl Med-RF and late-game rare-card recovery open the final refinement tier. Only one copy of each rare card can be held at a time, so refine each card before winning another if a recipe needs multiple copies. Useful routes include **100 Tri-Face Cards → 100 Curse Spikes → Dark Matter → Shaman Stone → Rosetta Stone**; **2 Minotaur Cards → 20 Adamantine → Steel Curtain**; **5 Irvine Cards → 15 Rocket Engines → 3 Spd Ups**; and **Ward Card → 3 Gaea’s Rings → 3 HP Ups**. Use the Refine and Items tabs for the remaining validated ratios.\n\nWith the castle guardians defeated and the seals restored, check that the needed commands—Items, Magic, GF, Draw, Command Abilities, Limit Breaks, and Resurrection—are available. Before the optional Omega fight, refresh **Auto-Haste**, **Auto-Protect**, **Auto-Shell**, **Death on ST-Def**, full HP, Meltdown access, Megalixirs, Phoenix Downs, and any Life/Full-Life or Revive fallback you plan to use.\n\n{{CALLOUT:enemy|Omega Weapon setup}} Omega is optional. Give **Defend** to each character who has learned it (normally two), give everyone **Item** and 9,999 HP, and use HP+80% if needed. Leave Elem-Atk empty, put **Death** on ST-Def, then prioritize Auto-Haste, Auto-Protect, Auto-Shell, and Str+60%. Keep Magic or GF available for Meltdown, and bring Megalixirs plus Phoenix Downs or Life/Full-Life/Revive. See **Ultimecia’s Castle** for the complete fight strategy.\n\n{{CALLOUT:route|Omega Weapon route}} Save before starting. Put the main party on the green Courtyard Party Switch Point, switch to the reserve party, then go to the Entrance Hall balcony and exit to the right. Examine the rope to ring the bell. Switch back at the nearby green point and run north through the courtyard into the Chapel to reach Omega before the roughly **60-second** timer expires. If time runs out, ring the bell again.\n\nFor Omega’s attack sequence and the final sealed-save-point route, follow the **Ultimecia’s Castle** chapter. Finish junctioning all six characters before entering the final chamber.",
+      "content": "{{CALLOUT:point|Recovering Ragnarok}} Start the Disc 4 cleanup loop by leaving Ultimecia Castle through the portals one screen south of the entrance Save Point and taking the **middle portal**. On the large island north of Centra, go around the mountain range to the northeast and reach the **Forest of Solitude**. Solve its Chocobo puzzle if needed and ride out of the forest. Cross the southwestern shallows to the Centra coast near Edea’s House, then travel east to **Kashkabald Desert** to find Ragnarok. Use the nearby portal to add a convenient return route beside the castle portal chain.\n\n{{CALLOUT:card|Ragnarok card and shop stop}} Board the ship and speak with **Man from Garden/Joker**. He is present whether or not the CC Group quest was completed; he runs a basic Item Shop and Junk Shop, and carries the **Leviathan Card** only if you never won it earlier.\n\n{{CALLOUT:route|Disc 4 cleanup access}} Towns and most field areas are sealed, but these locations remain accessible: **Fire Cavern, Tomb of the Unknown King, Centra Ruins, Chocobo Forests, Deep Sea Research Center, Trabia Canyon, Crash Site, and Tears’ Point**. Encounters in the open areas use the same state as at the end of Disc 3. The Ragnarok provides the remaining world-map travel; use it to reach the Crash Site and cleanup branches before returning to the castle.\n\n{{CALLOUT:perfect|Odin timing}} If you deliberately postponed recruiting Odin so he would not be replaced by Gilgamesh during the Disc 3 Seifer fight, Centra Ruins is available now. For a perfect-file item sweep, finish all desired Mug farming first: Odin can randomly defeat an enemy before you steal from it. Recruit him after that if you still want the Odin GF on this file.\n\n{{CALLOUT:point|Islands Closest to Hell and Heaven}} For EXP and late Draw Point cleanup, the **Island Closest to Hell** is immediately west of the Galbadia continent; the **Island Closest to Heaven** is the largest island northeast of Grandidi Forest. Both use fixed **Level 100** encounters. Equip Siren’s **Move-Find** to reveal the hidden field Draw Points, which include high-level magic such as Ultima, Triple, Meteor, Full-Life, and Flare. Drawing from them also contributes to Steam’s **Magic Miner** achievement. The optional ultimate monster is fought inside Ultimecia Castle; see the Castle chapter for its strategy.\n\n{{CALLOUT:perfect|Final-file checks}} Before committing to the ending, confirm that the CC Group was completed by the end of Disc 3 if you need its Ragnarok card players, and that every Esthar shop you need is already listed through Call Shop. Keep **Ultima Weapon alive** if you still need its fixed Deep Sea Research Center encounters for Tri-Face and Luck Up farming. Siren must be Level 100 to refine Dark Matter. For item routes and abilities, use the canonical Cards, GFs, Abilities, Refine, and Items tabs. If you want to fight Omega Weapon again after defeating it, do not save afterward.\n\n{{CALLOUT:refinement|Refinement Moment #14}} Eden’s GFAbl Med-RF and late-game rare-card recovery open the final refinement tier. Only one copy of each rare card can be held at a time, so refine each card before winning another if a recipe needs multiple copies. Useful routes include **100 Tri-Face Cards → 100 Curse Spikes → Dark Matter → Shaman Stone → Rosetta Stone**; **2 Minotaur Cards → 20 Adamantine → Steel Curtain**; **5 Irvine Cards → 15 Rocket Engines → 3 Spd Ups**; and **Ward Card → 3 Gaea’s Rings → 3 HP Ups**. Use the Refine and Items tabs for the remaining validated ratios.\n\nWith the castle guardians defeated and the seals restored, verify that all six characters have the intended commands back: **Items, Magic, GF, Draw, Command Abilities, Limit Breaks, and Resurrection**.\n\n{{CALLOUT:enemy|Optional Omega Weapon}} Omega is optional. Use the **Ultimecia’s Castle** chapter’s **Omega Weapon** section for the full setup and attack pattern.\n\nFor the final save route, use the **Ultimecia’s Castle** chapter. Finish junctioning all six characters before entering the final chamber.",
       "checkpoints": [
         {
           "id": "final-world-map-access",
@@ -2681,7 +2495,7 @@
           "id": "omega-bell-route",
           "type": "task",
           "label": "Omega Weapon Bell Route",
-          "description": "Main party waits at the Courtyard switch point while the reserve party rings the Entrance Hall balcony rope; return via the nearby green switch and reach the Chapel before the timer expires.",
+          "description": "If Omega remains undefeated, return to Ultimecia Castle and follow the complete bell route in that chapter’s Omega Weapon section; skip after defeating Omega.",
           "index": 10
         }
       ],
@@ -2692,8 +2506,7 @@
             {
               "id": "enemy-omega-weapon",
               "name": "Omega Weapon",
-              "lvRange": "1-100",
-              "notes": "Optional superboss. Ring the bell with the reserve party, then engage from the Chapel with the main party."
+              "lvRange": "1-100"
             }
           ]
         }

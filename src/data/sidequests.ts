@@ -409,13 +409,19 @@ export const SIDEQUESTS: Sidequest[] = [
       },
       {
         chapterId: 'd4-final-preparations',
-        afterParagraph: 2,
+        afterParagraph: 1,
         label: 'Queen of Cards: Disc 4 recovery',
         summary: 'At the Escape Pod Crash Site, recover any missing cards created by the Queen before using the CC Group for other rare cards.',
+        available: 'Disc 4, after reaching the Escape Pod Crash Site',
+        deadline: 'Before entering the final battle if any Queen-created cards are still missing.',
+        requirements: ['At least one Queen-created card is still missing: Kiros, Irvine, Chubby Chocobo, Doomtrain, or Phoenix'],
         route: [
           'Search around the tip of the southeast Esthar peninsula to reveal the hidden Escape Pod Crash Site.',
           'Challenge the Queen only if one of her five created cards is still missing: Kiros, Irvine, Chubby Chocobo, Doomtrain, or Phoenix.',
           'Her region and trade rule cannot be changed in Disc 4; use the Ragnarok CC Group to recover other rare cards if that quest was completed by the end of Disc 3.',
+        ],
+        notes: [
+          'She can play common cards in Disc 4, but other rare cards are not in her pool.',
         ],
       },
     ],
@@ -633,6 +639,9 @@ export const SIDEQUESTS: Sidequest[] = [
         afterParagraph: 1,
         label: 'CC Group: Disc 4 card recovery',
         summary: 'If the quest was completed by the end of Disc 3, the group is aboard Ragnarok and can recover rare cards.',
+        available: 'Disc 4, aboard the Ragnarok if the CC Group was completed by the end of Disc 3',
+        deadline: 'Before entering the final battle if rare-card recovery is still needed on this save.',
+        requirements: ['The full CC Group quest was completed by the end of Disc 3'],
         route: [
           'Speak with the Diamond pair aboard Ragnarok; Left Diamond is the most flexible rare-card recovery player.',
           'The CC Group does not play the unique PuPu Card.',
@@ -1103,19 +1112,6 @@ export const SIDEQUESTS: Sidequest[] = [
       'Omega is a true optional superboss. Its setup belongs in the Sidequests tab and the final-prep chapter, not scattered as a casual note.',
     ],
     related: ['Bestiary', 'Items', 'Abilities'],
-    placements: [
-      {
-        chapterId: 'd4-final-preparations',
-        afterParagraph: 10,
-        label: 'Omega Weapon: optional superboss route',
-        summary: 'After command seals are handled, prepare and trigger Omega from the castle bell route.',
-        route: [
-          'Restore the commands needed for your strategy.',
-          'Place the main party by the Chapel route party switch.',
-          'Use the reserve party to ring the Entrance Hall balcony bell.',
-          'Switch back and run into the Chapel before the timer ends.',
-        ],
-      },
-    ],
+    placements: [],
   },
 ]

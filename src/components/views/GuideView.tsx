@@ -1,4 +1,4 @@
-import { Fragment, useState, useLayoutEffect, useRef, useEffect } from 'react'
+import { useState, useLayoutEffect, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Activity,
@@ -38,6 +38,7 @@ import {
 import { charactersNeedingSpell, isMagicCompleted, magicByName } from '../../lib/playerState'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
+import { SequenceSteps } from '../ui/SequenceSteps'
 import { ContextualVisualAid, ImageGrid, contextualVisualAidPlacement, getBossImages } from './VisualAids'
 import { InlineSidequestBlock, sidequestTrackerId } from './SidequestView'
 import type { Chapter, Checkpoint, AreaEncounter, Enemy, MagicSpell, ShopInventory, JunctionTable, CharacterProfile, Sidequest } from '../../types'
@@ -73,16 +74,35 @@ interface Props {
 
 // ─── Inline rendering ─────────────────────────────────────────────────────────
 
+function parseSequenceParts(text: string): string[] | null {
+  const stripped = text.replace(/^[-\s\d.·]+/, '').trim()
+  const parts = stripped.split(/\s*(?:→|->)\s*/).map(part => part.trim())
+  const readsLikeProse = /[,;]|\b(?:and|or|then|because|if|while)\b/i
+  return parts.length >= 2 && parts.every(part => part.length >= 1 && part.length <= 75 && !readsLikeProse.test(part))
+    ? parts
+    : null
+}
+
 function renderInline(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*)/)
   if (parts.length === 1) return <>{text}</>
   return (
     <>
-      {parts.map((part, i) =>
-        part.startsWith('**') && part.endsWith('**')
-          ? <strong key={i} className="text-white font-semibold">{part.slice(2, -2)}</strong>
-          : <span key={i}>{part}</span>
-      )}
+      {parts.map((part, i) => {
+        if (!part.startsWith('**') || !part.endsWith('**')) return <span key={i}>{part}</span>
+        const content = part.slice(2, -2)
+        const sequence = parseSequenceParts(content)
+        if (sequence) {
+          return (
+            <SequenceSteps
+              key={i}
+              items={sequence.map((item, index) => <strong key={index} className="font-semibold">{item}</strong>)}
+              className="mx-0.5 gap-x-0.5 gap-y-1"
+            />
+          )
+        }
+        return <strong key={i} className="text-white font-semibold">{content}</strong>
+      })}
     </>
   )
 }
@@ -139,43 +159,12 @@ function SpellPill({ name, variant = 'draw' }: { name: string; variant?: 'draw' 
 // ─── Refinement chain renderer ────────────────────────────────────────────────
 
 function isChainLine(text: string): boolean {
-  // Strip bullet/number prefix before testing
-  const stripped = text.replace(/^[-\s\d.·]+/, '').trim()
-  const parts = stripped.split(' → ')
-  return (
-    parts.length >= 3 &&
-    parts.every(p => p.trim().length >= 1 && p.trim().length <= 75)
-  )
+  return parseSequenceParts(text) !== null
 }
 
 function ChainLine({ raw }: { raw: string }) {
-  // Find the actual start of the chain in the text
-  const stripped = raw.replace(/^[-\s\d.·]+/, '')
-  const parts = stripped.split(' → ')
-
-  return (
-    <div className="flex items-center flex-wrap gap-1 py-0.5 pl-1">
-      {parts.map((part, i) => {
-        const isLast = i === parts.length - 1
-        const clean = part.trim()
-        return (
-          <Fragment key={i}>
-            <span className={cn(
-              'inline-flex items-center px-2 py-1 rounded-md text-xs font-medium border leading-tight',
-              isLast
-                ? 'bg-teal-900/30 border-teal-700/40 text-teal-200'
-                : 'bg-slate-800/70 border-slate-700/40 text-slate-200'
-            )}>
-              {renderInline(clean)}
-            </span>
-            {!isLast && (
-              <ChevronRight size={11} className="text-slate-600 shrink-0" />
-            )}
-          </Fragment>
-        )
-      })}
-    </div>
-  )
+  const parts = parseSequenceParts(raw) ?? []
+  return <SequenceSteps items={parts.map(part => renderInline(part))} className="py-0.5 pl-1" />
 }
 
 // ─── Shop / price-list renderer ───────────────────────────────────────────────
@@ -2088,6 +2077,68 @@ function AreaEncounterCard({
   )
 }
 
+function removeStructuredEnemyNoteFacts(
+  notes: string,
+  structuredFields: { draw: boolean; mug: boolean; drop: boolean },
+) {
+  return notes
+    .split(/;\s*/)
+    .map(clause => clause.trim())
+    .map(clause => {
+      if (structuredFields.draw && /^draws?\b/i.test(clause)) return null
+      if (structuredFields.mug && /^mug(?:\b|\s*&|\/)/i.test(clause)) return null
+      if (structuredFields.drop && /^drops?\b/i.test(clause)) return null
+      return clause
+    })
+    .filter((clause): clause is string => Boolean(clause))
+    .join('; ')
+}
+
+interface DropRateEntry {
+  item: string
+  rate: string
+}
+
+interface DropRateGroup {
+  label: string
+  entries: DropRateEntry[]
+}
+
+function parseDropRateEntries(value: string): DropRateEntry[] {
+  const entries = [...value.matchAll(/([^();]+?)\s*\((\d+(?:\.\d+)?%)\)/g)]
+    .map(match => ({ item: match[1].trim(), rate: match[2] }))
+    .filter(entry => entry.item.length > 0)
+  return entries.length ? entries : [{ item: value.trim(), rate: '' }]
+}
+
+function parseDropRateGroups(value: string): DropRateGroup[] {
+  const labeledGroups = [...value.matchAll(/(?:^|;\s*)(Normal rates|Rare Item equipped):\s*([^;]*?)(?=;\s*(?:Normal rates|Rare Item equipped):|$)/gi)]
+  if (labeledGroups.length) {
+    return labeledGroups.map(match => ({
+      label: /^normal/i.test(match[1]) ? 'Normal' : 'Rare Item',
+      entries: parseDropRateEntries(match[2]),
+    }))
+  }
+  return [{ label: 'Drop', entries: parseDropRateEntries(value) }]
+}
+
+function DropRateList({ group }: { group: DropRateGroup }) {
+  return (
+    <div className="flex min-w-0 flex-wrap items-center gap-1">
+      <span className={cn(
+        'mr-0.5 text-[9px] font-semibold uppercase tracking-wide',
+        group.label === 'Rare Item' ? 'text-amber-300/70' : 'text-slate-500',
+      )}>{group.label}</span>
+      {group.entries.map((entry, index) => (
+        <span key={`${entry.item}-${index}`} className="inline-flex max-w-full min-w-0 items-center gap-1 rounded border border-emerald-900/35 bg-emerald-950/15 px-1.5 py-0.5 text-[10px] leading-snug text-emerald-200/85">
+          <span className="break-words [overflow-wrap:anywhere]">{entry.item}</span>
+          {entry.rate && <span className="shrink-0 font-mono text-[9px] text-emerald-400/70">{entry.rate}</span>}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 function EnemyRow({
   ae,
   enemy,
@@ -2112,10 +2163,9 @@ function EnemyRow({
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
 }) {
   const [noteOpen, setNoteOpen] = useState(false)
-  const notes = ae.notes ?? ''
+  const rawNotes = ae.notes ?? ''
   const activeCharacters = characters.filter(character => activePartyIds.includes(character.id))
   const spellsByName = magicByName(magic)
-  const noteLong = notes.length > 90
 
   const levelContext = enemy ? resolveEnemyLevelContext(enemy, partyContext, { lvMin: ae.lvMin, lvMax: ae.lvMax }) : null
   const drawOptions: ContextualOption[] = ae.drawMagic
@@ -2127,6 +2177,12 @@ function EnemyRow({
       ? contextualValue(undefined, ae.mug, levelContext?.levels ?? [])
       : contextualValue(enemy?.mugByLevel, enemy?.mug, levelContext?.levels ?? [])
   const dropOptions = contextualValue(enemy?.dropByLevel, enemy?.drop, levelContext?.levels ?? [])
+  const notes = removeStructuredEnemyNoteFacts(rawNotes, {
+    draw: drawOptions.length > 0,
+    mug: mugOptions.length > 0,
+    drop: dropOptions.length > 0,
+  })
+  const noteLong = notes.length > 110
   const abilityOptions = contextualEnemyAbilities(enemy, levelContext?.levels ?? [])
   const elementalDetails = enemy
     ? Object.entries(enemy.elementals ?? {}).filter(([, value]) => value && !/^normal$/i.test(value))
@@ -2227,14 +2283,28 @@ function EnemyRow({
             </div>
           )}
           {dropOptions.length > 0 && (
-            <div className="flex min-w-0 items-center gap-1 flex-wrap">
-              <span className="text-slate-500 font-medium text-[10px] uppercase tracking-wide shrink-0">Drop</span>
-              {dropOptions.map(option => (
-                <span key={option.value} title={optionLabel(option)}>
-                  <SpellPill name={option.value} variant="gf" />
-                  {!option.guaranteed && <span className="ml-1 text-[9px] text-amber-300/80">possible Lv {formatPossibleLevels(option.levels)}</span>}
-                </span>
-              ))}
+            <div className="flex min-w-0 basis-full items-start gap-1.5 flex-wrap">
+              <span className="pt-0.5 text-slate-500 font-medium text-[10px] uppercase tracking-wide shrink-0">Drop</span>
+              <div className="min-w-0 flex-1 space-y-1">
+                {dropOptions.map(option => {
+                  const groups = parseDropRateGroups(option.value)
+                  return (
+                    <div key={option.value} className="min-w-0 space-y-1">
+                      {groups.map((group, index) => group.label === 'Rare Item' ? (
+                        <details key={`${option.value}-${group.label}-${index}`} className="min-w-0">
+                          <summary className="w-fit cursor-pointer list-none text-[10px] text-amber-300/70 marker:hidden">
+                            Rare Item · {group.entries.length} {group.entries.length === 1 ? 'result' : 'results'}
+                          </summary>
+                          <div className="mt-1 pl-2">
+                            <DropRateList group={group} />
+                          </div>
+                        </details>
+                      ) : <DropRateList key={`${option.value}-${group.label}-${index}`} group={group} />)}
+                      {!option.guaranteed && <span className="text-[9px] text-amber-300/80">Possible at Lv {formatPossibleLevels(option.levels)}</span>}
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           )}
         </div>
@@ -2269,33 +2339,20 @@ function EnemyRow({
 
       {/* Notes */}
       {notes && (
-        <div className="min-w-0 text-[11px] text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">
-          {noteLong && !noteOpen
-            ? (
-              <>
-                {notes.slice(0, 90)}…{' '}
-                <button
-                  onClick={() => setNoteOpen(true)}
-                  className="text-slate-400 hover:text-slate-200 underline underline-offset-2"
-                >
-                  more
-                </button>
-              </>
-            )
-            : (
-              <>
-                {notes}
-                {noteLong && (
-                  <button
-                    onClick={() => setNoteOpen(false)}
-                    className="ml-1 text-slate-500 hover:text-slate-300 underline underline-offset-2"
-                  >
-                    less
-                  </button>
-                )}
-              </>
-            )
-          }
+        <div className="min-w-0 rounded-r-md border-l-2 border-cyan-800/50 bg-slate-950/20 py-1 pl-2.5 pr-2 text-xs leading-relaxed text-slate-400 break-words [overflow-wrap:anywhere]">
+          <div className="mb-0.5 flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-wide text-cyan-300/70">
+            <Info size={10} /> Field note
+          </div>
+          <p className={cn(!noteOpen && noteLong && 'line-clamp-2')}>{renderInline(notes)}</p>
+          {noteLong && (
+            <button
+              onClick={() => setNoteOpen(value => !value)}
+              aria-expanded={noteOpen}
+              className="mt-0.5 text-[10px] text-slate-400 underline underline-offset-2 hover:text-slate-200"
+            >
+              {noteOpen ? 'Show less' : 'Show full note'}
+            </button>
+          )}
         </div>
       )}
     </div>

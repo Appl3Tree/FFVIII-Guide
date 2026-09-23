@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
+import { SequenceSteps } from '../ui/SequenceSteps'
 import type { Card } from '../../types'
 
 interface Props {
@@ -26,6 +27,13 @@ function formatCardMod(mod: string): string {
     const toNum = parseInt(to)
     return `${fromNum} card${fromNum > 1 ? 's' : ''} → ${toNum}× ${item.trim()}`
   })
+}
+
+function cardModSequence(cardName: string, mod: string): string[] | null {
+  const match = mod.match(/^(.*?)\s*\[(\d+):(\d+)\]$/)
+  if (!match) return null
+  const [, item, from, to] = match
+  return [`${from}× ${cardName}`, `${to}× ${item.trim()}`]
 }
 
 function CardFace({ top, left, right, bottom }: { top: number; left: number; right: number; bottom: number }) {
@@ -142,7 +150,9 @@ export function CardView({ cards, completedItems, onToggleItem }: Props) {
           <p className="py-8 text-center text-sm text-slate-600">No cards match "{query}"</p>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2">
-            {filtered.map((c) => (
+            {filtered.map((c) => {
+            const cardModPath = c.cardMod ? cardModSequence(c.name, c.cardMod) : null
+            return (
             <div key={c.id} className={cn(
               'px-4 py-2.5 flex items-start gap-3 border-b border-slate-800/50',
               'xl:[&:nth-child(odd)]:border-r xl:[&:nth-child(odd)]:border-slate-800/40',
@@ -187,9 +197,14 @@ export function CardView({ cards, completedItems, onToggleItem }: Props) {
                     </p>
                   )}
                   {c.cardMod && (
-                    <p className="text-xs text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">
-                      <span className="text-slate-600">Card Mod:</span> {formatCardMod(c.cardMod)}
-                    </p>
+                    <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-relaxed">
+                      <span className="shrink-0 text-slate-600">Card Mod:</span>
+                      {cardModPath ? (
+                        <SequenceSteps items={cardModPath} className="gap-x-0.5 gap-y-1" />
+                      ) : (
+                        <span className="break-words text-slate-500 [overflow-wrap:anywhere]">{formatCardMod(c.cardMod)}</span>
+                      )}
+                    </div>
                   )}
                   {!c.location && !c.cardMod && c.howToGet && (
                     <p className="text-xs text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">
@@ -200,7 +215,8 @@ export function CardView({ cards, completedItems, onToggleItem }: Props) {
               </div>
               <span className="text-xs text-slate-700 shrink-0 font-mono">L{c.level}</span>
             </div>
-            ))}
+            )
+            })}
           </div>
         )}
       </div>

@@ -174,7 +174,6 @@ export function InlineSidequestBlock({
   const summary = placement?.summary ?? sidequest.summary
   const available = placement?.available ?? sidequest.available
   const deadline = placement?.deadline ?? sidequest.deadline
-  const rewards = (placement?.rewards ?? sidequest.rewards).slice(0, 4)
   const requirements = placement?.requirements ?? sidequest.requirements ?? []
   const route = placement?.route ?? sidequest.route
   const notes = placement?.notes ?? sidequest.notes ?? []
@@ -182,34 +181,29 @@ export function InlineSidequestBlock({
 
   return (
     <section className={cn('rounded-lg border bg-indigo-950/12', style.border, completed && 'opacity-60')}>
-      <div className="flex items-start gap-3 px-3 py-3">
-        <Checkbox checked={completed} onChange={onToggle} className="mt-1 shrink-0" />
+      <div className="flex items-start gap-2.5 px-3 py-2.5">
+        <Checkbox checked={completed} onChange={onToggle} className="mt-0.5 shrink-0" />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
             <Compass size={13} className={cn(style.text, 'shrink-0')} />
-            <span className="text-xs font-bold uppercase tracking-wide text-indigo-300">Optional Sidequest</span>
-            <span className="text-xs text-slate-600">/</span>
-            <span className="text-sm font-semibold text-slate-100">{title}</span>
+            <span className="min-w-0 break-words text-sm font-semibold text-slate-100">{title}</span>
             <Badge variant={style.badge}>{sidequest.category}</Badge>
+            <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-600">Optional</span>
           </div>
-          <p className="mt-1.5 max-w-[78ch] text-sm leading-relaxed text-slate-400">{summary}</p>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
-            <p className="text-xs leading-relaxed text-slate-500"><span className="font-semibold text-slate-400">Available:</span> {available}</p>
-            <p className="text-xs leading-relaxed text-amber-300/80"><span className="font-semibold text-amber-300">Deadline:</span> {deadline}</p>
-          </div>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {rewards.map(reward => (
-              <span key={reward} className="rounded border border-slate-700/40 bg-slate-900/55 px-1.5 py-0.5 text-[10px] text-slate-400">
-                {reward}
-              </span>
-            ))}
+          <div className="mt-1.5 flex min-w-0 flex-wrap gap-1.5">
+            <span className="max-w-full rounded border border-slate-700/45 bg-slate-900/45 px-1.5 py-1 text-[10px] leading-snug text-slate-400 break-words [overflow-wrap:anywhere]">
+              <span className="font-semibold text-slate-300">Window</span> · {available}
+            </span>
+            <span className="max-w-full rounded border border-amber-800/40 bg-amber-950/15 px-1.5 py-1 text-[10px] leading-snug text-amber-200/80 break-words [overflow-wrap:anywhere]">
+              <span className="font-semibold text-amber-200">Closes</span> · {deadline}
+            </span>
           </div>
           <button
             onClick={() => setOpen(value => !value)}
             className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-indigo-400 transition-colors hover:text-indigo-200"
           >
             <ChevronDown size={12} className={cn('transition-transform duration-200', open && 'rotate-180')} />
-            {open ? 'Hide sidequest steps' : isPartial ? 'Show steps for this point' : 'Show full sidequest route'}
+            {open ? 'Hide sidequest details' : isPartial ? 'Show steps for this point' : 'Show full sidequest route'}
           </button>
 
           <AnimatePresence initial={false}>
@@ -222,6 +216,7 @@ export function InlineSidequestBlock({
                 className="overflow-hidden"
               >
                 <div className="mt-3 space-y-3 border-t border-slate-800/70 pt-3">
+                  <p className="max-w-[78ch] text-xs leading-relaxed text-slate-400">{summary}</p>
                   {requirements.length ? (
                     <InfoList title="Requirements" icon={<AlertTriangle size={12} />} items={requirements} />
                   ) : null}
