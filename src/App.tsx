@@ -250,7 +250,7 @@ export default function App() {
   return (
     <div className="min-h-screen">
       {/* ── Desktop: 3-column layout ── */}
-      <div className="hidden lg:grid h-screen" style={{ gridTemplateColumns: 'clamp(200px,16vw,280px) 1fr clamp(220px,18vw,320px)' }}>
+      <div className="hidden lg:grid h-screen" style={{ gridTemplateColumns: view === 'bestiary' ? 'clamp(200px,16vw,280px) minmax(0,1fr)' : 'clamp(200px,16vw,280px) 1fr clamp(220px,18vw,320px)' }}>
 
         {/* Column 1: Navigation */}
         <div className="glass-panel border-r border-slate-700/60 rounded-none flex flex-col overflow-hidden">
@@ -371,29 +371,31 @@ export default function App() {
           </main>
         </div>
 
-        {/* Column 3: Contextual progress */}
-        <div className="border-l border-slate-700/60 overflow-hidden flex flex-col">
-          <ContextPanel
-            chapter={view === 'guide' ? (activeChapter ?? null) : null}
-            data={data}
-            completedItems={tracker.state.completedItems}
-            onToggleItem={tracker.toggleItem}
-            onOpenNotes={() => setNotesOpen(true)}
-            hasNotes={hasNotes}
-            characters={playerCharacters}
-            magic={data.lookup.magic ?? []}
-            gfs={data.lookup.gfs}
-            availableMagicIds={availableMagicIds}
-            visibleGFIds={visibleGFIds}
-            state={tracker.state}
-            partyContext={partyContext}
-            onToggleParty={tracker.setActiveCharacter}
-            onSetLevel={tracker.setCharacterLevel}
-            onToggleMagic={tracker.setMagicCompleted}
-            onToggleGFAbility={tracker.setGFAbilityLearned}
-            onSetProgressionChapter={tracker.setProgressionChapter}
-          />
-        </div>
+        {/* Column 3: Contextual progress; the Bestiary uses the full reference view. */}
+        {view !== 'bestiary' && (
+          <div className="border-l border-slate-700/60 overflow-hidden flex flex-col">
+            <ContextPanel
+              chapter={view === 'guide' ? (activeChapter ?? null) : null}
+              data={data}
+              completedItems={tracker.state.completedItems}
+              onToggleItem={tracker.toggleItem}
+              onOpenNotes={() => setNotesOpen(true)}
+              hasNotes={hasNotes}
+              characters={playerCharacters}
+              magic={data.lookup.magic ?? []}
+              gfs={data.lookup.gfs}
+              availableMagicIds={availableMagicIds}
+              visibleGFIds={visibleGFIds}
+              state={tracker.state}
+              partyContext={partyContext}
+              onToggleParty={tracker.setActiveCharacter}
+              onSetLevel={tracker.setCharacterLevel}
+              onToggleMagic={tracker.setMagicCompleted}
+              onToggleGFAbility={tracker.setGFAbilityLearned}
+              onSetProgressionChapter={tracker.setProgressionChapter}
+            />
+          </div>
+        )}
       </div>
 
       {/* ── Mobile ── */}
@@ -580,7 +582,7 @@ export default function App() {
         return <AbilitiesView gfs={data.lookup.gfs} abilities={data.lookup.abilities ?? []} abilitySections={data.lookup.abilitySections ?? []} />
 
       case 'bestiary':
-        return <BestiaryView enemies={data.lookup.enemies} partyContext={partyContext} characters={playerCharacters} activePartyIds={partyContext.activeCharacterIds} magic={data.lookup.magic ?? []} magicCompletedByCharacter={tracker.state.magicCompletedByCharacter} />
+        return <BestiaryView enemies={data.lookup.enemies} completedItems={tracker.state.completedItems} onSetItem={tracker.setCheck} />
 
       case 'player':
         return (

@@ -1,31 +1,49 @@
 import type { Enemy } from '../types'
 
-type CanonicalValue = {
+export type CanonicalValue = {
   text?: string
   lines?: string[]
   collapsibles?: Array<{ label?: string; text?: string; lines?: string[] }>
+  links?: Array<{ text?: string; url?: string }>
 }
 
-type CanonicalField = {
+export type CanonicalField = {
   key?: string
   label?: string
   percent?: number | null
   value?: CanonicalValue
 }
 
-type CanonicalBand = {
+export type CanonicalBand = {
+  label?: string
   min_level: number
   max_level: number
   fields?: CanonicalField[]
   entries?: Array<{ name?: string }>
+  field?: CanonicalField
+  result_text?: string
 }
 
-type CanonicalRecord = {
+export interface CanonicalBestiaryRecord {
   id: string
   name?: string
   base_name?: string
+  roster_section?: string
+  page_type?: string
+  source_url?: string
+  canonical_page_url?: string
+  page_title?: string
+  source_section?: string
+  processing_status?: string
+  stats_section_present?: boolean
+  unresolved_detail?: string
+  unresolved_reason?: string
   level?: { min?: number; max?: number; fixed?: boolean }
-  classification?: { fields?: CanonicalField[] }
+  classification?: {
+    fields?: CanonicalField[]
+    tables?: Array<{ title?: string; headers?: string[]; rows?: string[][] }>
+    type_from_page?: string
+  }
   elements?: { entries?: Array<{ key?: string; label?: string; value?: CanonicalValue }> }
   statuses?: { entries?: Array<{ label?: string; value?: CanonicalValue }> }
   draw?: CanonicalBand[]
@@ -33,9 +51,14 @@ type CanonicalRecord = {
   items?: { level_bands?: CanonicalBand[] }
   stats?: { rows?: Array<{ values?: Record<string, number | string> }> }
   cards?: { fields?: CanonicalField[] }
+  devour?: CanonicalBand[] | { field?: CanonicalField; result_text?: string }
+  rewards?: { fields?: CanonicalField[]; ap?: string; exp_column?: string }
+  formulas?: Record<string, { label?: string; source_text?: string }>
+  source_notes?: string[]
 }
 
-export type CanonicalBestiaryData = { enemies: CanonicalRecord[] }
+export type CanonicalBestiaryData = { enemies: CanonicalBestiaryRecord[] }
+type CanonicalRecord = CanonicalBestiaryRecord
 
 const EXPLICIT_ID_MAP: Record<string, string> = {
   'enemy-blobra': 'blobra',
@@ -67,15 +90,12 @@ const EXPLICIT_ID_MAP: Record<string, string> = {
   'enemy-ultimecia-1': 'ultimecia',
   'enemy-ultimecia-griever': 'ultimecia-griver-form-a',
   'enemy-ultimecia-final': 'ultimecia-final-boss',
+  'enemy-ultimecia-final-lower': 'ultimecia-final-boss',
   'enemy-biggs-1': 'biggs',
   'enemy-biggs-2': 'biggs',
   'enemy-red-bat': 'red-bat',
   'enemy-wedge-1': 'wedge',
   'enemy-wedge-2': 'wedge',
-}
-
-function normalized(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, '')
 }
 
 function cleanText(value: string | undefined) {
@@ -227,14 +247,12 @@ function canonicalCards(record: CanonicalRecord) {
 }
 
 function findCanonicalRecord(enemy: Enemy, records: CanonicalRecord[]) {
-  const explicitId = EXPLICIT_ID_MAP[enemy.id]
-  if (explicitId) return records.find(record => record.id === explicitId) ?? null
+  const canonicalId = EXPLICIT_ID_MAP[enemy.id] ?? enemy.id.replace(/^enemy-/, '')
+  return records.find(record => record.id === canonicalId) ?? null
+}
 
-  const candidates = records.filter(record => {
-    const names = [record.name, record.base_name].filter((value): value is string => Boolean(value))
-    return names.some(name => normalized(name) === normalized(enemy.name))
-  })
-  return candidates.length === 1 ? candidates[0] : null
+export function canonicalRecordForEnemy(enemy: Enemy, data: CanonicalBestiaryData) {
+  return findCanonicalRecord(enemy, data.enemies)
 }
 
 function mergeCanonicalEnemy(enemy: Enemy, record: CanonicalRecord | null): Enemy {
