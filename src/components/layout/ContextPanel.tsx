@@ -17,6 +17,7 @@ interface Props {
   magic: MagicSpell[]
   gfs: GuardianForce[]
   availableMagicIds: ReadonlySet<string>
+  availableBlueMagicIds: ReadonlySet<string>
   visibleGFIds: ReadonlySet<string>
   state: TrackerState
   partyContext: PartyLevelContext
@@ -24,6 +25,7 @@ interface Props {
   onSetLevel: (characterId: string, level: number) => void
   onToggleMagic: (characterId: string, spellId: string) => void
   onToggleGFAbility: (gfId: string, abilityName: string) => void
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
   onSetProgressionChapter: (chapterId: string) => void
 }
 
@@ -34,7 +36,7 @@ const DISC_COLORS_PANEL: Record<number, { label: string; text: string; bar: 'tea
   4: { label: 'Disc 4', text: 'text-amber-400',  bar: 'amber' },
 }
 
-export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes, characters, magic, gfs, availableMagicIds, visibleGFIds, state, partyContext, onToggleParty, onSetLevel, onToggleMagic, onToggleGFAbility, onSetProgressionChapter }: Props) {
+export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOpenNotes, hasNotes, characters, magic, gfs, availableMagicIds, availableBlueMagicIds, visibleGFIds, state, partyContext, onToggleParty, onSetLevel, onToggleMagic, onToggleGFAbility, onToggleBlueMagic, onSetProgressionChapter }: Props) {
   const allCps = data.chapters.flatMap(ch => ch.checkpoints)
   const allAchs = allCps.filter(cp => cp.type === 'achievement')
   const allMisses = allCps.filter(cp => cp.type === 'missable')
@@ -75,9 +77,11 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOp
         <PlayerContextPanel
           characters={characters}
           magic={magic}
+          items={data.lookup.items}
           gfs={gfs}
           chapters={data.chapters}
           availableMagicIds={availableMagicIds}
+          availableBlueMagicIds={availableBlueMagicIds}
           visibleGFIds={visibleGFIds}
           state={state}
           partyContext={partyContext}
@@ -85,6 +89,7 @@ export function ContextPanel({ chapter, data, completedItems, onToggleItem, onOp
           onSetLevel={onSetLevel}
           onToggleMagic={onToggleMagic}
           onToggleGFAbility={onToggleGFAbility}
+          onToggleBlueMagic={onToggleBlueMagic}
           onSetProgressionChapter={onSetProgressionChapter}
         />
 

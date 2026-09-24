@@ -44,6 +44,13 @@ export function isGFAbilityLearned(
   return !!state.learnedGFAbilities[gfAbilityKey(gfId, abilityName)]
 }
 
+export function isBlueMagicLearned(
+  state: Pick<TrackerState, 'learnedBlueMagic'>,
+  abilityId: string,
+) {
+  return !!state.learnedBlueMagic[abilityId]
+}
+
 function normalized(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '')
 }

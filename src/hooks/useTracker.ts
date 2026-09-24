@@ -12,6 +12,7 @@ import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import type { MasterData, TrackerState } from '../types'
 import { auth, db, firebaseEnabled, googleProvider, GUIDE_SLUG } from '../lib/firebase'
 import { clampCharacterLevel, gfAbilityKey, MAX_ACTIVE_PARTY_SIZE } from '../lib/playerState'
+import { BLUE_MAGIC } from '../data/blueMagic'
 import { defaultProgressionChapterId, validProgressionChapterId } from '../lib/progression'
 
 const STORAGE_KEY = 'ffviii-tracker-v2'
@@ -48,6 +49,7 @@ function createDefaultState(data: MasterData): TrackerState {
     notes: {},
     magicCompletedByCharacter: {},
     learnedGFAbilities: {},
+    learnedBlueMagic: Object.fromEntries(BLUE_MAGIC.filter(ability => ability.knownByDefault).map(ability => [ability.id, true])),
     characterLevels: Object.fromEntries(characters.map(character => [character.id, 1])),
     activeParty: Object.fromEntries(characters.map((character, index) => [character.id, index < 3])),
     progressionChapterId: defaultProgressionChapterId(data.chapters),
@@ -158,6 +160,10 @@ function parseTrackerState(value: unknown, data: MasterData): TrackerState {
     notes: parseNotes(parsed.notes),
     magicCompletedByCharacter: parseNestedChecked(parsed.magicCompletedByCharacter),
     learnedGFAbilities: parseChecked(parsed.learnedGFAbilities),
+    learnedBlueMagic: {
+      ...defaults.learnedBlueMagic,
+      ...parseChecked(parsed.learnedBlueMagic),
+    },
     characterLevels: { ...defaults.characterLevels, ...parseNumbers(parsed.characterLevels) },
     activeParty: parsedActiveParty
       ? normalizeActiveParty(data, parsedActiveParty)
@@ -172,6 +178,7 @@ function stateHasPlayerProgress(state: TrackerState, data: MasterData) {
     Object.keys(state.completedItems).length > 0 ||
     Object.keys(state.magicCompletedByCharacter).some(characterId => Object.keys(state.magicCompletedByCharacter[characterId] ?? {}).length > 0) ||
     Object.keys(state.learnedGFAbilities).length > 0 ||
+    Object.keys(state.learnedBlueMagic).some(id => !defaults.learnedBlueMagic[id]) ||
     Object.entries(defaults.characterLevels).some(([id, level]) => state.characterLevels[id] !== level) ||
     Object.entries(defaults.activeParty).some(([id, active]) => state.activeParty[id] !== active)
     || state.progressionChapterId !== defaults.progressionChapterId
@@ -253,7 +260,7 @@ export function useTracker(data: MasterData) {
         const snapshot = await getDoc(guideDocRef(nextUser.uid))
         const cloudData = snapshot.exists() ? snapshot.data() : {}
         const cloudState = parseTrackerState(cloudData.state ?? cloudData, data)
-        const cloudHasPlayerState = Boolean(cloudData.state)
+        const cloudHasPlayerState = stateHasPlayerProgress(cloudState, data)
         const cloudChecked = activeChecked(cloudState.completedItems)
         const localChecked = activeChecked(stateRef.current.completedItems)
         const localEmpty = checkedCount(localChecked) === 0
@@ -270,6 +277,9 @@ export function useTracker(data: MasterData) {
         } else if (sameChecked(localChecked, cloudChecked)) {
           if (!localHasPlayerState && cloudHasPlayerState) {
             setState(current => ({ ...current, ...cloudState }))
+          } else if (localHasPlayerState && !cloudHasPlayerState) {
+            setSyncStatus('syncing')
+            await saveStateToCloud(nextUser.uid, stateRef.current)
           }
           setSyncStatus('saved')
         } else if (!localEmpty && !cloudEmpty) {
@@ -354,6 +364,18 @@ export function useTracker(data: MasterData) {
       if (nextLearned) learnedGFAbilities[key] = true
       else delete learnedGFAbilities[key]
       return { ...current, learnedGFAbilities }
+    })
+  }, [])
+
+  const setBlueMagicLearned = useCallback((abilityId: string, next?: boolean) => {
+    const ability = BLUE_MAGIC.find(candidate => candidate.id === abilityId)
+    if (!ability || ability.knownByDefault) return
+    setState(current => {
+      const nextLearned = typeof next === 'boolean' ? next : !current.learnedBlueMagic[abilityId]
+      const learnedBlueMagic = { ...current.learnedBlueMagic }
+      if (nextLearned) learnedBlueMagic[abilityId] = true
+      else delete learnedBlueMagic[abilityId]
+      return { ...current, learnedBlueMagic }
     })
   }, [])
 
@@ -523,6 +545,7 @@ export function useTracker(data: MasterData) {
     isCompleted,
     setMagicCompleted,
     setGFAbilityLearned,
+    setBlueMagicLearned,
     setCharacterLevel,
     setActiveCharacter,
     setProgressionChapter,

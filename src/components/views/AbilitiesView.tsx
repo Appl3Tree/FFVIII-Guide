@@ -284,7 +284,7 @@ export function AbilitiesView({ gfs, abilities: sourceAbilities = [], abilitySec
                 : 'text-slate-500 border-slate-700/40 hover:text-slate-300'
             )}
           >
-            All ({abilities.length})
+            All
           </button>
           {categories.map(cat => (
             <button

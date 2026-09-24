@@ -5,12 +5,16 @@ import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
 import { SequenceSteps } from '../ui/SequenceSteps'
-import type { Card } from '../../types'
+import { BlueMagicConnections } from '../ui/BlueMagicTracker'
+import type { Card, Item, TrackerState } from '../../types'
 
 interface Props {
   cards: Card[]
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 type FilterLevel = 'all' | string
@@ -48,7 +52,7 @@ function CardFace({ top, left, right, bottom }: { top: number; left: number; rig
   )
 }
 
-export function CardView({ cards, completedItems, onToggleItem }: Props) {
+export function CardView({ cards, completedItems, onToggleItem, items, state, onToggleBlueMagic }: Props) {
   const [filterLevel, setFilterLevel] = useState<FilterLevel>('all')
   const [filterType, setFilterType] = useState<'all' | Card['type']>('all')
   const [hideObtained, setHideObtained] = useState(false)
@@ -143,9 +147,6 @@ export function CardView({ cards, completedItems, onToggleItem }: Props) {
       </div>
 
       <div className="glass-panel overflow-hidden">
-        <div className="px-4 py-2 border-b border-slate-700/40 text-xs text-slate-500">
-          {filtered.length} of {cards.length} cards
-        </div>
         {filtered.length === 0 ? (
           <p className="py-8 text-center text-sm text-slate-600">No cards match "{query}"</p>
         ) : (
@@ -205,6 +206,14 @@ export function CardView({ cards, completedItems, onToggleItem }: Props) {
                         <span className="break-words text-slate-500 [overflow-wrap:anywhere]">{formatCardMod(c.cardMod)}</span>
                       )}
                     </div>
+                  )}
+                  {c.cardMod && (
+                    <BlueMagicConnections
+                      text={c.cardMod}
+                      items={items}
+                      state={state}
+                      onToggle={onToggleBlueMagic}
+                    />
                   )}
                   {!c.location && !c.cardMod && c.howToGet && (
                     <p className="text-xs text-slate-500 leading-relaxed break-words [overflow-wrap:anywhere]">

@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
+import { BlueMagicTracker } from '../ui/BlueMagicTracker'
 import {
   activeCharacterIds,
   characterLevel,
@@ -13,17 +14,20 @@ import {
   recommendedGFAbilities,
 } from '../../lib/playerState'
 import { createPartyLevelContext, formatPossibleLevels } from '../../lib/enemyLevelData'
-import type { CharacterProfile, GuardianForce, MagicSpell, TrackerState } from '../../types'
+import type { CharacterProfile, GuardianForce, Item, MagicSpell, TrackerState } from '../../types'
 
 interface Props {
   characters: CharacterProfile[]
   magic: MagicSpell[]
   gfs: GuardianForce[]
+  items: Item[]
   availableMagicIds: ReadonlySet<string>
+  availableBlueMagicIds: ReadonlySet<string>
   visibleGFIds: ReadonlySet<string>
   state: TrackerState
   onToggleMagic: (characterId: string, spellId: string) => void
   onToggleGFAbility: (gfId: string, abilityName: string) => void
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
   onSetLevel: (characterId: string, level: number) => void
   onToggleParty: (characterId: string) => void
 }
@@ -42,11 +46,14 @@ export function PlayerView({
   characters,
   magic,
   gfs,
+  items,
   availableMagicIds,
+  availableBlueMagicIds,
   visibleGFIds,
   state,
   onToggleMagic,
   onToggleGFAbility,
+  onToggleBlueMagic,
   onSetLevel,
   onToggleParty,
 }: Props) {
@@ -154,6 +161,14 @@ export function PlayerView({
           {activeIds.length}/3 active · select up to three. A fourth character is disabled while the party is full.
         </p>
       </section>
+
+      <BlueMagicTracker
+        items={items}
+        state={state}
+        onToggle={onToggleBlueMagic}
+        availableAbilityIds={availableBlueMagicIds}
+        variant="full"
+      />
 
       <section className="glass-panel overflow-hidden">
         <div className="border-b border-slate-700/40 px-4 py-3">

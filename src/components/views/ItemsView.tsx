@@ -2,11 +2,14 @@ import { useState, useMemo } from 'react'
 import { Search, Sword, Package, ChevronDown, ChevronRight } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Badge } from '../ui/Badge'
-import type { Item, Weapon } from '../../types'
+import { BlueMagicConnections } from '../ui/BlueMagicTracker'
+import type { Item, TrackerState, Weapon } from '../../types'
 
 interface Props {
   items: Item[]
   weapons: Weapon[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 type Tab = 'items' | 'weapons'
@@ -81,7 +84,7 @@ function weaponIssueLabel(value: string) {
 
 // ─── Item card (compact, expandable) ─────────────────────────────────────────
 
-function ItemCard({ item }: { item: Item }) {
+function ItemCard({ item, state, onToggleBlueMagic }: { item: Item; state: TrackerState; onToggleBlueMagic: (abilityId: string, next?: boolean) => void }) {
   const [open, setOpen] = useState(false)
   const hasDetail = !!(item.obtain || item.refineFrom.length || item.refineTo.length)
 
@@ -118,6 +121,7 @@ function ItemCard({ item }: { item: Item }) {
 
       {open && hasDetail && (
         <div className="px-3 pb-3 pt-2 space-y-1.5 border-t border-slate-700/40">
+          <BlueMagicConnections text={item.name} items={[item]} state={state} onToggle={onToggleBlueMagic} compact />
           {textValue(item.obtain) && (
             <div className="flex gap-2 text-xs">
               <span className="text-slate-600 shrink-0 w-16">Obtain</span>
@@ -150,10 +154,14 @@ function ItemSection({
   section,
   items,
   collapsible,
+  state,
+  onToggleBlueMagic,
 }: {
   section: string
   items: Item[]
   collapsible: boolean
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }) {
   const [collapsed, setCollapsed] = useState(false)
   const color = SECTION_COLORS[section] ?? 'slate'
@@ -168,7 +176,6 @@ function ItemSection({
         )}
       >
         <Badge variant={color}>{section}</Badge>
-        <span className="text-xs text-slate-600">{items.length}</span>
         {collapsible && (
           collapsed
             ? <ChevronRight size={12} className="text-slate-600 group-hover:text-slate-400 transition-colors" />
@@ -177,7 +184,7 @@ function ItemSection({
       </button>
       {!collapsed && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
-          {items.map(it => <ItemCard key={it.id} item={it} />)}
+          {items.map(it => <ItemCard key={it.id} item={it} state={state} onToggleBlueMagic={onToggleBlueMagic} />)}
         </div>
       )}
     </div>
@@ -227,15 +234,12 @@ function WeaponSection({
   guest?: boolean
 }) {
   const color = CHAR_COLORS[character] ?? 'slate'
-  const label = guest
-    ? `${character} (guest)`
-    : `${weapons.length} upgrade${weapons.length !== 1 ? 's' : ''}`
+  const label = guest ? 'non-upgradeable' : null
   return (
     <div className="mb-5">
       <div className="flex items-center gap-2 mb-2">
         <Badge variant={color}>{character}</Badge>
-        <span className="text-xs text-slate-600">{label}</span>
-        {guest && <span className="text-xs text-slate-700 italic">non-upgradeable</span>}
+        {label && <span className="text-xs italic text-slate-700">{label}</span>}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {weapons.map(w => <WeaponCard key={w.id} weapon={w} />)}
@@ -246,7 +250,7 @@ function WeaponSection({
 
 // ─── Main view ────────────────────────────────────────────────────────────────
 
-export function ItemsView({ items, weapons }: Props) {
+export function ItemsView({ items, weapons, state, onToggleBlueMagic }: Props) {
   const [tab, setTab]       = useState<Tab>('items')
   const [query, setQuery]   = useState('')
   const [section, setSection] = useState('all')
@@ -319,10 +323,10 @@ export function ItemsView({ items, weapons }: Props) {
           <h2 className="text-base font-semibold text-slate-100">Items & Weapons</h2>
           <div className="flex gap-1.5">
             <button onClick={() => setTab('items')} className={tabBtn('items')}>
-              <Package size={12} /> Items ({items.length})
+              <Package size={12} /> Items
             </button>
             <button onClick={() => setTab('weapons')} className={tabBtn('weapons')}>
-              <Sword size={12} /> Weapons ({weapons.length})
+              <Sword size={12} /> Weapons
             </button>
           </div>
         </div>
@@ -367,27 +371,17 @@ export function ItemsView({ items, weapons }: Props) {
       <div className="glass-panel p-4">
         {tab === 'items' && (
           <>
-            {/* Result count */}
-            <div className="text-xs text-slate-600 mb-4">
-              {isSearching
-                ? `${filteredItems.length} result${filteredItems.length !== 1 ? 's' : ''}`
-                : section !== 'all'
-                  ? `${filteredItems.length} items in ${section}`
-                  : `${items.length} items across ${sections.length - 1} sections`
-              }
-            </div>
-
             {filteredItems.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-600">No items match "{query}"</p>
             ) : isSearching || section !== 'all' ? (
               /* Flat grid when filtered/searching */
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {filteredItems.map(it => <ItemCard key={it.id} item={it} />)}
+                {filteredItems.map(it => <ItemCard key={it.id} item={it} state={state} onToggleBlueMagic={onToggleBlueMagic} />)}
               </div>
             ) : (
               /* Grouped view with collapsible sections */
               groupedItems.map(({ section: s, items: si }) => (
-                <ItemSection key={s} section={s} items={si} collapsible={true} />
+                <ItemSection key={s} section={s} items={si} collapsible={true} state={state} onToggleBlueMagic={onToggleBlueMagic} />
               ))
             )}
           </>
@@ -395,13 +389,6 @@ export function ItemsView({ items, weapons }: Props) {
 
         {tab === 'weapons' && (
           <>
-            <div className="text-xs text-slate-600 mb-4">
-              {isSearching
-                ? `${filteredWeapons.length} weapon${filteredWeapons.length !== 1 ? 's' : ''}`
-                : `${weapons.length} weapons total — ${weapons.length - 4} upgradeable + 4 guest`
-              }
-            </div>
-
             {filteredWeapons.length === 0 ? (
               <p className="py-8 text-center text-sm text-slate-600">No weapons match "{query}"</p>
             ) : isSearching ? (

@@ -40,9 +40,10 @@ import { enemyDefeatedTrackerId, isMagicCompleted, magicByName } from '../../lib
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { SequenceSteps } from '../ui/SequenceSteps'
+import { BlueMagicConnections, BlueMagicTracker } from '../ui/BlueMagicTracker'
 import { ContextualVisualAid, ImageGrid, contextualVisualAidPlacement, getBossImages } from './VisualAids'
 import { InlineSidequestBlock, sidequestTrackerId } from './SidequestView'
-import type { Chapter, Checkpoint, AreaEncounter, Enemy, MagicSpell, ShopInventory, JunctionTable, CharacterProfile, Sidequest } from '../../types'
+import type { Chapter, Checkpoint, AreaEncounter, Enemy, Item, MagicSpell, ShopInventory, JunctionTable, CharacterProfile, Sidequest, TrackerState } from '../../types'
 
 const DISC_HEADER: Record<number, { border: string; text: string; gradient: string; badge: string }> = {
   0: { border: 'border-sky-500',    text: 'text-sky-400',    gradient: 'rgba(14,165,233,0.05)',  badge: 'bg-sky-900/60 border-sky-500/40 text-sky-300' },
@@ -71,12 +72,16 @@ interface Props {
   activePartyIds?: string[]
   magicCompletedByCharacter?: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+  items: Item[]
+  learnedBlueMagic: TrackerState['learnedBlueMagic']
+  availableBlueMagicIds: ReadonlySet<string>
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 // ─── Inline rendering ─────────────────────────────────────────────────────────
 
 function parseSequenceParts(text: string): string[] | null {
-  const stripped = text.replace(/^[-\s\d.·]+/, '').trim()
+  const stripped = text.trim().replace(/^(?:[-·]\s*|\d+\.\s*)/, '').trim()
   const parts = stripped.split(/\s*(?:→|->)\s*/).map(part => part.trim())
   const readsLikeProse = /[,;]|\b(?:and|or|then|because|if|while)\b/i
   return parts.length >= 2 && parts.every(part => part.length >= 1 && part.length <= 75 && !readsLikeProse.test(part))
@@ -204,7 +209,6 @@ function ShopGrid({ items, label }: { items: ShopItem[]; label?: string }) {
         <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wide flex-1">
           {label ?? 'Shop Inventory'}
         </span>
-        <span className="text-xs text-slate-500">{items.length} items</span>
         <ChevronDown
           size={12}
           className={cn('text-slate-500 transition-transform duration-200', open && 'rotate-180')}
@@ -606,7 +610,7 @@ function MagicReference({
               Magic Reference
             </div>
             <p className="mt-1 text-sm text-slate-400">
-              {filtered.length} of {spells.length} spells · sorted by <span className="font-semibold text-slate-200">{focusStat}-J</span>
+              Sorted by <span className="font-semibold text-slate-200">{focusStat}-J</span>
             </p>
             {selectedCharacter && (
               <p className="mt-1 text-xs text-teal-300/80">
@@ -773,9 +777,6 @@ function ShopReference({ content, shops }: { content: string; shops: ShopInvento
               <ShoppingBag size={13} />
               Shop Inventories
             </div>
-            <p className="mt-1 text-sm text-slate-400">
-              {filtered.length} of {shops.length} shops · {filtered.reduce((sum, shop) => sum + shop.items.length, 0)} visible items
-            </p>
           </div>
           <div className="relative min-w-0 sm:w-72">
             <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
@@ -794,7 +795,6 @@ function ShopReference({ content, shops }: { content: string; shops: ShopInvento
           <section key={shop.id} className="rounded-xl border border-slate-700/45 bg-slate-900/45 overflow-hidden">
             <div className="flex items-center justify-between gap-3 border-b border-slate-800/70 px-4 py-3">
               <h2 className="text-sm font-semibold text-slate-100">{shop.name}</h2>
-              <span className="text-xs text-slate-600">{shop.items.length} items</span>
             </div>
             <div className="divide-y divide-slate-800/70">
               {shop.items.map(item => (
@@ -848,9 +848,6 @@ function JunctionReference({ content, junctions }: { content: string; junctions:
               <Activity size={13} />
               Junction Tables
             </div>
-            <p className="mt-1 text-sm text-slate-400">
-              {filtered.length} of {junctions.length} tables · {filtered.reduce((sum, table) => sum + table.rows.length, 0)} visible rows
-            </p>
           </div>
           <div className="relative min-w-0 sm:w-72">
             <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
@@ -869,7 +866,6 @@ function JunctionReference({ content, junctions }: { content: string; junctions:
           <section key={table.id} className="rounded-xl border border-slate-700/45 bg-slate-900/45 overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-800/70 px-4 py-3">
               <h2 className="text-sm font-semibold text-slate-100">{table.name}</h2>
-              <span className="text-xs text-slate-600">{table.rows.length} rows</span>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-xs">
@@ -937,9 +933,6 @@ function CharacterReference({ content, characters }: { content: string; characte
               <UserRound size={13} />
               Character Data
             </div>
-            <p className="mt-1 text-sm text-slate-400">
-              {characters.length} characters · {characters.reduce((sum, character) => sum + character.tables.length, 0)} detailed tables
-            </p>
           </div>
           <div className="flex min-w-0 flex-wrap gap-1 rounded-lg border border-slate-700/45 bg-slate-950/45 p-1">
             {characters.map(character => (
@@ -1016,7 +1009,6 @@ function CharacterDataTableView({ table }: { table: CharacterProfile['tables'][n
     <section className="rounded-xl border border-slate-700/45 bg-slate-900/45 overflow-hidden">
       <div className="flex items-center justify-between border-b border-slate-800/70 px-4 py-3">
         <h3 className="text-sm font-semibold text-slate-100">{table.title}</h3>
-        <span className="text-xs text-slate-600">{table.rows.length} rows</span>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-xs">
@@ -1088,11 +1080,9 @@ function renderLines(lines: string[]) {
           const isChain = isChainLine(content)
           return (
             <li key={i} className="flex items-start gap-2 text-sm text-slate-300 leading-relaxed">
-              {!isChain && (
-                <span className={cn('shrink-0 mt-0.5 font-mono text-[11px] w-4 text-right', isNum ? 'text-slate-500' : 'text-teal-500/60')}>
-                  {isNum ? line.match(/^(\d+)\./)?.[1] + '.' : '▹'}
-                </span>
-              )}
+              <span className={cn('shrink-0 mt-0.5 font-mono text-[11px] w-4 text-right', isNum ? 'text-slate-500' : 'text-teal-500/60')}>
+                {isNum ? line.match(/^(\d+)\./)?.[1] + '.' : '▹'}
+              </span>
               <span className={isChain ? 'flex-1' : 'flex-1'}>
                 {isChain ? <ChainLine raw={content} /> : renderInline(content)}
               </span>
@@ -1113,7 +1103,7 @@ function renderLines(lines: string[]) {
             const isChain = isChainLine(content)
             return (
               <div key={i} className="flex items-start gap-2 text-sm text-slate-300 leading-relaxed">
-                {!isChain && <span className="text-teal-500/60 shrink-0 mt-0.5">▹</span>}
+                <span className="text-teal-500/60 shrink-0 mt-0.5">▹</span>
                 <span className="flex-1">
                   {isChain ? <ChainLine raw={content} /> : renderInline(content)}
                 </span>
@@ -1714,8 +1704,6 @@ function ReferenceCalloutPanel({ items, chapterId }: { items: string[]; chapterI
         <span className={cn('text-xs font-bold uppercase tracking-wide', style.titleClass)}>
           {style.eyebrow}
         </span>
-        <span className="text-xs text-slate-600">/</span>
-        <span className="text-xs text-slate-400">{parsed.length} entries</span>
       </div>
       <div className="divide-y divide-slate-800/70">
         {parsed.map((item, index) => (
@@ -2021,23 +2009,29 @@ function achTypeBadge(t: string) {
 function AreaEncounterCard({
   area,
   enemies,
+  items,
   partyContext,
   characters,
   activePartyIds,
   magic,
   magicCompletedByCharacter,
   onToggleMagic,
+  learnedBlueMagic,
+  onToggleBlueMagic,
   completedItems,
   onToggleItem,
 }: {
   area: AreaEncounter
   enemies: Enemy[]
+  items: Item[]
   partyContext: PartyLevelContext
   characters: CharacterProfile[]
   activePartyIds: string[]
   magic: MagicSpell[]
   magicCompletedByCharacter: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+  learnedBlueMagic: TrackerState['learnedBlueMagic']
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
 }) {
@@ -2071,7 +2065,6 @@ function AreaEncounterCard({
       <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 border-b border-violet-800/20 bg-violet-900/20 px-4 py-2">
         <Swords size={11} className="text-violet-400 shrink-0" />
         <h2 className="min-w-0 flex-1 break-words text-xs font-semibold uppercase tracking-wider text-violet-200">{area.area}</h2>
-        <span className="shrink-0 text-[10px] text-violet-300/70">{area.enemies.length} enemies</span>
         {defeatedCount > 0 && <span className="shrink-0 text-[10px] text-teal-300">{defeatedCount} defeated</span>}
       </div>
 
@@ -2138,8 +2131,11 @@ function AreaEncounterCard({
               characters={characters}
               activePartyIds={activePartyIds}
               magic={magic}
+              items={items}
               magicCompletedByCharacter={magicCompletedByCharacter}
               onToggleMagic={onToggleMagic}
+              learnedBlueMagic={learnedBlueMagic}
+              onToggleBlueMagic={onToggleBlueMagic}
               completedItems={completedItems}
               onToggleItem={onToggleItem}
             />
@@ -2282,13 +2278,17 @@ function EnemyRow({
   characters,
   activePartyIds,
   magic,
+  items,
   magicCompletedByCharacter,
   onToggleMagic,
+  learnedBlueMagic,
+  onToggleBlueMagic,
   completedItems,
   onToggleItem,
 }: {
   ae: AreaEncounter['enemies'][number]
   enemy: Enemy | null
+  items: Item[]
   mugAvailable: boolean
   partyContext: PartyLevelContext
   characters: CharacterProfile[]
@@ -2296,6 +2296,8 @@ function EnemyRow({
   magic: MagicSpell[]
   magicCompletedByCharacter: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
+  learnedBlueMagic: TrackerState['learnedBlueMagic']
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
 }) {
@@ -2485,6 +2487,13 @@ function EnemyRow({
                         {chanceGroups.length > 0 && <span className="text-[9px] text-slate-500">Success {chanceGroups.map(group => `${group.chance}${group.levels.length === 1 && option.levels.length > 1 ? ` at Lv ${group.levels[0]}` : ''}`).join(' · ')}</span>}
                       </div>
                       <DropRateList entries={tables} />
+                      <BlueMagicConnections
+                        text={option.value}
+                        items={items}
+                        state={{ learnedBlueMagic }}
+                        onToggle={onToggleBlueMagic}
+                        sourceLabel="Mug"
+                      />
                     </div>
                   )
                 })}
@@ -2522,6 +2531,13 @@ function EnemyRow({
                           {rare.map((group, index) => <DropRateList key={`${group.label}-${index}`} entries={group.entries} />)}
                         </details>
                       )}
+                      <BlueMagicConnections
+                        text={option.value}
+                        items={items}
+                        state={{ learnedBlueMagic }}
+                        onToggle={onToggleBlueMagic}
+                        sourceLabel="Drop"
+                      />
                     </div>
                   )
                 })}
@@ -2643,7 +2659,40 @@ function bulletColor(key: string): string {
   return 'text-slate-400'
 }
 
-function BossStatBlock({ text, chapterId }: { text: string; chapterId: string }) {
+function normalizedEnemyName(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
+function bossEnemyForName(name: string, enemies: Enemy[]) {
+  const cleanedName = name.replace(/^\d+\s*x\s*/i, '').trim()
+  const normalizedName = normalizedEnemyName(cleanedName)
+  const aliases: Record<string, string> = {
+    ultimeciafinalform: 'Ultimecia (final)',
+    ultimecialowerportion: 'Ultimecia (appendage)',
+  }
+  const aliasedName = aliases[normalizedName]
+  if (aliasedName) {
+    const aliasKey = normalizedEnemyName(aliasedName)
+    const aliasMatch = enemies.find(enemy => normalizedEnemyName(enemy.name) === aliasKey)
+    if (aliasMatch) return aliasMatch
+  }
+
+  const exactMatch = enemies.find(enemy => normalizedEnemyName(enemy.name) === normalizedName)
+  if (exactMatch) return exactMatch
+
+  return enemies.find(enemy => {
+    const baseName = enemy.name.replace(/\s*\([^)]*\)\s*$/, '')
+    return normalizedEnemyName(baseName) === normalizedName
+  })
+}
+
+function BossStatBlock({ text, chapterId, enemies, completedItems, onToggleItem }: {
+  text: string
+  chapterId: string
+  enemies: Enemy[]
+  completedItems: Record<string, boolean>
+  onToggleItem: (id: string) => void
+}) {
   const lines = text.split('\n')
   const header  = lines[0]
   const bullets = lines.slice(1).filter(l => l.startsWith('- '))
@@ -2655,6 +2704,9 @@ function BossStatBlock({ text, chapterId }: { text: string; chapterId: string })
   const expMatch  = header.match(/EXP:\s*([\d,]+)/)
   const name      = nameMatch?.[1] ?? 'Boss'
   const images    = getBossImages(chapterId, name)
+  const enemy     = bossEnemyForName(name, enemies)
+  const defeatedId = enemy ? enemyDefeatedTrackerId(enemy.id) : null
+  const defeated = defeatedId ? Boolean(completedItems[defeatedId]) : false
 
   return (
     <div className="px-4 py-3 space-y-2">
@@ -2666,6 +2718,24 @@ function BossStatBlock({ text, chapterId }: { text: string; chapterId: string })
         {apMatch && <span className="text-xs font-mono text-slate-500">{apMatch[1]} AP</span>}
         {expMatch && expMatch[1] !== '0' && (
           <span className="text-xs font-mono text-teal-600">{expMatch[1]} EXP</span>
+        )}
+        {defeatedId && (
+          <button
+            type="button"
+            role="checkbox"
+            aria-checked={defeated}
+            aria-label={`${defeated ? 'Unmark' : 'Mark'} ${name} ${defeated ? 'as not defeated' : 'defeated'}`}
+            onClick={() => onToggleItem(defeatedId)}
+            className={cn(
+              'ml-auto inline-flex min-h-8 shrink-0 items-center justify-center gap-1.5 rounded-md border px-2 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+              defeated
+                ? 'border-teal-700/60 bg-teal-950/40 text-teal-200 hover:bg-teal-900/50'
+                : 'border-slate-700 bg-slate-900/40 text-slate-300 hover:border-teal-700/70 hover:text-teal-200',
+            )}
+          >
+            {defeated && <Check size={12} aria-hidden="true" />}
+            {defeated ? 'Defeated' : 'Mark defeated'}
+          </button>
         )}
       </div>
 
@@ -2759,7 +2829,14 @@ function BossStatBlock({ text, chapterId }: { text: string; chapterId: string })
 
 // ─── Boss section (stat blocks + strategy) ────────────────────────────────────
 
-function BossSection({ chapterId, bosses, strategy }: { chapterId: string; bosses: string[]; strategy: string | null }) {
+function BossSection({ chapterId, bosses, strategy, enemies, completedItems, onToggleItem }: {
+  chapterId: string
+  bosses: string[]
+  strategy: string | null
+  enemies: Enemy[]
+  completedItems: Record<string, boolean>
+  onToggleItem: (id: string) => void
+}) {
   let strategyLabel = 'Strategy'
   let strategyBody  = ''
   if (strategy) {
@@ -2776,7 +2853,7 @@ function BossSection({ chapterId, bosses, strategy }: { chapterId: string; bosse
       {bosses.map((bossText, i) => (
         <div key={i}>
           {i > 0 && <div className="mx-4 h-px bg-red-900/30" />}
-          <BossStatBlock text={bossText} chapterId={chapterId} />
+          <BossStatBlock text={bossText} chapterId={chapterId} enemies={enemies} completedItems={completedItems} onToggleItem={onToggleItem} />
         </div>
       ))}
       {strategy && (
@@ -2889,10 +2966,16 @@ function InlineSidequestBlocks({
   entries,
   completedItems,
   onToggleItem,
+  items,
+  learnedBlueMagic,
+  onToggleBlueMagic,
 }: {
   entries: Array<{ sidequest: Sidequest; placement: Sidequest['placements'][number] }>
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
+  items: Item[]
+  learnedBlueMagic: TrackerState['learnedBlueMagic']
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }) {
   if (!entries.length) return null
   return (
@@ -2906,6 +2989,9 @@ function InlineSidequestBlocks({
             placement={placement}
             completed={!!completedItems[id]}
             onToggle={() => onToggleItem(id)}
+            items={items}
+            state={{ learnedBlueMagic }}
+            onToggleBlueMagic={onToggleBlueMagic}
           />
         )
       })}
@@ -2923,7 +3009,7 @@ const DISC_NAV_COLORS: Record<number, { border: string; text: string; label: str
   4: { border: 'border-amber-700/50',  text: 'text-amber-400',  label: 'Disc 4' },
 }
 
-export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate, characterLevels = {}, activePartyIds = [], magicCompletedByCharacter = {}, onToggleMagic }: Props) {
+export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate, characterLevels = {}, activePartyIds = [], magicCompletedByCharacter = {}, onToggleMagic, items, learnedBlueMagic, availableBlueMagicIds, onToggleBlueMagic }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
 
   // Scroll the nearest overflow-y-auto ancestor to the top whenever the
@@ -2962,21 +3048,16 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
         className={cn('glass-panel p-5 border-t-2', discStyle.border)}
         style={{ backgroundImage: `linear-gradient(to bottom, ${discStyle.gradient}, transparent)` }}
       >
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-              <span className={cn('text-xs px-2 py-0.5 rounded-full border font-medium', discStyle.badge)}>
-                {chapter.disc === 0 ? 'Reference' : `Disc ${chapter.disc}`}
-              </span>
-              {chapter.disc > 0 && (
-                <span className="text-xs text-slate-500">Ch. {chapter.index}</span>
-              )}
-              {totalCps > 0 && (
-                <span className="text-xs text-slate-500">{doneCps}/{totalCps} checkpoints</span>
-              )}
-            </div>
-            <h1 className="text-xl font-bold text-slate-100 leading-tight">{chapter.title}</h1>
+        <div className="mb-2">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span className={cn('text-xs px-2 py-0.5 rounded-full border font-medium', discStyle.badge)}>
+              {chapter.disc === 0 ? 'Reference' : `Disc ${chapter.disc}`}
+            </span>
+            {totalCps > 0 && (
+              <span className="text-xs text-slate-500">{doneCps}/{totalCps} checkpoints</span>
+            )}
           </div>
+          <h1 className="text-xl font-bold text-slate-100 leading-tight">{chapter.title}</h1>
         </div>
         {totalCps > 0 && (
           <div className="h-1 rounded-full bg-slate-800/60 overflow-hidden mt-3">
@@ -3013,9 +3094,16 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
               const groupSidequests = item.indices.flatMap(idx => sidequestMap[idx] ?? [])
               return (
                 <div key={di} className="space-y-3">
-                  <BossSection chapterId={chapter.id} bosses={item.bosses} strategy={item.strategy} />
+                  <BossSection
+                    chapterId={chapter.id}
+                    bosses={item.bosses}
+                    strategy={item.strategy}
+                    enemies={enemies}
+                    completedItems={completedItems}
+                    onToggleItem={onToggleItem}
+                  />
                   <CheckpointCards checkpoints={groupCps} completedItems={completedItems} onToggleItem={onToggleItem} />
-                <InlineSidequestBlocks entries={groupSidequests} completedItems={completedItems} onToggleItem={onToggleItem} />
+                <InlineSidequestBlocks entries={groupSidequests} completedItems={completedItems} onToggleItem={onToggleItem} items={items} learnedBlueMagic={learnedBlueMagic} onToggleBlueMagic={onToggleBlueMagic} />
                 </div>
               )
             }
@@ -3027,7 +3115,7 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
                 <div key={di} className="space-y-3">
                   <ReferenceCalloutPanel items={item.paras} chapterId={chapter.id} />
                   <CheckpointCards checkpoints={groupCps} completedItems={completedItems} onToggleItem={onToggleItem} />
-                  <InlineSidequestBlocks entries={groupSidequests} completedItems={completedItems} onToggleItem={onToggleItem} />
+                  <InlineSidequestBlocks entries={groupSidequests} completedItems={completedItems} onToggleItem={onToggleItem} items={items} learnedBlueMagic={learnedBlueMagic} onToggleBlueMagic={onToggleBlueMagic} />
                 </div>
               )
             }
@@ -3046,12 +3134,15 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
                   ? <AreaEncounterCard
                       area={area}
                       enemies={enemies}
+                      items={items}
                       partyContext={partyContext}
                       characters={characters}
                       activePartyIds={activePartyIds}
                       magic={magic}
                       magicCompletedByCharacter={magicCompletedByCharacter}
                       onToggleMagic={onToggleMagic}
+                      learnedBlueMagic={learnedBlueMagic}
+                      onToggleBlueMagic={onToggleBlueMagic}
                       completedItems={completedItems}
                       onToggleItem={onToggleItem}
                     />
@@ -3059,9 +3150,27 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
                     ? <RouteStep text={para} />
                     : renderParagraphBlock(para, chapter.id)
                 }
+                {!area && (
+                  <BlueMagicConnections
+                    text={para}
+                    items={items}
+                    state={{ learnedBlueMagic }}
+                    onToggle={onToggleBlueMagic}
+                    sourceLabel="Guide"
+                  />
+                )}
+                {chapter.id === 'r0-gf-mechanics' && idx === 19 && (
+                  <BlueMagicTracker
+                    items={items}
+                    state={{ learnedBlueMagic }}
+                    onToggle={onToggleBlueMagic}
+                    availableAbilityIds={availableBlueMagicIds}
+                    variant="full"
+                  />
+                )}
                 {aidPlacement === 'after' && <ContextualVisualAid chapterId={chapter.id} paragraphText={para} />}
                 <CheckpointCards checkpoints={checkpointMap[idx] ?? []} completedItems={completedItems} onToggleItem={onToggleItem} />
-                <InlineSidequestBlocks entries={sidequestMap[idx] ?? []} completedItems={completedItems} onToggleItem={onToggleItem} />
+                <InlineSidequestBlocks entries={sidequestMap[idx] ?? []} completedItems={completedItems} onToggleItem={onToggleItem} items={items} learnedBlueMagic={learnedBlueMagic} onToggleBlueMagic={onToggleBlueMagic} />
               </div>
             )
           })}

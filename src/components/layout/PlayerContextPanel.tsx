@@ -1,4 +1,4 @@
-import { Check, ChevronDown, ChevronRight, Users, WandSparkles, Zap } from 'lucide-react'
+import { Check, ChevronDown, ChevronRight, Sparkles, Users, WandSparkles, Zap } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { cn } from '../../lib/utils'
 import { formatPossibleLevels, type PartyLevelContext } from '../../lib/enemyLevelData'
@@ -9,14 +9,17 @@ import {
   recommendedGFProgress,
 } from '../../lib/playerState'
 import { orderedStoryChapters } from '../../lib/progression'
-import type { Chapter, CharacterProfile, GuardianForce, MagicSpell, TrackerState } from '../../types'
+import { BlueMagicTracker } from '../ui/BlueMagicTracker'
+import type { Chapter, CharacterProfile, GuardianForce, Item, MagicSpell, TrackerState } from '../../types'
 
 interface Props {
   characters: CharacterProfile[]
   magic: MagicSpell[]
+  items: Item[]
   gfs: GuardianForce[]
   chapters: Chapter[]
   availableMagicIds: ReadonlySet<string>
+  availableBlueMagicIds: ReadonlySet<string>
   visibleGFIds: ReadonlySet<string>
   state: TrackerState
   partyContext: PartyLevelContext
@@ -24,10 +27,11 @@ interface Props {
   onSetLevel: (characterId: string, level: number) => void
   onToggleMagic: (characterId: string, spellId: string) => void
   onToggleGFAbility: (gfId: string, abilityName: string) => void
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
   onSetProgressionChapter: (chapterId: string) => void
 }
 
-type OpenPanel = 'party' | 'magic' | 'gf' | null
+type OpenPanel = 'party' | 'magic' | 'gf' | 'blue' | null
 type MagicFilter = 'needed' | 'all'
 type GFDisplay = 'remaining' | 'all'
 
@@ -42,9 +46,11 @@ function temporaryGuest(character: CharacterProfile) {
 export function PlayerContextPanel({
   characters,
   magic,
+  items,
   gfs,
   chapters,
   availableMagicIds,
+  availableBlueMagicIds,
   visibleGFIds,
   state,
   partyContext,
@@ -52,6 +58,7 @@ export function PlayerContextPanel({
   onSetLevel,
   onToggleMagic,
   onToggleGFAbility,
+  onToggleBlueMagic,
   onSetProgressionChapter,
 }: Props) {
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null)
@@ -81,6 +88,7 @@ export function PlayerContextPanel({
   }))
   const magicToDoCount = activeMagicNeeds.reduce((total, entry) => total + entry.remaining, 0)
   const gfToDo = gfProgress.filter(progress => progress.remaining > 0)
+  const blueMagicToDo = [...availableBlueMagicIds].filter(id => !state.learnedBlueMagic[id]).length
   const magicRows = useMemo(() => {
     if (!selectedMagicCharacter) return []
     const query = magicQuery.trim().toLowerCase()
@@ -183,6 +191,13 @@ export function PlayerContextPanel({
             icon={<Zap size={11} />}
             onClick={() => togglePanel('gf')}
           />
+          <ContextActionButton
+            active={openPanel === 'blue'}
+            label="Blue Magic"
+            detail={`${blueMagicToDo} to learn`}
+            icon={<Sparkles size={11} />}
+            onClick={() => togglePanel('blue')}
+          />
         </div>
 
         {openPanel === 'party' && (
@@ -273,7 +288,7 @@ export function PlayerContextPanel({
             </div>
             {selectedMagicCharacter && (
               <p className="mt-1.5 text-[10px] text-slate-600">
-                {selectedMagicCharacter.name}: {magicRows.length} {magicFilter === 'needed' ? 'needed now' : 'listed'} · completed magic counts as 100 stock.
+                Completed magic counts as 100 stock.
               </p>
             )}
             <div className="mt-1 max-h-52 divide-y divide-slate-800/60 overflow-y-auto rounded-md border border-slate-800/70 bg-slate-950/25">
@@ -295,10 +310,22 @@ export function PlayerContextPanel({
             </div>
             {magicRows.length > visibleMagicRows.length && (
               <button type="button" onClick={() => setShowAllMagic(value => !value)} className="mt-1.5 flex w-full items-center justify-center gap-1 text-[10px] text-violet-300 hover:text-violet-200">
-                {showAllMagic ? 'Show fewer' : `Show all ${magicRows.length}`}
+                {showAllMagic ? 'Show fewer' : 'Show all'}
                 {showAllMagic ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
               </button>
             )}
+          </div>
+        )}
+
+        {openPanel === 'blue' && (
+          <div className="mt-2 border-t border-slate-800/80 pt-2">
+            <BlueMagicTracker
+              items={items}
+              state={state}
+              onToggle={onToggleBlueMagic}
+              availableAbilityIds={availableBlueMagicIds}
+              variant="compact"
+            />
           </div>
         )}
 
@@ -351,7 +378,7 @@ export function PlayerContextPanel({
             </div>}
             {gfProgress.length > 0 && abilityRows.length > visibleAbilityRows.length && (
               <button type="button" onClick={() => setShowAllAbilities(value => !value)} className="mt-1.5 flex w-full items-center justify-center gap-1 text-[10px] text-emerald-300 hover:text-emerald-200">
-                {showAllAbilities ? 'Show fewer' : `Show all ${abilityRows.length}`}
+                {showAllAbilities ? 'Show fewer' : 'Show all'}
                 {showAllAbilities ? <ChevronDown size={11} /> : <ChevronRight size={11} />}
               </button>
             )}

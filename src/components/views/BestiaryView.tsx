@@ -2,15 +2,19 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { BadgeCheck, BookOpen, ChevronDown, Circle, CircleCheck, MapPin, Search, Shield, Skull, Sparkles, Swords } from 'lucide-react'
 import { cn } from '../../lib/utils'
+import { BlueMagicConnections } from '../ui/BlueMagicTracker'
 import { canonicalRecordForEnemy, type CanonicalBand, type CanonicalBestiaryData, type CanonicalBestiaryRecord, type CanonicalField, type CanonicalValue } from '../../lib/bestiaryData'
 import { enemyDefeatedTrackerId } from '../../lib/playerState'
 import bestiaryRaw from '../../data/ff8_bestiary.json'
-import type { Enemy } from '../../types'
+import type { Enemy, Item, TrackerState } from '../../types'
 
 interface Props {
   enemies: Enemy[]
   completedItems: Record<string, boolean>
   onSetItem: (id: string, next: boolean) => void
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 type BestiaryRecord = CanonicalBestiaryRecord & {
@@ -222,7 +226,7 @@ function outcomeLines(value?: CanonicalValue) {
     .filter(line => line && !/^expand$/i.test(line) && !/^\[MaxDepth\]$/i.test(line))
 }
 
-function ItemDrop({ band }: { band: CanonicalBand }) {
+function ItemDrop({ band, items, state, onToggleBlueMagic }: { band: CanonicalBand; items: Item[]; state: TrackerState; onToggleBlueMagic: (abilityId: string, next?: boolean) => void }) {
   const field = (band.fields ?? []).find(candidate => /^item drop/i.test(candidate.label || ''))
   if (!field) return <span className="text-slate-500">No item drop data.</span>
   const dropChance = formatPercent(field.percent)
@@ -230,6 +234,7 @@ function ItemDrop({ band }: { band: CanonicalBand }) {
   const normalTable = alternatives.find(item => /normal/i.test(item.label || ''))
   const rareTable = alternatives.find(item => /rare item/i.test(item.label || ''))
   const defaultLines = outcomeLines(field.value)
+  const normalLines = normalTable ? outcomeLines(normalTable as CanonicalValue) : defaultLines
   return (
     <div className="space-y-2.5">
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -239,18 +244,22 @@ function ItemDrop({ band }: { band: CanonicalBand }) {
       {normalTable ? (
         <div>
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-violet-200/75">Normal table</p>
-          <OutcomeList lines={outcomeLines(normalTable as CanonicalValue)} />
+          <OutcomeList lines={normalLines} />
         </div>
       ) : (
         <OutcomeList lines={defaultLines} />
       )}
+      <BlueMagicConnections text={normalLines.join(' ')} items={items} state={state} onToggle={onToggleBlueMagic} sourceLabel="Drop" />
       {rareTable && (
         <details className="rounded-md border border-violet-300/10 bg-violet-300/[0.035] px-2.5 py-2">
           <summary className="flex min-h-7 cursor-pointer list-none items-center gap-2 text-[11px] font-medium text-violet-200 marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70">
             <ChevronDown size={13} className="shrink-0 text-violet-300" />
             Rare Item ability table
           </summary>
-          <div className="pt-1.5"><OutcomeList lines={outcomeLines(rareTable as CanonicalValue)} /></div>
+          <div className="pt-1.5">
+            <OutcomeList lines={outcomeLines(rareTable as CanonicalValue)} />
+            <BlueMagicConnections text={outcomeLines(rareTable as CanonicalValue).join(' ')} items={items} state={state} onToggle={onToggleBlueMagic} sourceLabel="Drop" />
+          </div>
         </details>
       )}
     </div>
@@ -273,11 +282,14 @@ function OutcomeList({ lines }: { lines: string[] }) {
   )
 }
 
-function ItemBands({ record, title, matcher, target }: {
+function ItemBands({ record, title, matcher, target, items, state, onToggleBlueMagic }: {
   record: BestiaryRecord
   title: 'Mug' | 'Drops' | 'Other information'
   matcher: (field: CanonicalField) => boolean
   target: number | null
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }) {
   const bands = (record.items?.level_bands ?? [])
     .map(band => ({ ...band, selectedField: (band.fields ?? []).find(matcher) }))
@@ -297,7 +309,7 @@ function ItemBands({ record, title, matcher, target }: {
       target={target}
       render={band => {
         const field = band.fields?.[0]
-        if (title === 'Drops') return <ItemDrop band={band} />
+        if (title === 'Drops') return <ItemDrop band={band} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
         const lines = outcomeLines(field?.value)
         if (title === 'Mug') {
           return (
@@ -306,6 +318,7 @@ function ItemBands({ record, title, matcher, target }: {
                 <span>Mug success</span><span className="text-slate-300">{formatPercent(field?.percent) || 'Not stated'}</span>
               </div>
               <OutcomeList lines={lines} />
+              <BlueMagicConnections text={lines.join(' ')} items={items} state={state} onToggle={onToggleBlueMagic} sourceLabel="Mug" />
             </div>
           )
         }
@@ -363,7 +376,6 @@ function StatusTable({ record }: { record: BestiaryRecord }) {
       <summary className="flex min-h-8 cursor-pointer list-none items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70">
         <ChevronDown size={14} className="text-violet-300" />
         Status susceptibility
-        <span className="ml-auto text-[10px] font-normal normal-case tracking-normal text-slate-500">{entries.length} effects</span>
       </summary>
       <div className="mt-3 grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
         {entries.map((entry, index) => (
@@ -406,7 +418,7 @@ function FullStats({ record, target }: { record: BestiaryRecord; target: number 
       <details className="mt-3 border-t border-slate-800/70 pt-2.5">
         <summary className="flex min-h-8 cursor-pointer list-none items-center gap-2 text-[11px] text-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70">
           <ChevronDown size={13} className="text-violet-300" />
-          Full level table <span className="text-slate-500">({rows.length} levels)</span>
+          Full level table
         </summary>
         <div className="mt-2 max-h-80 overflow-auto rounded-md border border-slate-800/70">
           <table className="w-full min-w-[34rem] border-collapse text-left text-[10px]">
@@ -445,11 +457,14 @@ function FullStats({ record, target }: { record: BestiaryRecord; target: number 
   )
 }
 
-function EnemyDossier({ record, aliases, completedItems, onSetItem }: {
+function EnemyDossier({ record, aliases, completedItems, onSetItem, items, state, onToggleBlueMagic }: {
   record: BestiaryRecord
   aliases: Enemy[]
   completedItems: Record<string, boolean>
   onSetItem: Props['onSetItem']
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: Props['onToggleBlueMagic']
 }) {
   const [targetText, setTargetText] = useState('')
   useEffect(() => setTargetText(''), [record.id])
@@ -631,7 +646,7 @@ function EnemyDossier({ record, aliases, completedItems, onSetItem }: {
             <details>
               <summary className="flex min-h-8 cursor-pointer list-none items-center gap-2 text-xs text-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70">
                 <ChevronDown size={13} className="text-violet-300" />
-                Show location list <span className="text-slate-500">({valueLines(locationField.value).length} entries)</span>
+                Show location list
               </summary>
               <ul className="mt-2 space-y-1.5 border-l border-slate-700/80 pl-3.5">
                 {valueLines(locationField.value).map((line, index) => (
@@ -672,8 +687,8 @@ function EnemyDossier({ record, aliases, completedItems, onSetItem }: {
       </div>
 
       <div className="mt-3 grid gap-3 lg:grid-cols-2">
-        <ItemBands record={record} title="Mug" matcher={field => /^mug/i.test(field.label || '')} target={target} />
-        <ItemBands record={record} title="Drops" matcher={field => /^item drop/i.test(field.label || '')} target={target} />
+        <ItemBands record={record} title="Mug" matcher={field => /^mug/i.test(field.label || '')} target={target} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
+        <ItemBands record={record} title="Drops" matcher={field => /^item drop/i.test(field.label || '')} target={target} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
       </div>
 
       <div className="mt-3 grid gap-3 lg:grid-cols-2">
@@ -721,7 +736,7 @@ function EnemyDossier({ record, aliases, completedItems, onSetItem }: {
   )
 }
 
-export function BestiaryView({ enemies, completedItems, onSetItem }: Props) {
+export function BestiaryView({ enemies, completedItems, onSetItem, items, state, onToggleBlueMagic }: Props) {
   const reduceMotion = useReducedMotion()
   const [category, setCategory] = useState<Category>('Enemies')
   const [searchText, setSearchText] = useState('')
@@ -783,7 +798,6 @@ export function BestiaryView({ enemies, completedItems, onSetItem }: Props) {
               )}
             >
               {item}
-              {item !== 'All' && <span className="ml-1.5 font-mono text-[9px] text-slate-500">{records.filter(record => recordCategory(record) === item).length}</span>}
             </button>
           ))}
         </div>
@@ -819,7 +833,6 @@ export function BestiaryView({ enemies, completedItems, onSetItem }: Props) {
             <aside className="sticky top-2 hidden max-h-[calc(100vh-13rem)] min-w-0 overflow-hidden rounded-lg border border-slate-800/70 bg-slate-950/45 lg:block">
               <div className="flex items-center justify-between border-b border-slate-800/80 px-3 py-2.5">
                 <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400">Enemy index</span>
-                <span className="font-mono text-[10px] text-slate-600">{filteredRecords.length}</span>
               </div>
               <nav aria-label="Enemy records" className="max-h-[calc(100vh-16.2rem)] overflow-y-auto p-1">
                 {filteredRecords.map(record => {
@@ -866,6 +879,9 @@ export function BestiaryView({ enemies, completedItems, onSetItem }: Props) {
                   aliases={aliases}
                   completedItems={completedItems}
                   onSetItem={onSetItem}
+                  items={items}
+                  state={state}
+                  onToggleBlueMagic={onToggleBlueMagic}
                 />
               </motion.div>
             </div>

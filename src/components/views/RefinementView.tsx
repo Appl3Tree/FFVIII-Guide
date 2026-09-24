@@ -1,10 +1,14 @@
 import { useState, useMemo } from 'react'
 import { Search, X } from 'lucide-react'
 import { cn } from '../../lib/utils'
-import type { RefinementAbility } from '../../types'
+import { BlueMagicConnections } from '../ui/BlueMagicTracker'
+import type { Item, RefinementAbility, TrackerState } from '../../types'
 
 interface Props {
   refinement: RefinementAbility[]
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 // ── Category definitions ─────────────────────────────────────────────────────
@@ -97,32 +101,34 @@ const fallbackAccent = { text: 'text-teal-400', badge: 'bg-teal-400/10 text-teal
 // ── Recipe row ────────────────────────────────────────────────────────────────
 
 function RecipeRow({
-  from, fromQty, to, toQty, striped,
-}: { from: string; fromQty: number; to: string; toQty: number; striped?: boolean }) {
+  from, fromQty, to, toQty, striped, items, state, onToggleBlueMagic,
+}: { from: string; fromQty: number; to: string; toQty: number; striped?: boolean; items: Item[]; state: TrackerState; onToggleBlueMagic: (abilityId: string, next?: boolean) => void }) {
   return (
-    <div className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', striped && 'bg-slate-800/25')}>
-      <span className="text-slate-500 font-mono w-5 text-right shrink-0">{fromQty}×</span>
-      <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{from}</span>
-      <span className="text-slate-600 shrink-0 pt-0.5">→</span>
-      <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed text-right break-words [overflow-wrap:anywhere]">
-        {toQty}× {to}
-      </span>
+    <div className={cn('px-3 py-1.5', striped && 'bg-slate-800/25')}>
+      <div className="flex items-start gap-2 text-xs">
+        <span className="text-slate-500 font-mono w-5 text-right shrink-0">{fromQty}×</span>
+        <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{from}</span>
+        <span className="text-slate-600 shrink-0 pt-0.5">→</span>
+        <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed text-right break-words [overflow-wrap:anywhere]">
+          {toQty}× {to}
+        </span>
+      </div>
+      <BlueMagicConnections text={to} items={items} state={state} onToggle={onToggleBlueMagic} />
     </div>
   )
 }
 
 // ── Ability panel (always-expanded) ──────────────────────────────────────────
 
-function AbilityPanel({ ability, entries }: { ability: string; entries: RefinementAbility['entries'] }) {
+function AbilityPanel({ ability, entries, items, state, onToggleBlueMagic }: { ability: string; entries: RefinementAbility['entries']; items: Item[]; state: TrackerState; onToggleBlueMagic: (abilityId: string, next?: boolean) => void }) {
   const accent = ABILITY_ACCENT[ability] ?? fallbackAccent
   return (
     <div className="glass-panel overflow-hidden">
       <div className="flex items-center justify-between px-3 py-2 bg-slate-800/50 border-b border-slate-700/40">
         <span className={cn('text-xs font-semibold', accent.text)}>{ability}</span>
-        <span className="text-[10px] text-slate-600">{entries.length}</span>
       </div>
       {entries.map((e, i) => (
-        <RecipeRow key={i} striped={i % 2 === 1} {...e} />
+        <RecipeRow key={i} striped={i % 2 === 1} {...e} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
       ))}
     </div>
   )
@@ -130,7 +136,7 @@ function AbilityPanel({ ability, entries }: { ability: string; entries: Refineme
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function RefinementView({ refinement }: Props) {
+export function RefinementView({ refinement, items, state, onToggleBlueMagic }: Props) {
   const [query,      setQuery]      = useState('')
   const [category,   setCategory]   = useState<Category>('all')
   const [cardGroup,  setCardGroup]  = useState<CardGroup>('all')
@@ -189,20 +195,20 @@ export function RefinementView({ refinement }: Props) {
     }
     return (
       <div className="glass-panel overflow-hidden">
-        <div className="px-3 py-2 bg-slate-800/50 border-b border-slate-700/40 flex items-center justify-between">
-          <span className="text-xs text-slate-400">{searchResults.length} result{searchResults.length !== 1 ? 's' : ''}</span>
-        </div>
         {searchResults.map((r, i) => {
           const accent = ABILITY_ACCENT[r.ability] ?? fallbackAccent
           return (
-            <div key={i} className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
-              <span className="text-slate-500 font-mono w-5 text-right shrink-0">{r.fromQty}×</span>
-              <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.from}</span>
-              <span className="text-slate-600 shrink-0 pt-0.5">→</span>
-              <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.toQty}× {r.to}</span>
-              <span className={cn('text-[10px] px-1.5 py-0.5 rounded border font-medium shrink-0 hidden sm:inline mt-0.5', accent.badge)}>
-                {r.ability}
-              </span>
+            <div key={i} className={cn(i % 2 === 1 && 'bg-slate-800/25')}>
+              <div className="flex items-start gap-2 px-3 py-1.5 text-xs">
+                <span className="text-slate-500 font-mono w-5 text-right shrink-0">{r.fromQty}×</span>
+                <span className="text-slate-200 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.from}</span>
+                <span className="text-slate-600 shrink-0 pt-0.5">→</span>
+                <span className="text-emerald-300 font-medium flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">{r.toQty}× {r.to}</span>
+                <span className={cn('text-[10px] px-1.5 py-0.5 rounded border font-medium shrink-0 hidden sm:inline mt-0.5', accent.badge)}>
+                  {r.ability}
+                </span>
+              </div>
+              <BlueMagicConnections text={r.to} items={items} state={state} onToggle={onToggleBlueMagic} />
             </div>
           )
         })}
@@ -215,7 +221,7 @@ export function RefinementView({ refinement }: Props) {
     return (
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
         {panels.map(r => (
-          <AbilityPanel key={r.ability} ability={r.ability} entries={r.entries} />
+          <AbilityPanel key={r.ability} ability={r.ability} entries={r.entries} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
         ))}
       </div>
     )
@@ -262,25 +268,12 @@ export function RefinementView({ refinement }: Props) {
                 <div key={level.label} className="glass-panel overflow-hidden">
                   <div className="flex items-center justify-between px-3 py-2 bg-slate-800/50 border-b border-slate-700/40">
                     <span className="text-xs font-semibold text-yellow-300">{level.label}</span>
-                    <span className="text-[10px] text-slate-600">{level.cards.length} cards</span>
                   </div>
                   {level.cards.map((cardName, i) => {
                     const entry = cardEntryMap.get(cardName)
                     if (!entry) return null
                     return (
-                      <div key={cardName} className={cn('flex items-start gap-2 px-3 py-1.5 text-xs', i % 2 === 1 && 'bg-slate-800/25')}>
-                        <span className="text-slate-300 flex-1 min-w-0 leading-relaxed break-words [overflow-wrap:anywhere]">
-                          {entry.fromQty > 1 && (
-                            <span className="text-slate-500 font-mono mr-1">{entry.fromQty}×</span>
-                          )}
-                          {cardName}
-                        </span>
-                        <span className="text-slate-600 shrink-0 pt-0.5">→</span>
-                        <span className="text-emerald-300 font-medium min-w-0 text-right leading-relaxed break-words [overflow-wrap:anywhere]">
-                          {entry.toQty > 1 && <span className="font-mono">{entry.toQty}× </span>}
-                          {entry.to}
-                        </span>
-                      </div>
+                      <RecipeRow key={cardName} striped={i % 2 === 1} from={cardName} fromQty={entry.fromQty} to={entry.to} toQty={entry.toQty} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
                     )
                   })}
                 </div>
@@ -309,7 +302,6 @@ export function RefinementView({ refinement }: Props) {
                 >
                   <span className={cn('text-xs font-semibold', accent.text)}>{r.ability}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-slate-600">{r.entries.length} recipes</span>
                     <svg
                       className={cn('w-3 h-3 text-slate-600 transition-transform duration-150', isOpen && 'rotate-180')}
                       viewBox="0 0 12 12" fill="none"
@@ -321,7 +313,7 @@ export function RefinementView({ refinement }: Props) {
                 {isOpen && (
                   <div className="border-t border-slate-700/40">
                     {r.entries.map((e, i) => (
-                      <RecipeRow key={i} striped={i % 2 === 1} {...e} />
+                      <RecipeRow key={i} striped={i % 2 === 1} {...e} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
                     ))}
                   </div>
                 )}
@@ -338,7 +330,6 @@ export function RefinementView({ refinement }: Props) {
           >
             <span className="text-xs font-semibold text-yellow-300">Card Mod</span>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-slate-600">{cardMod.entries.length} recipes</span>
               <svg
                 className={cn('w-3 h-3 text-slate-600 transition-transform duration-150', expanded.has('Card Mod') && 'rotate-180')}
                 viewBox="0 0 12 12" fill="none"
@@ -359,13 +350,8 @@ export function RefinementView({ refinement }: Props) {
                       const entry = cardEntryMap.get(cardName)
                       if (!entry) return null
                       return (
-                        <div key={cardName} className={cn('flex items-start gap-1 px-2 py-1 text-[10px]', i % 2 === 1 && 'bg-slate-800/30')}>
-                          <span className="text-slate-400 min-w-0 flex-1 leading-tight break-words [overflow-wrap:anywhere]">
-                            {entry.fromQty > 1 && <span className="text-slate-500">{entry.fromQty}×</span>} {cardName}
-                          </span>
-                          <span className="text-emerald-400 min-w-0 font-medium text-right leading-tight break-words [overflow-wrap:anywhere]">
-                            {entry.toQty > 1 ? `${entry.toQty}× ` : ''}{entry.to}
-                          </span>
+                        <div key={cardName} className={i % 2 === 1 ? 'bg-slate-800/30' : ''}>
+                          <RecipeRow from={cardName} fromQty={entry.fromQty} to={entry.to} toQty={entry.toQty} items={items} state={state} onToggleBlueMagic={onToggleBlueMagic} />
                         </div>
                       )
                     })}
@@ -396,9 +382,6 @@ export function RefinementView({ refinement }: Props) {
       <div className="glass-panel p-4">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-base font-semibold text-slate-100">Refinement</h2>
-          <span className="text-xs text-slate-500">
-            {refinement.reduce((sum, ability) => sum + ability.entries.length, 0)} recipes across {refinement.length} abilities
-          </span>
         </div>
       </div>
 

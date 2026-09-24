@@ -28,7 +28,7 @@ import { SIDEQUESTS } from './data/sidequests'
 import { createProgressLabeler } from './lib/progressLabels'
 import { createPartyLevelContext } from './lib/enemyLevelData'
 import { createCanonicalEnemyLookup } from './lib/bestiaryData'
-import { gfIdsAvailableByProgression, magicAvailableByProgression } from './lib/progression'
+import { blueMagicAvailableByProgression, gfIdsAvailableByProgression, magicAvailableByProgression } from './lib/progression'
 
 const baseData = masterDataRaw as unknown as MasterData
 const canonicalEnemies = createCanonicalEnemyLookup(baseData.lookup.enemies, bestiaryRaw as unknown as Parameters<typeof createCanonicalEnemyLookup>[1])
@@ -114,6 +114,10 @@ export default function App() {
     data.chapters,
     tracker.state.progressionChapterId,
     data.lookup.gfs,
+  ), [tracker.state.progressionChapterId])
+  const availableBlueMagicIds = useMemo(() => blueMagicAvailableByProgression(
+    data.chapters,
+    tracker.state.progressionChapterId,
   ), [tracker.state.progressionChapterId])
   const visibleGFIds = useMemo(() => new Set(
     data.lookup.gfs
@@ -385,6 +389,7 @@ export default function App() {
               magic={data.lookup.magic ?? []}
               gfs={data.lookup.gfs}
               availableMagicIds={availableMagicIds}
+              availableBlueMagicIds={availableBlueMagicIds}
               visibleGFIds={visibleGFIds}
               state={tracker.state}
               partyContext={partyContext}
@@ -392,6 +397,7 @@ export default function App() {
               onSetLevel={tracker.setCharacterLevel}
               onToggleMagic={tracker.setMagicCompleted}
               onToggleGFAbility={tracker.setGFAbilityLearned}
+              onToggleBlueMagic={tracker.setBlueMagicLearned}
               onSetProgressionChapter={tracker.setProgressionChapter}
             />
           </div>
@@ -529,6 +535,10 @@ export default function App() {
             activePartyIds={partyContext.activeCharacterIds}
             magicCompletedByCharacter={tracker.state.magicCompletedByCharacter}
             onToggleMagic={tracker.setMagicCompleted}
+            learnedBlueMagic={tracker.state.learnedBlueMagic}
+            availableBlueMagicIds={availableBlueMagicIds}
+            onToggleBlueMagic={tracker.setBlueMagicLearned}
+            items={data.lookup.items}
           />
         ) : null
 
@@ -549,6 +559,9 @@ export default function App() {
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
             onNavigateToChapter={navigateToChapter}
+            items={data.lookup.items}
+            state={tracker.state}
+            onToggleBlueMagic={tracker.setBlueMagicLearned}
           />
         )
 
@@ -569,20 +582,23 @@ export default function App() {
             cards={data.lookup.cards}
             completedItems={tracker.state.completedItems}
             onToggleItem={tracker.toggleItem}
+            items={data.lookup.items}
+            state={tracker.state}
+            onToggleBlueMagic={tracker.setBlueMagicLearned}
           />
         )
 
       case 'refinement':
-        return <RefinementView refinement={data.lookup.refinement} />
+        return <RefinementView refinement={data.lookup.refinement} items={data.lookup.items} state={tracker.state} onToggleBlueMagic={tracker.setBlueMagicLearned} />
 
       case 'items':
-        return <ItemsView items={data.lookup.items} weapons={data.lookup.weapons} />
+        return <ItemsView items={data.lookup.items} weapons={data.lookup.weapons} state={tracker.state} onToggleBlueMagic={tracker.setBlueMagicLearned} />
 
       case 'abilities':
         return <AbilitiesView gfs={data.lookup.gfs} abilities={data.lookup.abilities ?? []} abilitySections={data.lookup.abilitySections ?? []} />
 
       case 'bestiary':
-        return <BestiaryView enemies={data.lookup.enemies} completedItems={tracker.state.completedItems} onSetItem={tracker.setCheck} />
+        return <BestiaryView enemies={data.lookup.enemies} completedItems={tracker.state.completedItems} onSetItem={tracker.setCheck} items={data.lookup.items} state={tracker.state} onToggleBlueMagic={tracker.setBlueMagicLearned} />
 
       case 'player':
         return (
@@ -590,11 +606,14 @@ export default function App() {
             characters={playerCharacters}
             magic={data.lookup.magic ?? []}
             gfs={data.lookup.gfs}
+            items={data.lookup.items}
             state={tracker.state}
             availableMagicIds={availableMagicIds}
+            availableBlueMagicIds={availableBlueMagicIds}
             visibleGFIds={visibleGFIds}
             onToggleMagic={tracker.setMagicCompleted}
             onToggleGFAbility={tracker.setGFAbilityLearned}
+            onToggleBlueMagic={tracker.setBlueMagicLearned}
             onSetLevel={tracker.setCharacterLevel}
             onToggleParty={tracker.setActiveCharacter}
           />

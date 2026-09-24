@@ -381,7 +381,7 @@ export function NotesDrawer({
                 <div className="grid shrink-0 grid-cols-2 gap-1 rounded-xl border border-slate-800 bg-slate-950/55 p-1">
                   {([
                     ['page', 'Current Page'],
-                    ['all', `All Notes${allNoteEntries.length ? ` (${allNoteEntries.length})` : ''}`],
+                    ['all', 'All Notes'],
                   ] as const).map(([tab, label]) => (
                     <button
                       key={tab}

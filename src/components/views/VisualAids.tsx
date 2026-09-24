@@ -1234,9 +1234,6 @@ function InlineImagePanel({ title, subtitle, images }: { title: string; subtitle
         <div className="flex items-center gap-2">
           <Images size={13} className="text-cyan-300" />
           <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
-          <span className="ml-auto text-[10px] font-mono text-slate-500">
-            {images.length} {images.length === 1 ? 'image' : 'images'}
-          </span>
         </div>
         <p className="mt-1 text-xs leading-relaxed text-slate-400">{subtitle}</p>
       </div>

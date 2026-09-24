@@ -1,4 +1,5 @@
 import type { Chapter, Enemy, GuardianForce, MagicSpell } from '../types'
+import { BLUE_MAGIC } from '../data/blueMagic'
 import { contextualDrawMagic, resolveEnemyLevelContext, type PartyLevelContext } from './enemyLevelData'
 import { magicByName } from './playerState'
 
@@ -55,6 +56,20 @@ export function gfIdsAvailableByProgression(
     gfs
       .filter(gf => progression.hasReached(gf.availabilityChapterId))
       .map(gf => gf.id),
+  )
+}
+
+/**
+ * Blue Magic to-do counts follow the first acquisition opportunity explicitly
+ * established by the Guide. Learned future abilities remain learned, while
+ * unavailable items do not inflate the current actionable count.
+ */
+export function blueMagicAvailableByProgression(chapters: Chapter[], chapterId: string) {
+  const progression = createProgressionAvailability(chapters, chapterId)
+  return new Set(
+    BLUE_MAGIC
+      .filter(ability => ability.knownByDefault || progression.hasReached(ability.availableFromChapterId))
+      .map(ability => ability.id),
   )
 }
 

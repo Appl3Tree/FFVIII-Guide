@@ -317,6 +317,8 @@ export interface TrackerState {
   magicCompletedByCharacter: Record<string, Record<string, boolean>>
   /** GF ability learning is keyed by `${gfId}:${abilityName}`. */
   learnedGFAbilities: Record<string, boolean>
+  /** Quistis's learned Blue Magic, keyed by the canonical ability id. */
+  learnedBlueMagic: Record<string, boolean>
   characterLevels: Record<string, number>
   activeParty: Record<string, boolean>
   progressionChapterId: string

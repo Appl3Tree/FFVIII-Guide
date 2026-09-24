@@ -107,7 +107,7 @@ export function GFView({ gfs, completedItems, onToggleItem, learnedGFAbilities, 
                       )}
                       {gf.abilities.length > 0 && (
                         <div>
-                          <p className="text-xs text-slate-600 mb-1.5">Abilities ({gf.abilities.length})</p>
+                          <p className="text-xs text-slate-600 mb-1.5">Abilities</p>
                           <div className="grid grid-cols-1 gap-1 max-h-52 overflow-y-auto">
                             {recommended.map((ab, idx) => {
                               const learned = isGFAbilityLearned({ learnedGFAbilities }, gf.id, ab.name)

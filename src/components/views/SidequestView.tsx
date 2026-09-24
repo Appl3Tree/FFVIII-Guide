@@ -4,13 +4,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../../lib/utils'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
-import type { Sidequest } from '../../types'
+import { BlueMagicConnections } from '../ui/BlueMagicTracker'
+import type { Item, Sidequest, TrackerState } from '../../types'
 
 interface Props {
   sidequests: Sidequest[]
   completedItems: Record<string, boolean>
   onToggleItem: (id: string) => void
   onNavigateToChapter?: (id: string) => void
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }
 
 const categoryStyles: Record<Sidequest['category'], { badge: 'teal' | 'indigo' | 'violet' | 'amber' | 'emerald'; text: string; border: string }> = {
@@ -78,11 +82,17 @@ function SidequestDetail({
   completed,
   onToggle,
   onNavigateToChapter,
+  items,
+  state,
+  onToggleBlueMagic,
 }: {
   sidequest: Sidequest
   completed: boolean
   onToggle: () => void
   onNavigateToChapter?: (id: string) => void
+  items: Item[]
+  state: TrackerState
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }) {
   const style = categoryStyles[sidequest.category]
   const firstPlacement = sidequest.placements[0]
@@ -118,6 +128,12 @@ function SidequestDetail({
 
         <InfoList title="Rewards" icon={<Gift size={12} />} items={sidequest.rewards} />
         <InfoList title="Requirements" icon={<AlertTriangle size={12} />} items={sidequest.requirements ?? []} />
+        <BlueMagicConnections
+          text={[sidequest.summary, ...sidequest.rewards, ...(sidequest.requirements ?? []), ...sidequest.route, ...(sidequest.notes ?? [])].join(' ')}
+          items={items}
+          state={state}
+          onToggle={onToggleBlueMagic}
+        />
 
         <section className="space-y-3">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-slate-500">
@@ -162,11 +178,17 @@ export function InlineSidequestBlock({
   placement,
   completed,
   onToggle,
+  items,
+  state,
+  onToggleBlueMagic,
 }: {
   sidequest: Sidequest
   placement?: Sidequest['placements'][number]
   completed: boolean
   onToggle: () => void
+  items: Item[]
+  state: Pick<TrackerState, 'learnedBlueMagic'>
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
 }) {
   const [open, setOpen] = useState(false)
   const style = categoryStyles[sidequest.category]
@@ -220,6 +242,12 @@ export function InlineSidequestBlock({
                   {requirements.length ? (
                     <InfoList title="Requirements" icon={<AlertTriangle size={12} />} items={requirements} />
                   ) : null}
+                  <BlueMagicConnections
+                    text={[summary, ...requirements, ...route, ...notes].join(' ')}
+                    items={items}
+                    state={state}
+                    onToggle={onToggleBlueMagic}
+                  />
                   <RouteList steps={route} />
                   {notes.length ? (
                     <ul className="space-y-1.5">
@@ -238,7 +266,7 @@ export function InlineSidequestBlock({
   )
 }
 
-export function SidequestView({ sidequests, completedItems, onToggleItem, onNavigateToChapter }: Props) {
+export function SidequestView({ sidequests, completedItems, onToggleItem, onNavigateToChapter, items, state, onToggleBlueMagic }: Props) {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<'All' | Sidequest['category']>('All')
   const [disc, setDisc] = useState<'All' | number>('All')
@@ -332,7 +360,7 @@ export function SidequestView({ sidequests, completedItems, onToggleItem, onNavi
           <div className="overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/20">
             <div className="flex items-center gap-2 border-b border-slate-800/70 px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-500">
               <Filter size={12} />
-              {filtered.length} routes
+              Routes
             </div>
             <div className="max-h-[62vh] overflow-y-auto divide-y divide-slate-800/60">
               {filtered.map(sidequest => {
@@ -375,6 +403,9 @@ export function SidequestView({ sidequests, completedItems, onToggleItem, onNavi
               completed={!!completedItems[trackerId(selected)]}
               onToggle={() => onToggleItem(trackerId(selected))}
               onNavigateToChapter={onNavigateToChapter}
+              items={items}
+              state={state}
+              onToggleBlueMagic={onToggleBlueMagic}
             />
           ) : (
             <div className="rounded-xl border border-slate-800/70 bg-slate-950/25 px-4 py-10 text-center text-sm text-slate-500">

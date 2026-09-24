@@ -62,7 +62,7 @@ export const SIDEQUESTS: Sidequest[] = [
     ],
     notes: [
       'The Balamb pair is mutually exclusive for collection count. Pick either one and do not worry about the other.',
-      'One reviewed walkthrough warns that collecting the Shumi Village issue before the Trabia Canyon Laguna sequence removes Ward from the battle. The issue remains available afterward, so postpone this one pickup until that sequence is complete.',
+      'To protect Ward’s upcoming Laguna battle, postpone this issue until after the Trabia Canyon sequence. It remains available afterward.',
       'This is a collection sidequest rather than a combat route, so the walkthrough only reminds you at the relevant towns.',
     ],
     related: ['Checklist'],
@@ -104,7 +104,7 @@ export const SIDEQUESTS: Sidequest[] = [
         summary: 'Visit Shumi Village now, but leave its magazine until after the Trabia Canyon Laguna sequence on Disc 3.',
         route: [
           'Use the Ultima Draw Point and complete Shumi Village quest steps if desired.',
-          'Do not take the Timber Maniacs issue from the Artisan\'s House bed yet; one reviewed walkthrough warns it removes Ward from the upcoming Laguna battle.',
+          'Leave the Timber Maniacs issue on the Artisan’s House bed until after the Trabia Canyon Laguna sequence; collect it on the later return.',
           'Return after the Trabia Canyon sequence to collect the issue safely.',
         ],
       },
@@ -122,7 +122,7 @@ export const SIDEQUESTS: Sidequest[] = [
         chapterId: 'd3-trabia-canyon',
         afterParagraph: 8,
         label: 'Timber Maniacs: Shumi Village issue safe to collect',
-        summary: 'After the Trabia Canyon Laguna sequence, the Shumi Village issue can be collected without removing Ward from that battle.',
+        summary: 'After the Trabia Canyon Laguna sequence, return to Shumi Village for the issue; this keeps the pickup outside Ward’s battle window.',
         route: [
           'Return to Shumi Village after completing the Trabia Canyon sequence.',
           'Collect the issue from the Artisan\'s House bed.',
@@ -335,7 +335,7 @@ export const SIDEQUESTS: Sidequest[] = [
     notes: [
       'Save before every deliberate loss. Reload if the Queen moves to the wrong region.',
       'Do not refine MiniMog, Sacred, Chicobo, Alexander, or Doomtrain until their Queen steps are finished.',
-      'After winning Phoenix and recovering Doomtrain, choose the Queen’s final region and regional trade rule before the Mobile Type 8 cutoff if using her to influence Disc 4 card play; the best setup depends on the card route you plan to use.',
+      'After winning Phoenix and recovering Doomtrain, move the Queen to Shumi Village and set the Trabia trade rule to Diff before the Mobile Type 8 cutoff if you plan to use her for Disc 4 card farming; the Queen’s location and regional rules explain this setup.',
     ],
     related: ['Cards', 'Checklist'],
     placements: [
@@ -603,7 +603,7 @@ export const SIDEQUESTS: Sidequest[] = [
       'Challenge Joker on the bridge reached by going right from the Training Centers first screen; he appears randomly and awards the GF Report upgrade when defeated.',
       'Challenge Club in the back portion of the 1F circle near the Dormitory exit.',
       'Challenge Diamond, the pair of girls walking near the directory.',
-      'Challenge Spade in Garden\'s 2F Hall during Chapter 12 before leaving for Fisherman\'s Horizon.',
+      'Challenge Spade in Garden\'s 2F Hall during the return to Balamb Garden, before leaving for Fisherman\'s Horizon.',
       'Challenge Heart, revealed as Xu, on the bridge.',
       'Speak to Dr. Kadowaki about King, then rest in Squalls dorm until King appears.',
       'Defeat King to complete the chain. If completed before Disc 4, the group later appears on the Ragnarok.',
@@ -663,7 +663,7 @@ export const SIDEQUESTS: Sidequest[] = [
       'For Odin, climb the ruins and use the statue mechanisms to collect both eye pieces.',
       'Enter the code at the upper statue, open Odins room, and defeat Odin before the timer expires.',
       'For Tonberry, repeatedly defeat Tonberries in the lower ruins; each gives 1 AP and no EXP.',
-      'Tonberry King appears after enough Tonberries are defeated. Guides differ on the exact threshold; keep defeating them until the King appears.',
+      'Tonberry King appears after enough Tonberries are defeated; keep fighting until he appears.',
       'If Odin is still undefeated, the 20-minute ruins timer remains active; leaving and re-entering resets the timer without resetting the Tonberry count.',
       'Defeat Tonberry King to obtain Tonberry GF and its guaranteed Royal Crown drop.',
       'Teach Tonberry LV Up, LV Down, Haggle, Sell-High, Familiar, and Call Shop according to your route needs.',
@@ -681,7 +681,7 @@ export const SIDEQUESTS: Sidequest[] = [
         route: [
           'Enter Centra Ruins when prepared for the timer.',
           'Complete the eye/statue route and defeat Odin if you want him now.',
-          'Defeat Tonberries in the lower ruins until Tonberry King appears, then defeat him for Tonberry GF and a Royal Crown. The approved guides give different exact thresholds.',
+          'Defeat Tonberries in the lower ruins until Tonberry King appears, then defeat him for Tonberry GF and a Royal Crown.',
         ],
       },
     ],
@@ -705,7 +705,7 @@ export const SIDEQUESTS: Sidequest[] = [
     ],
     notes: [
       'Status Guard teaches ST-Def-Jx4, making this more than a flavor sidequest.',
-      'Complete the Shumi quest and paid Ultima draws whenever convenient, but leave the village Timber Maniacs issue until after the Trabia Canyon Laguna sequence; a reviewed walkthrough warns that taking it earlier removes Ward from that battle.',
+      'Complete the Shumi quest and paid Ultima draws whenever convenient, but leave the village Timber Maniacs issue until after the Trabia Canyon Laguna sequence. Return afterward to collect it.',
     ],
     related: ['Items', 'Abilities', 'Magic'],
     placements: [
