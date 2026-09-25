@@ -170,7 +170,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd1-preparing-for-the-exam',
-        afterParagraph: 6,
+        afterParagraph: 7,
         label: "Zell's Love Quest: first Library visit",
         summary: 'Start the Library Girl chain before the Fire Cavern and refresh it before the SeeD Exam.',
         route: [
@@ -250,7 +250,7 @@ export const SIDEQUESTS: Sidequest[] = [
     placements: [
       {
         chapterId: 'd1-preparing-for-the-exam',
-        afterParagraph: 25,
+        afterParagraph: 26,
         label: 'Novice SeeD Candidates: window 1',
         summary: 'Start the candidate chain before the SeeD Field Exam.',
         route: [

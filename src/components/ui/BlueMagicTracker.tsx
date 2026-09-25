@@ -72,6 +72,42 @@ export function BlueMagicLearnedToggle({
   )
 }
 
+/** Compact learned-state control for a Blue Magic result embedded in a route. */
+export function BlueMagicRouteStep({
+  ability,
+  learned,
+  onToggle,
+}: {
+  ability: BlueMagicAbility
+  learned: boolean
+  onToggle: () => void
+}) {
+  return (
+    <span className="inline-flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1">
+      <Sparkles size={11} aria-hidden="true" className="shrink-0 text-teal-300" />
+      <span className="text-[9px] font-semibold uppercase tracking-wider text-teal-300/80">Blue Magic</span>
+      <span className="font-semibold text-teal-50">{ability.name}</span>
+      <button
+        type="button"
+        role="checkbox"
+        aria-checked={learned}
+        aria-label={`${ability.name} ${learned ? 'learned' : 'not learned'}`}
+        title={learned ? 'Mark as not learned' : 'Mark as learned'}
+        onClick={onToggle}
+        className={cn(
+          'inline-flex min-h-7 items-center gap-1 rounded border px-1.5 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300',
+          learned
+            ? 'border-emerald-600/45 bg-emerald-950/35 text-emerald-200'
+            : 'border-slate-700 bg-slate-950/50 text-slate-400 hover:border-teal-600/50 hover:text-teal-100',
+        )}
+      >
+        {learned ? <Check size={10} strokeWidth={3} /> : <Circle size={10} />}
+        {learned ? 'Learned' : 'Mark learned'}
+      </button>
+    </span>
+  )
+}
+
 export function BlueMagicConnections({
   text,
   items,

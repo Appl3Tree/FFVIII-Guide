@@ -539,6 +539,7 @@ export default function App() {
             availableBlueMagicIds={availableBlueMagicIds}
             onToggleBlueMagic={tracker.setBlueMagicLearned}
             items={data.lookup.items}
+            refinement={data.lookup.refinement}
           />
         ) : null
 

@@ -36,14 +36,15 @@ import {
   type ContextualOption,
   type PartyLevelContext,
 } from '../../lib/enemyLevelData'
-import { enemyDefeatedTrackerId, isMagicCompleted, magicByName } from '../../lib/playerState'
+import { enemyDefeatedTrackerId, isBlueMagicLearned, isMagicCompleted, magicByName } from '../../lib/playerState'
 import { Checkbox } from '../ui/Checkbox'
 import { Badge } from '../ui/Badge'
 import { SequenceSteps } from '../ui/SequenceSteps'
-import { BlueMagicConnections, BlueMagicTracker } from '../ui/BlueMagicTracker'
+import { BLUE_MAGIC_BY_ITEM_ID } from '../../data/blueMagic'
+import { BlueMagicConnections, BlueMagicRouteStep, BlueMagicTracker } from '../ui/BlueMagicTracker'
 import { ContextualVisualAid, ImageGrid, contextualVisualAidPlacement, getBossImages } from './VisualAids'
 import { InlineSidequestBlock, sidequestTrackerId } from './SidequestView'
-import type { Chapter, Checkpoint, AreaEncounter, Enemy, Item, MagicSpell, ShopInventory, JunctionTable, CharacterProfile, Sidequest, TrackerState } from '../../types'
+import type { Chapter, Checkpoint, AreaEncounter, Enemy, Item, MagicSpell, RefinementAbility, ShopInventory, JunctionTable, CharacterProfile, Sidequest, TrackerState } from '../../types'
 
 const DISC_HEADER: Record<number, { border: string; text: string; gradient: string; badge: string }> = {
   0: { border: 'border-sky-500',    text: 'text-sky-400',    gradient: 'rgba(14,165,233,0.05)',  badge: 'bg-sky-900/60 border-sky-500/40 text-sky-300' },
@@ -73,6 +74,7 @@ interface Props {
   magicCompletedByCharacter?: Record<string, Record<string, boolean>>
   onToggleMagic?: (characterId: string, spellId: string, next?: boolean) => void
   items: Item[]
+  refinement: RefinementAbility[]
   learnedBlueMagic: TrackerState['learnedBlueMagic']
   availableBlueMagicIds: ReadonlySet<string>
   onToggleBlueMagic: (abilityId: string, next?: boolean) => void
@@ -84,7 +86,11 @@ function parseSequenceParts(text: string): string[] | null {
   const stripped = text.trim().replace(/^(?:[-·]\s*|\d+\.\s*)/, '').trim()
   const parts = stripped.split(/\s*(?:→|->)\s*/).map(part => part.trim())
   const readsLikeProse = /[,;]|\b(?:and|or|then|because|if|while)\b/i
-  return parts.length >= 2 && parts.every(part => part.length >= 1 && part.length <= 75 && !readsLikeProse.test(part))
+  return parts.length >= 2 && parts.every(part =>
+    part.length >= 1
+      && part.length <= 75
+      && !readsLikeProse.test(part.replace(/(\d),(?=\d{3}\b)/g, '$1')),
+  )
     ? parts
     : null
 }
@@ -171,6 +177,134 @@ function isChainLine(text: string): boolean {
 function ChainLine({ raw }: { raw: string }) {
   const parts = parseSequenceParts(raw) ?? []
   return <SequenceSteps items={parts.map(part => renderInline(part))} className="py-0.5 pl-1" />
+}
+
+interface RefinementFlowContext {
+  items: Item[]
+  refinement: RefinementAbility[]
+  learnedBlueMagic: TrackerState['learnedBlueMagic']
+  onToggleBlueMagic: (abilityId: string, next?: boolean) => void
+}
+
+function normalizeFlowName(text: string) {
+  return text
+    .replace(/\*\*/g, '')
+    .replace(/^\s*\d[\d,]*\s*(?:[x×]\s*)?/i, '')
+    .trim()
+    .replace(/\s+cards?$/i, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase()
+}
+
+function recipeBetween(from: string, to: string, refinement: RefinementAbility[]) {
+  const fromName = normalizeFlowName(from).replace(/s$/, '')
+  const toName = normalizeFlowName(to).replace(/s$/, '')
+  return refinement.find(ability => ability.entries.some(entry =>
+    normalizeFlowName(entry.from).replace(/s$/, '') === fromName
+      && normalizeFlowName(entry.to).replace(/s$/, '') === toName,
+  ))?.ability
+}
+
+function expandRefinementPath(parts: string[], refinement: RefinementAbility[]) {
+  const expanded: Array<{ text: string; ability?: boolean }> = []
+  parts.forEach((part, index) => {
+    expanded.push({ text: part })
+    const next = parts[index + 1]
+    if (!next) return
+    const ability = recipeBetween(part, next, refinement)
+    if (ability) expanded.push({ text: ability, ability: true })
+  })
+  return expanded
+}
+
+function blueMagicForFlowStep(step: string, items: Item[]) {
+  const name = normalizeFlowName(step)
+  for (const [itemId, ability] of BLUE_MAGIC_BY_ITEM_ID) {
+    const itemName = items.find(item => item.id === itemId)?.name
+    if (itemName && normalizeFlowName(itemName) === name) return ability
+  }
+  return null
+}
+
+function renderFlowSteps(steps: Array<{ text: string; ability?: boolean }>) {
+  return steps.map(step => step.ability
+    ? <span key={`${step.text}-ability`} className="font-semibold text-violet-200">{step.text}</span>
+    : <span key={step.text}>{renderInline(step.text)}</span>,
+  )
+}
+
+function BlueMagicFlowStep({ ability, context }: { ability: NonNullable<ReturnType<typeof blueMagicForFlowStep>>; context: RefinementFlowContext }) {
+  return (
+    <BlueMagicRouteStep
+      ability={ability}
+      learned={isBlueMagicLearned({ learnedBlueMagic: context.learnedBlueMagic }, ability.id)}
+      onToggle={() => context.onToggleBlueMagic(ability.id)}
+    />
+  )
+}
+
+function RefinementFlowLines({ lines, context }: { lines: string[]; context: RefinementFlowContext }) {
+  const renderedBlueMagic = new Set<string>()
+  return (
+    <div className="space-y-2">
+      {lines.map((line, index) => {
+        const parts = parseSequenceParts(line)
+        if (!parts) {
+          const lineAbilities = [...BLUE_MAGIC_BY_ITEM_ID.entries()]
+            .map(([itemId, ability]) => ({ itemId, ability, item: context.items.find(item => item.id === itemId) }))
+            .filter((entry): entry is { itemId: string; ability: typeof entry.ability; item: Item } =>
+              !!entry.item && !renderedBlueMagic.has(entry.ability.id) && normalizeFlowName(line).includes(normalizeFlowName(entry.item.name)),
+            )
+          lineAbilities.forEach(entry => renderedBlueMagic.add(entry.ability.id))
+          return (
+            <div key={index} className="space-y-1.5">
+              {renderLines([line])}
+              {lineAbilities.map(entry => <BlueMagicFlowStep key={entry.ability.id} ability={entry.ability} context={context} />)}
+            </div>
+          )
+        }
+
+        const route = expandRefinementPath(parts, context.refinement)
+        const blueMagicIndex = route.findIndex(step => blueMagicForFlowStep(step.text, context.items))
+        const routeAbility = blueMagicIndex >= 0 ? blueMagicForFlowStep(route[blueMagicIndex].text, context.items) : null
+        const ability = routeAbility && !renderedBlueMagic.has(routeAbility.id) ? routeAbility : null
+        if (ability) renderedBlueMagic.add(ability.id)
+        const prefix = ability ? route.slice(0, blueMagicIndex + 1) : route
+        const branch = ability ? route.slice(blueMagicIndex) : []
+        const bullet = /^\s*(?:[-·]\s*|\d+\.\s*)/.test(line)
+
+        return (
+          <div key={index} className="rounded-md border border-violet-900/30 bg-slate-950/20 px-2.5 py-2">
+            <div className="flex min-w-0 items-start gap-2">
+              {bullet && <span className="mt-1 shrink-0 text-[10px] text-violet-400/75">▹</span>}
+              <div className="min-w-0 flex-1 space-y-2">
+                {ability ? (
+                  blueMagicIndex === route.length - 1 ? (
+                    <SequenceSteps
+                      items={[
+                        ...renderFlowSteps(prefix),
+                        <BlueMagicFlowStep key={ability.id} ability={ability} context={context} />,
+                      ]}
+                      className="py-0.5"
+                    />
+                  ) : (
+                    <>
+                      <SequenceSteps items={renderFlowSteps(prefix)} className="py-0.5" />
+                      <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-slate-800/70 pt-2">
+                        <BlueMagicFlowStep ability={ability} context={context} />
+                        <span className="text-[10px] font-medium uppercase tracking-wide text-slate-500">or refine</span>
+                        <SequenceSteps items={renderFlowSteps(branch)} className="py-0.5" />
+                      </div>
+                    </>
+                  )
+                ) : <SequenceSteps items={renderFlowSteps(route)} className="py-0.5" />}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 // ─── Shop / price-list renderer ───────────────────────────────────────────────
@@ -1539,7 +1673,13 @@ function calloutStyle(kind: CalloutKind): CalloutStyle {
   }
 }
 
-function renderParagraphBlock(text: string, chapterId = '') {
+function usesRefinementFlow(title: string, text: string, kind: CalloutKind) {
+  if (kind === 'refinement') return true
+  return /(?:card\s*mod|(?:t|i|f|l|mid|high|time|st|supt|recov|recovery|forbid|gfrecov|gfabl|med\s*lv\s*up|ammo|tool)\s*-?\s*(?:mag|med|rf|lv\s*up)|refin(?:e|ement))/i.test(`${title} ${text}`)
+    && /(?:→|->)/.test(text)
+}
+
+function renderParagraphBlock(text: string, chapterId = '', flowContext?: RefinementFlowContext) {
   const directiveMatch = text.match(CALLOUT_DIRECTIVE_RE)
   if (directiveMatch) {
     const rawKind = directiveMatch[1]
@@ -1554,12 +1694,15 @@ function renderParagraphBlock(text: string, chapterId = '') {
       if (items.length >= 3) return <ShopGrid items={items} label={title} />
     }
 
+    const refinementFlow = flowContext && usesRefinementFlow(title, rest, kind) ? flowContext : undefined
+
     return (
       <CollapsibleCallout
         title={title}
         lines={lines}
         kind={kind}
         collapseAt={COLLAPSE_AT}
+        refinementFlow={refinementFlow}
       />
     )
   }
@@ -1587,12 +1730,15 @@ function renderParagraphBlock(text: string, chapterId = '') {
       if (items.length >= 4) return <ShopGrid items={items} label={title} />
     }
 
+    const refinementFlow = flowContext && usesRefinementFlow(title, rest, kind) ? flowContext : undefined
+
     return (
       <CollapsibleCallout
         title={title}
         lines={lines}
         kind={kind}
         collapseAt={COLLAPSE_AT}
+        refinementFlow={refinementFlow}
       />
     )
   }
@@ -1607,6 +1753,9 @@ function renderParagraphBlock(text: string, chapterId = '') {
   }
 
   const lines = rawLines.flatMap(l => autoSplitProse(l))
+  if (flowContext && usesRefinementFlow('', text, 'note')) {
+    return <RefinementFlowLines lines={lines} context={flowContext} />
+  }
   return renderLines(lines)
 }
 
@@ -1629,11 +1778,13 @@ function CollapsibleCallout({
   lines,
   kind,
   collapseAt,
+  refinementFlow,
 }: {
   title: string
   lines: string[]
   kind: CalloutKind
   collapseAt: number
+  refinementFlow?: RefinementFlowContext
 }) {
   const [expanded, setExpanded] = useState(false)
   const [revealed, setRevealed] = useState(kind !== 'spoiler')
@@ -1669,7 +1820,9 @@ function CollapsibleCallout({
           </button>
         </div>
       ) : (
-        visible.length > 0 && renderLines(visible)
+        visible.length > 0 && (refinementFlow
+          ? <RefinementFlowLines lines={visible} context={refinementFlow} />
+          : renderLines(visible))
       )}
       {revealed && needsCollapse && (
         <button
@@ -1687,7 +1840,7 @@ function CollapsibleCallout({
   )
 }
 
-function ReferenceCalloutPanel({ items, chapterId }: { items: string[]; chapterId: string }) {
+function ReferenceCalloutPanel({ items, chapterId, refinementFlow }: { items: string[]; chapterId: string; refinementFlow: RefinementFlowContext }) {
   const parsed = items.map(item => parseDirectiveCallout(item, chapterId)).filter(Boolean) as Array<{
     title: string
     lines: string[]
@@ -1707,14 +1860,14 @@ function ReferenceCalloutPanel({ items, chapterId }: { items: string[]; chapterI
       </div>
       <div className="divide-y divide-slate-800/70">
         {parsed.map((item, index) => (
-          <ReferenceCalloutRow key={`${item.title}-${index}`} item={item} />
+          <ReferenceCalloutRow key={`${item.title}-${index}`} item={item} refinementFlow={refinementFlow} />
         ))}
       </div>
     </section>
   )
 }
 
-function ReferenceCalloutRow({ item }: { item: { title: string; lines: string[]; kind: CalloutKind } }) {
+function ReferenceCalloutRow({ item, refinementFlow }: { item: { title: string; lines: string[]; kind: CalloutKind }; refinementFlow: RefinementFlowContext }) {
   const [expanded, setExpanded] = useState(false)
   const style = calloutStyle(item.kind)
   const containsTable = splitLineBlocks(item.lines).some(block => block.type === 'table')
@@ -1727,7 +1880,9 @@ function ReferenceCalloutRow({ item }: { item: { title: string; lines: string[];
         {style.icon}
         <span className="text-slate-100">{item.title}</span>
       </div>
-      {visible.length > 0 && renderLines(visible)}
+      {visible.length > 0 && (usesRefinementFlow(item.title, item.lines.join('\n'), item.kind)
+        ? <RefinementFlowLines lines={visible} context={refinementFlow} />
+        : renderLines(visible))}
       {needsCollapse && (
         <button
           onClick={() => setExpanded(value => !value)}
@@ -3009,8 +3164,9 @@ const DISC_NAV_COLORS: Record<number, { border: string; text: string; label: str
   4: { border: 'border-amber-700/50',  text: 'text-amber-400',  label: 'Disc 4' },
 }
 
-export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate, characterLevels = {}, activePartyIds = [], magicCompletedByCharacter = {}, onToggleMagic, items, learnedBlueMagic, availableBlueMagicIds, onToggleBlueMagic }: Props) {
+export function GuideView({ chapter, completedItems, onToggleItem, enemies = [], magic = [], shops = [], junctions = [], characters = [], sidequests = [], prevChapter, nextChapter, onNavigate, characterLevels = {}, activePartyIds = [], magicCompletedByCharacter = {}, onToggleMagic, items, refinement, learnedBlueMagic, availableBlueMagicIds, onToggleBlueMagic }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const refinementFlow: RefinementFlowContext = { items, refinement, learnedBlueMagic, onToggleBlueMagic }
 
   // Scroll the nearest overflow-y-auto ancestor to the top whenever the
   // chapter changes.  useLayoutEffect fires after the DOM mutation but
@@ -3113,7 +3269,7 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
               const groupSidequests = item.indices.flatMap(idx => sidequestMap[idx] ?? [])
               return (
                 <div key={di} className="space-y-3">
-                  <ReferenceCalloutPanel items={item.paras} chapterId={chapter.id} />
+                  <ReferenceCalloutPanel items={item.paras} chapterId={chapter.id} refinementFlow={refinementFlow} />
                   <CheckpointCards checkpoints={groupCps} completedItems={completedItems} onToggleItem={onToggleItem} />
                   <InlineSidequestBlocks entries={groupSidequests} completedItems={completedItems} onToggleItem={onToggleItem} items={items} learnedBlueMagic={learnedBlueMagic} onToggleBlueMagic={onToggleBlueMagic} />
                 </div>
@@ -3148,9 +3304,14 @@ export function GuideView({ chapter, completedItems, onToggleItem, enemies = [],
                     />
                   : shouldRenderAsRouteStep(paras, idx, chapter.id)
                     ? <RouteStep text={para} />
-                    : renderParagraphBlock(para, chapter.id)
+                    : renderParagraphBlock(para, chapter.id, refinementFlow)
                 }
-                {!area && (
+                {!area && !usesRefinementFlow(
+                  para.match(CALLOUT_DIRECTIVE_RE)?.[2]?.trim() ?? '',
+                  para,
+                  normalizeCalloutKind(para.match(CALLOUT_DIRECTIVE_RE)?.[1] ?? '')
+                    ?? calloutKind(para.match(CALLOUT_RE)?.[1] ?? '', para, chapter.id),
+                ) && (
                   <BlueMagicConnections
                     text={para}
                     items={items}
